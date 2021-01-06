@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include CurrentUserConcern
+  
   def show
   end
 
@@ -17,13 +18,21 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    user = User.find(@current_user).try(:authenticate, params['user']['password'])
+  def authenticate_user
+    user = @current_user.try(:authenticate, params['user']['password']) if @current_user
 
-    if user.update(user_params)
+    if user
+      render json: { status: 'authenticated' }
+    else
+      render json: { status: 'not_authenticated' }
+    end
+  end
+
+  def update
+    if @current_user.update(user_params)
       render json: {
-        status: :updated
-        user: user
+        status: :updated,
+        user: @current_user
       }
     else
       render json: { status: 500 }
@@ -31,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(@current_user).try(:authenticate, params['user']['password'])
+    user = @current_user.try(:authenticate, params['user']['password']) if @current_user
 
     if user.destroy
       reset_session
