@@ -4,6 +4,19 @@ class UsersController < ApplicationController
   def show
   end
 
+  def confirm_email
+    user = User.find_by_confirm_token(params[:token])
+    if user
+      user.email_activate
+      render json: {
+        status: 200,
+        email: 'confirmed'
+      }
+    else
+      render json: { status: 500 }
+    end
+  end
+
   def create
     user = User.create!(user_params)
 
@@ -40,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = @current_user.try(:authenticate, params['user']['password']) if @current_user
+    user = @current_user.try(:authenticate, params[:user][:password]) if @current_user
 
     if user.destroy
       reset_session

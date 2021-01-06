@@ -1,3 +1,4 @@
+Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 Rails.application.routes.draw do
   resources :sessions, only: [:create]
   get :log_status, to: 'sessions#log_status'
