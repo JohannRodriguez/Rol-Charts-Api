@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   delete :logout, to: 'sessions#logout'
 
   resources :users, only: [:show, :create, :update, :destroy]
-  get :auth_user, to: 'users#authenticate_user'
+  get :confirm_email, to: 'users#confirm_email'
+  patch :email_correction, to: 'users#email_correction'
 end
