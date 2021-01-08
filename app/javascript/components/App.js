@@ -18,10 +18,11 @@ const App = () => {
     callApi
       .get('/api/v1/log_status', { withCredentials: true })
       .then(response => {
-        if (response.data.logStatus && log.logStatus === 'NOT_LOGGED_IN') {
+        console.log(response);
+        if (response.data.loged_in && log.logStatus === 'NOT_LOGGED_IN') {
           setLog({
             ...log,
-            logStatus: 'NOT_LOGGED_IN',
+            logStatus: 'LOGGED_IN',
             user: response.data.user,
           });
         }
@@ -29,10 +30,18 @@ const App = () => {
       .catch(error => console.log(error));
   });
 
+  const handleLogout = () => {
+    setLog({
+      ...log,
+      logStatus: 'NOT_LOGGED_IN',
+      user: null,
+    });
+  }
+
   return (
     <Switch>
       <Route exact path={'/'} render={props => (
-        <Home {...props} user={log.logStatus} // handleLogin={handleLogin}handleLogout={handleLogout}
+        <Home {...props} user={log.logStatus} handleLogout={handleLogout} // handleLogin={handleLogin}
         />
       )}/>
       <Route exact path='/login' render={props => (
