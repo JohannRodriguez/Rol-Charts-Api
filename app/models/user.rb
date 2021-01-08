@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true, email: true
   validates :password, presence: true, length: { minimum: 8, maximum: 28}, format: { with: PASSWORD_FORMAT }, if: :password
-  validates :username, presence: true, length: { minimum: 5, maximum: 16}, format: { with:  /\A[a-zA-Z0-9 ]+\z/, message: 'Only letters and numbers' }
+  validates :username, presence: true, length: { minimum: 5, maximum: 16}, format: { with:  /\A[a-zA-Z0-9 ]+\z/, message: 'Only letters and numbers' }, uniqueness: { case_sensitive: false }
   validates :status, inclusion: { in: %w(INACTIVE ACTIVE DEACTIVADED SUSPENDED BANNED), message: 'Unauthorized status' }
 
   def email_activate
