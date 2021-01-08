@@ -1,6 +1,5 @@
 Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 Rails.application.routes.draw do
-  resources :pages, only: [:index]
   root 'pages#index'
 
   namespace :api do
@@ -13,7 +12,8 @@ Rails.application.routes.draw do
         
         get :confirm_email, to: 'users#confirm_email'
         patch :email_correction, to: 'users#email_correction'
-
     end
   end
+
+  get '*path', to: 'pages#index', via: :all 
 end
