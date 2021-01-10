@@ -1,22 +1,9 @@
 module Api
-module V1
+  module V1
     class UsersController < ApplicationController
       include CurrentUserConcern
       
       def index
-      end
-
-      def confirm_email
-        user = User.find_by_confirm_token(params[:token])
-        if user
-          user.email_activate
-          render json: {
-            status: 200,
-            email: 'confirmed'
-          }
-        else
-          render json: { status: 'No token found' }
-        end
       end
 
       def create
@@ -31,18 +18,6 @@ module V1
           }
         else
           render json: { status: 500 }
-        end
-      end
-
-      def email_correction
-        user = @current_user.try(:authenticate, params[:user][:auth_password])
-
-        if user.status === 'INACTIVE'and user.email != params[:user][:email] and user.update!(email: params[:user][:email])
-          user.update!(confirm_token: SecureRandom.urlsafe_base64.to_s)
-          UsersMailer.registration_confirmation(user).deliver
-          render json: { user: user }
-        else
-          render json: { status: 'nouser' }
         end
       end
 

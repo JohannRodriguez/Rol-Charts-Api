@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { default as callApi } from 'axios';
+import { default as api } from 'axios';
 
 const Home = props => {
   const logout = () => {
-    callApi
+    api
       .delete('/api/v1/logout', { withCredentials: true })
       .then(response => {
         console.log(response);

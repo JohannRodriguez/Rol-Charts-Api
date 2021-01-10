@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { default as callApi } from 'axios';
+import { default as api } from 'axios';
 
 const Login = () => {
   const [field, setField] = useState({
@@ -12,7 +12,7 @@ const Login = () => {
     event.preventDefault();
 
     const { email, password } = field;
-    callApi
+    api
       .post(
         '/api/v1/sessions',
         {

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { default as callApi } from 'axios';
+import { default as api } from 'axios';
 import { Route, Switch } from 'react-router-dom';
 
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
+import ConfirmEmail from './ConfirmEmail';
+import ResendEmail from './ResendEmail';
 
 const App = () => {
   const [log, setLog] = useState(
@@ -15,10 +17,9 @@ const App = () => {
   );
 
   useEffect(() => {
-    callApi
+    api
       .get('/api/v1/log_status', { withCredentials: true })
       .then(response => {
-        console.log(response);
         if (response.data.loged_in && log.logStatus === 'NOT_LOGGED_IN') {
           setLog({
             ...log,
@@ -49,6 +50,12 @@ const App = () => {
       )}/>
       <Route exact path='/register' render={props => (
         <Register {...props} />
+      )}/>
+      <Route exact path='/confirm_email' render={props => (
+        <ConfirmEmail {...props} />
+      )}/>
+      <Route exact path='/resend_email' render={props => (
+        <ResendEmail {...props} />
       )}/>
     </Switch>
   );

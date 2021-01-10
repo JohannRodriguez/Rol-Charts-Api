@@ -10,8 +10,9 @@ Rails.application.routes.draw do
         get :log_status, to: 'sessions#log_status'
         delete :logout, to: 'sessions#logout'
         
-        get :confirm_email, to: 'users#confirm_email'
-        patch :email_correction, to: 'users#email_correction'
+        post :email_confirmation, to: 'emails#email_confirmation'
+        post :email_resend, to: 'emails#email_resend'
+        patch :email_correction, to: 'emails#email_correction'
     end
   end
 
