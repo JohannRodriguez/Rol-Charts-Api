@@ -10,21 +10,15 @@ module Api
     
         if user
           session[:user_id] = user.id
-          render json: {
-            status: :created,
-            user: user
-          }
+          render :create
         else
-          render json: { status: 500 }
+          render json: { status: 500, error: user.errors.full_messages }
         end
       end
     
       def log_status
         if @current_user
-          render json: {
-            loged_in: true,
-            user: @current_user
-          }
+          render :log_status
         else
           render json: {
             loged_in: false,

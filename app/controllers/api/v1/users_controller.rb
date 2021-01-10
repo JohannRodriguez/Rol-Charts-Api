@@ -7,17 +7,14 @@ module Api
       end
 
       def create
-        user = User.create!(create_user_params)
+        user = User.new(create_user_params)
 
-        if user
+        if user.save
           session[:user_id] = user.id
           UsersMailer.registration_confirmation(user).deliver
-          render json: {
-            status: :created,
-            user: user
-          }
+          render json: :create
         else
-          render json: { status: 500 }
+          render json: { status: 400, error: user.errors }
         end
       end
 
@@ -26,15 +23,12 @@ module Api
 
         if user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
-            render json: {
-              status: :updated,
-              user: @current_user
-            }
+            render json: :udpate
           else
-            render json: { status: 500 }
+            render json: { status: 400, error: user.errors }
           end
         else
-          render json: { status: 500, message: 'You need to be active' }
+          render json: { status: 400, error: user.errors }
         end
       end
 
@@ -43,13 +37,9 @@ module Api
 
         if user.destroy
           reset_session
-          render json: {
-            status: :destroyed
-          }
+          render json: :destroy
         else
-          render json: {
-            status: 500
-          }
+          render json: { status: 400 , error: user.errors }
         end
       end
 

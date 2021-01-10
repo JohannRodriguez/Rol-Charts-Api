@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_secure_token
   before_create :set_token
   
   PASSWORD_FORMAT = /\A
@@ -9,9 +10,9 @@ class User < ApplicationRecord
     (?=.*[[:^alnum:]])
   /x
 
-  validates :email, presence: true, uniqueness: true, email: true
+  validates :username, presence: true, length: { minimum: 5, maximum: 16}, format: { with:  /\A[a-zA-Z0-9\_]+\z/, message: 'You can only use letters and numbers' }, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: { message: 'Sorry, this email is taken'}, email: true
   validates :password, presence: true, length: { minimum: 8, maximum: 28}, format: { with: PASSWORD_FORMAT }, if: :password
-  validates :username, presence: true, length: { minimum: 5, maximum: 16}, format: { with:  /\A[a-zA-Z0-9 ]+\z/, message: 'Only letters and numbers' }, uniqueness: { case_sensitive: false }
   validates :status, inclusion: { in: %w(INACTIVE ACTIVE DEACTIVADED SUSPENDED BANNED), message: 'Unauthorized status' }
 
   def email_activate
