@@ -6,6 +6,18 @@ module Api
       def index
       end
 
+      def authenticate
+        user = @current_user.try(:authenticate, params[:user][:password])
+
+        if user
+          session[:auth_status] = 'AUTH'
+          session[:auth_time] = Time.now.to_i
+          render json: { status: session[:auth_status] }
+        else
+          render json: { error: 'Incorrect password' }
+        end
+      end
+
       def create
         user = User.new(create_user_params)
 
@@ -19,23 +31,28 @@ module Api
       end
 
       def update
-        user = @current_user.try(:authenticate, params[:user][:auth_password])
-
-        if user.status === 'ACTIVE' or user.status === 'SUSPENDED'
+        user = @current_user
+        if (Time.now.to_i - session[:auth_time]) > 18000
+          session[:auth_status] === 'NOT_AUTH'
+          render json: { authenticated: 'NOT_AUTH' }
+        elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
             render json: :udpate
           else
             render json: { status: 400, error: user.errors }
           end
         else
-          render json: { status: 400, error: user.errors }
+          render json: { status: 500 }
         end
       end
 
       def destroy
         user = @current_user.try(:authenticate, params[:user][:password]) if @current_user
 
-        if user.destroy
+        if (Time.now.to_i - session[:auth_time]) > 18000
+          session[:auth_status] === 'NOT_AUTH'
+          render json: { authenticated: 'NOT_AUTH' }
+        elsif user.destroy
           reset_session
           render json: :destroy
         else

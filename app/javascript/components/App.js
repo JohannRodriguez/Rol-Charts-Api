@@ -7,6 +7,7 @@ import Login from './Login';
 import Register from './Register';
 import ConfirmEmail from './ConfirmEmail';
 import ResendEmail from './ResendEmail';
+import Authenticate from './Authenticate';
 
 const App = () => {
   const [log, setLog] = useState(
@@ -56,6 +57,9 @@ const App = () => {
       )}/>
       <Route exact path='/resend_email' render={props => (
         <ResendEmail {...props} />
+      )}/>
+      <Route exact path='/authenticate' render={ props => (
+        <Authenticate {...props} />
       )}/>
     </Switch>
   );

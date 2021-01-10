@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :sessions, only: [:create]
       resources :users, only: [:index, :create, :update, :destroy]
+        post :authenticate, to: 'users#authenticate'
 
         get :log_status, to: 'sessions#log_status'
         delete :logout, to: 'sessions#logout'
