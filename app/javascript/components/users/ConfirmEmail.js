@@ -1,23 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { default as api } from 'axios';
+import confirm_email_call from './api_calls/confirm_email_call';
 
 const ConfirmEmail = props => {
-  const [token] = useState(props.location.search.split('?confirm_token=')[1]);
+  const [token] = useState(props.location.search.split('?token=')[1]);
+  const [response, setResponse] = useState('No token detected');
 
-  const confirmEmail = () => {
-      {confirmEmail}
-      api
-      .post('/api/v1/email_confirmation', { token: token }, { withCredentials: true })
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
-    ;
-  }
+  
 
-  useEffect(() => confirmEmail());
+  useEffect(() => {
+    if (token) {
+      confirm_email_call(token, setResponse);
+    }
+  });
 
   return (
     <>
-      <h1>Confirm Email</h1>
+      {response === 'succes' ? 
+        <>
+          <h2>Your email was succesfully verified, you can close this tab and login to your account</h2>
+        </>
+      : response === 'failure' ?
+        <>
+          <h2>Soemthing went wrong, this email is already verified or you request to resend the verification</h2>
+        </>
+      :
+        <>
+          <h2>{response}</h2>
+        </>
+      }
     </>
   );
 };

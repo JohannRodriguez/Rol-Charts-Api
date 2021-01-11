@@ -4,17 +4,13 @@ module Api
       include CurrentUserConcern
 
       def email_confirmation
-        user = User.find_by_confirm_token(params[:token])
+        puts params.inspect
+        user = User.find_by(confirm_token: params[:token])
         if user
           user.email_activate
-          render json: {
-            status: 200,
-            user: user.username,
-            user_status: user.status,
-            email: 'confirmed',
-          }
+          render json: { status: :succes }
         else
-          render json: { status: 'No token found' }
+          render json: { status: :failure }
         end
       end
 
