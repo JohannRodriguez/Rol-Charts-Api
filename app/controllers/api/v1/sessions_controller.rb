@@ -13,7 +13,7 @@ module Api
         elsif user
           render json: { status: '0-01' }
         else
-          render json: { status: '0-00' }
+          render json: { status: '0-11' }
         end
       end
     

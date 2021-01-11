@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import login_call from './api_calls/login_call';
 
-const Login = () => {
+const Login = props => {
   const [field, setField] = useState({
     email: '',
     password: '',
   });
-
   const [response, setResponse] = useState(null);
+
+  useEffect(() => {
+    if (response === '0-00') {
+      props.history.push('/');
+    }
+  });
 
   const handleSubmit = event => {
     event.preventDefault();

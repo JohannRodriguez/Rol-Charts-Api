@@ -12,11 +12,11 @@ module Api
         if auth_user
           session[:auth_status] = 'AUTH'
           session[:auth_time] = Time.now.to_i
-          render json: { status: '0-11' }
+          render json: { status: '0-00' }
         elsif @current_user
           render json: { status: '0-01'}
         else
-          render json: { status: '0-00' }
+          render json: { status: '0-11' }
         end
       end
 
