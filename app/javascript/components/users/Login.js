@@ -1,34 +1,18 @@
 import React, { useState } from 'react';
-import { default as api } from 'axios';
+import login_call from './api_calls/login_call';
 
 const Login = () => {
   const [field, setField] = useState({
     email: '',
     password: '',
-    registrationErrors: '',
   });
+
+  const [response, setResponse] = useState(null);
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    const { email, password } = field;
-    api
-      .post(
-        '/api/v1/sessions',
-        {
-          user: {
-            email: email,
-            password: password,
-          },
-        },
-        { withCredentials: true }
-      )
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log('registration error', error);
-      })
+    login_call(field, setResponse);
   };
 
   const handleChange = event => {
@@ -60,6 +44,7 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+      <p>{response}</p>
     </>
   );
 };

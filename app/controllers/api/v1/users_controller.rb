@@ -7,14 +7,16 @@ module Api
       end
 
       def authenticate
-        user = @current_user.try(:authenticate, params[:user][:password])
+        auth_user = @current_user.try(:authenticate, params[:user][:password])
 
-        if user
+        if auth_user
           session[:auth_status] = 'AUTH'
           session[:auth_time] = Time.now.to_i
-          render json: { status: session[:auth_status] }
+          render json: { status: '0-11' }
+        elsif @current_user
+          render json: { status: '0-01'}
         else
-          render json: { status: 'NOT_AUTH' }
+          render json: { status: '0-00' }
         end
       end
 

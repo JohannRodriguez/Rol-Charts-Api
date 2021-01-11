@@ -4,7 +4,6 @@ module Api
       include CurrentUserConcern
 
       def email_confirmation
-        puts params.inspect
         user = User.find_by(confirm_token: params[:token])
         if user
           user.email_activate
@@ -15,7 +14,6 @@ module Api
       end
 
       def email_resend
-        puts params.inspect
         user = User.find_by(email: params[:user][:email])
 
         if user and user.status === 'INACTIVE'
