@@ -14,7 +14,7 @@ module Api
           session[:auth_time] = Time.now.to_i
           render json: { status: session[:auth_status] }
         else
-          render json: { error: 'Incorrect password' }
+          render json: { status: 'NOT_AUTH' }
         end
       end
 

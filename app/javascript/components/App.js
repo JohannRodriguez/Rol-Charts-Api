@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { default as api } from 'axios';
 import { Route, Switch } from 'react-router-dom';
 
-import Home from './Home';
-import Login from './Login';
-import Register from './Register';
-import ConfirmEmail from './ConfirmEmail';
-import ResendEmail from './ResendEmail';
-import Authenticate from './Authenticate';
+import Home from './users/Home';
+import Login from './users/Login';
+import Register from './users/Register';
+import ConfirmEmail from './users/ConfirmEmail';
+import ResendEmail from './users/ResendEmail';
+import Authenticate from './users/Authenticate';
 
 const App = () => {
   const [log, setLog] = useState(
