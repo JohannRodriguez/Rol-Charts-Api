@@ -1,10 +1,11 @@
 import { default as api } from 'axios';
 
-const register_call = (field, setResponse) => {
+const update_call = (field, setResponse) => {
+  console.log('update call');
   const { username, email, password, password_confirmation } = field;
 
   api
-    .post(
+    .patch(
       '/api/v1/users',
       {
         user: {
@@ -25,4 +26,4 @@ const register_call = (field, setResponse) => {
   ;
 };
 
-export default register_call;
+export default update_call;

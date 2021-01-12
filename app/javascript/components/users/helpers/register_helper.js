@@ -86,6 +86,20 @@ const validateField = (target, value, validation, setValidation, field) => {
   }
 };
 
+const checkFields = object => {
+  const arr = Object.values(object);
+
+  for (let i = 0; i < arr.length; i++) {
+    let arr_child = Object.values(arr[i]);
+    for (let i = 0; i < arr_child.length; i++) {
+      if (arr_child[i] != 'correct') {
+        return false;
+      }
+    }
+  };
+  return true;
+};
+
 const password_confirmation = (password, confirmation) => {
   if (password === confirmation) {
     return 'correct';
@@ -94,3 +108,4 @@ const password_confirmation = (password, confirmation) => {
   }
 }
 export default validateField;
+export { checkFields };
