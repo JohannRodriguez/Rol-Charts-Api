@@ -26,9 +26,9 @@ module Api
         if user.save
           session[:user_id] = user.id
           UsersMailer.registration_confirmation(user).deliver
-          render json: :create
+          render json: { status: '1-0'}
         else
-          render json: { status: 400, error: user.errors }
+          render json: { status: '1-1', error: user.errors }
         end
       end
 
