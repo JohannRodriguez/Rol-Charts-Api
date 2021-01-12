@@ -15,18 +15,12 @@ const ConfirmEmail = props => {
 
   return (
     <>
-      {response === 'succes' ? 
-        <>
-          <h2>Your email was succesfully verified, you can close this tab and login to your account</h2>
-        </>
-      : response === 'failure' ?
-        <>
-          <h2>Soemthing went wrong, this email is already verified or you request to resend the verification</h2>
-        </>
+      {response === '5-0' ? 
+        <h2>Your email was succesfully verified, you can close this tab and login to your account</h2>
+      : response === '5-1' ?
+        <h2>Soemthing went wrong, this email is already verified or you request to resend the verification</h2>
       :
-        <>
-          <h2>{response}</h2>
-        </>
+        <h2>{response}</h2>
       }
     </>
   );

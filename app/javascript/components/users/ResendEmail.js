@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { default as api } from 'axios';
+import resend_email_call from './api_calls/resend_email_call';
 
 const ResendEmail = () => {
+  const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     email: '',
     registrationErrors: '',
@@ -9,16 +10,8 @@ const ResendEmail = () => {
 
   const resend = event => {
     event.preventDefault();
-    const { email } = field;
-    api
-      .post(
-        '/api/v1/email_resend',
-        { user: { email: email}},
-        { withCredentials: true }
-      )
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
-    ;
+
+    resend_email_call(field, setResponse);
   };
 
   const handleChange = event => {
@@ -42,6 +35,15 @@ const ResendEmail = () => {
         />
         <button type="submit">Resend Email</button>
       </form>
+      {response === '5-00' ?
+        <p>Email was succesfully resended</p>
+      : response === '5-01' ?
+        <p>This email has already been verified</p>
+      : response === '5-11' ?
+        <p>Not user found with this email</p>
+      :
+        <p>{response}</p>
+      }
     </>
   )
 }
