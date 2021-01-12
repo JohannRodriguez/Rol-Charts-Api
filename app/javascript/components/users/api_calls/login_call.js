@@ -1,6 +1,6 @@
 import { default as api } from 'axios';
 
-const login_call = (field, setResponse) => {
+const login_call = (field, setResponse, handleLogin) => {
   const { email, password } = field;
 
   api
@@ -16,6 +16,7 @@ const login_call = (field, setResponse) => {
     )
     .then(response => {
       setResponse(response.data.status);
+      handleLogin();
     })
     .catch(() => {
       setResponse('Internal server error');

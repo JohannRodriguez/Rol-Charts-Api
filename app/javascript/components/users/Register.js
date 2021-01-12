@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import register_call from './api_calls/register_call';
 import validateField from './helpers/register_helper';
 

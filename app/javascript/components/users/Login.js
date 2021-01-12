@@ -17,7 +17,7 @@ const Login = props => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    login_call(field, setResponse);
+    login_call(field, setResponse, props.handleLogin);
   };
 
   const handleChange = event => {
