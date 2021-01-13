@@ -9,6 +9,8 @@ module Api
     
         if auth_user
           session[:user_id] = user.id
+          session[:auth_status] = 'NOT_AUTH'
+          session[:auth_time] = 0
           render json: { status: '0-00' }
         elsif user
           render json: { status: '0-01' }

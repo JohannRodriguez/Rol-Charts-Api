@@ -3,8 +3,7 @@ import { default as api } from 'axios';
 const dashboard_call = handleLogout => {
   api
     .delete('/api/v1/logout', { withCredentials: true })
-    .then(response => {
-      console.log(response);
+    .then(() => {
       handleLogout();
     })
     .catch(error => console.log(error))

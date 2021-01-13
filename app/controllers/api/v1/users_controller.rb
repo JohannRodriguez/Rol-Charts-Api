@@ -12,11 +12,11 @@ module Api
         if auth_user
           session[:auth_status] = 'AUTH'
           session[:auth_time] = Time.now.to_i
-          render json: { status: '0-00' }
+          render json: { status: 'USER-AUTH' }
         elsif @current_user
-          render json: { status: '0-01'}
+          render json: { status: 'AUTH-BAD-PASSWORD'}
         else
-          render json: { status: '0-11' }
+          render json: { status: 'AUTH_NO_USER_FOUND' }
         end
       end
 
@@ -35,30 +35,30 @@ module Api
       def update
         user = @current_user
         if (Time.now.to_i - session[:auth_time]) > 18000
-          session[:auth_status] === 'NOT_AUTH'
-          render json: { authenticated: 'NOT_AUTH' }
+          session[:auth_status] = 'NOT_AUTH'
+          render json: { status: '2-01-', authenticated: 'NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
-            render json: :udpate
+            render json: { status: '2-000'}
           else
-            render json: { status: 400, error: user.errors }
+            render json: { status: '2-001', error: user.errors }
           end
         else
-          render json: { status: 500 }
+          render json: { status: '2-1--' }
         end
       end
 
       def destroy
-        user = @current_user.try(:authenticate, params[:user][:password]) if @current_user
+        user = @current_user if @current_user === User.find_by(id: params[:id])
 
         if (Time.now.to_i - session[:auth_time]) > 18000
-          session[:auth_status] === 'NOT_AUTH'
-          render json: { authenticated: 'NOT_AUTH' }
+          session[:auth_status] = 'NOT_AUTH'
+          render json: { status: 'USER_NOT_AUTH' }
         elsif user.destroy
           reset_session
-          render json: :destroy
+          render json: { status: 'USER-DELETED' }
         else
-          render json: { status: 400 , error: user.errors }
+          render json: { status: 'NO-USER-FOUND' }
         end
       end
 

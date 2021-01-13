@@ -1,7 +1,7 @@
 import { default as api } from 'axios';
 
-const authenticate_call = (state, setState) => {
-  const { password } = state;
+const authenticate_call = (field, setResponse) => {
+  const { password } = field;
   api
     .post(
       '/api/v1/authenticate',
@@ -13,16 +13,10 @@ const authenticate_call = (state, setState) => {
       { withCredentials: true, }
     )
     .then(response => {
-      setState({
-        ...state,
-        response: response.data.status,
-      });
+      setResponse(response.data.status);
     })
     .catch(() => {
-      setState({
-        ...state,
-        response: 'There was an error with this request',
-      });
+      setResponse('There was an error with this request');
     })
   ;
 };
