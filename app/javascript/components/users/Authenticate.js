@@ -34,7 +34,7 @@ const Authenticate = () => {
             />
             <button type="submit">Authenticate</button>
           </form>
-          { response === 'AUTH-BAD-PASSWORD' ?
+          {response === 'AUTH-BAD-PASSWORD' ?
             <p>Inconrrect password</p>
           :
           response === 'AUTH_NO_USER_FOUND' ?

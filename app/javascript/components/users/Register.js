@@ -6,6 +6,7 @@ const Register = props => {
     <div className="register">
       <h1>Register</h1>
       <AllFields {...props} type={'register'}/>
+      <button onClick={() => {props.history.push('/login');}}>Login</button>
     </div>
   )
 }

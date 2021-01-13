@@ -25,6 +25,8 @@ module Api
 
         if user.save
           session[:user_id] = user.id
+          session[:auth_status] = 'NOT_AUTH'
+          session[:auth_time] = 0
           UsersMailer.registration_confirmation(user).deliver
           render json: { status: '1-0'}
         else
@@ -33,18 +35,19 @@ module Api
       end
 
       def update
-        user = @current_user
+        user = @current_user if @current_user === User.find_by(id: params[:id])
+
         if (Time.now.to_i - session[:auth_time]) > 18000
           session[:auth_status] = 'NOT_AUTH'
-          render json: { status: '2-01-', authenticated: 'NOT_AUTH' }
+          render json: { status: 'USER_NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
-            render json: { status: '2-000'}
+            render json: { status: 'USER-UPDATED' }
           else
-            render json: { status: '2-001', error: user.errors }
+            render json: { status: 'USER-UPDATE-BAD-FIELD', error: user.errors }
           end
         else
-          render json: { status: '2-1--' }
+          render json: { status: 'NO-USER-FOUND' }
         end
       end
 

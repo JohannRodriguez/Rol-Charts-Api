@@ -50,6 +50,7 @@ const Login = props => {
         <button type="submit">Login</button>
       </form>
       <p>{response}</p>
+      <button onClick={() => {props.history.push('/register');}}>Create Account</button>
     </>
   );
 };

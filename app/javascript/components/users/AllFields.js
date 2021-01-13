@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import register_call from './api_calls/register_call';
 import update_call from './api_calls/update_call';
-import validateField, { checkFields } from './helpers/register_helper';
+import validateField, { checkValidations } from './helpers/all_fields_helper';
 
 const AllFields = props => {
   const [response, setResponse] = useState(null);
@@ -14,35 +14,72 @@ const AllFields = props => {
   });
   const [validation, setValidation] = useState({
     username: {
-      length: null,
-      characters: null,
+      length: {
+        verify: null,
+        min: 3,
+        max: 16,
+      },
+      characters: {
+        verify: null,
+        special: {
+          verify: null,
+          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+          response: 'bad',
+        },
+      },
     },
     password: {
-      min: null,
-      cap: null,
-      s_char: null,
-      number: null,
-      length: null,
+      length: {
+        verify: null,
+        min: 8,
+        max: 28,
+      },
+      match: {
+        verify: null,
+        compare: 'password_confirmation',
+      },
+      characters: {
+        verify: null,
+        lower_case: {
+          verify: null,
+          regex: /[a-z]/,
+          response: 'good',
+        },
+        upper_case: {
+          verify: null,
+          regex: /[A-Z]/,
+          response: 'good',
+        },
+        special: {
+          verify: null,
+          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+          response: 'good',
+        },
+        number: {
+          verify: null,
+          regex: /[0-9]/,
+          response: 'good',
+        },
+      },
     },
-    password_confirmation: { match: null },
+    password_confirmation: { match: { verify: null, compare: 'password', } },
   });
 
   const handleSubmit = event => {
     event.preventDefault();
-
-    let val_pass = checkFields(validation);
     
-    if (val_pass) {
-      
-      if (props.type === 'register') {
-        register_call(field, setResponse);
-      } else if (props.type === 'update') {
-        update_call(field, setResponse);
-      }
-    }
-    else {
-      console.log('Not passed validations');
-    }
+    console.log(validation);
+    console.log(checkValidations(validation));
+    // if (checkFields(validation, field)) {
+    //   if (props.type === 'register') {
+    //     register_call(field, setResponse);
+    //   } else if (props.type === 'update') {
+    //     update_call(field, setResponse);
+    //   }
+    // }
+    // else {
+    //   console.log('Not passed validations');
+    // }
   };
 
   const handleChange = event => {
@@ -51,7 +88,7 @@ const AllFields = props => {
       [event.target.name]: event.target.value
     });
 
-    validateField(event.target.name, event.target.value, validation, setValidation, field);
+    validateField(event.target.name, event.target.value, field, validation, setValidation);
   };
 
   const visibilityToggle = () => {
@@ -69,8 +106,6 @@ const AllFields = props => {
           onChange={handleChange}
           required
         /> <br/>
-        {validation.username.length ? <p>{validation.username.length}</p> : null}
-        {validation.username.characters ? <p>{validation.username.characters}</p> : null}
         <input
           type="email"
           name="email"
@@ -87,11 +122,6 @@ const AllFields = props => {
           onChange={handleChange}
           required
         /> <p onClick={visibilityToggle}>eye icon mock</p> <br/>
-        <p>Contains lower case:{validation.password.min ? <span> :D</span> : <span> X</span>}</p>
-        <p>Contains upper case:{validation.password.cap ? <span> :D</span> : <span> X</span>}</p>
-        <p>Contains a special character:{validation.password.s_char ? <span> :D</span> : <span> X</span>}</p>
-        <p>Contains a number:{validation.password.number ? <span> :D</span> : <span> X</span>}</p>
-        {validation.password.length ? <p>{validation.password.length}</p> : null}
         <input
           type={visiblePassword ? "text" : "password"}
           name="password_confirmation"
@@ -100,7 +130,6 @@ const AllFields = props => {
           onChange={handleChange}
           required
         />
-        {validation.password_confirmation.match ? <p>{validation.password_confirmation.match}</p> : null}
         <br/>
         <button type="submit">{props.type}</button>
       </form>

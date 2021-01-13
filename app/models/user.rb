@@ -1,6 +1,5 @@
 class User < ApplicationRecord
   has_secure_password
-  has_secure_token
   before_create :set_token
   
   PASSWORD_FORMAT = /\A

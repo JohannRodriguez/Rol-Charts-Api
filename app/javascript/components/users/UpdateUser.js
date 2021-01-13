@@ -11,7 +11,6 @@ const UpdateUser = props => {
   return (
     <div className="update">
       <h1>Update</h1>
-      <h2>{props.user.username}</h2>
       <AllFields {...props} type={'update'}/>
     </div>
   )

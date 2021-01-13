@@ -7,8 +7,7 @@ import Login from './users/Login';
 import Register from './users/Register';
 import ConfirmEmail from './users/ConfirmEmail';
 import ResendEmail from './users/ResendEmail';
-import Authenticate from './users/Authenticate';
-import UpdateUser from './users/UpdateUser';
+import Settings from './users/Settings';
 
 const App = () => {
   const [log, setLog] = useState(
@@ -73,8 +72,8 @@ const App = () => {
       <Route exact path='/register' render={props => (
         <Register {...props} />
       )}/>
-      <Route exact path='/update/user' render={props => (
-        <UpdateUser {...props} user={log.user} />
+      <Route exact path='/settings' render={props => (
+        <Settings {...props} user={log.user}/>
       )}/>
       <Route exact path='/confirm_email' render={props => (
         <ConfirmEmail {...props} />
