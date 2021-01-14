@@ -11,11 +11,11 @@ module Api
           session[:user_id] = user.id
           session[:auth_status] = 'NOT_AUTH'
           session[:auth_time] = 0
-          render json: { status: '0-00' }
+          render json: { status: 'SUCCESS' }
         elsif user
-          render json: { status: '0-01' }
+          render json: { status: 'BAD_PASSWORD' }
         else
-          render json: { status: '0-11' }
+          render json: { status: 'BAD_USER' }
         end
       end
     
@@ -24,14 +24,14 @@ module Api
           render :log_status
         else
           render json: {
-            loged_in: false,
+            log: 'NOT_LOGGED_IN',
           }
         end
       end
     
       def logout
         reset_session
-        render json: { status: 200, logged_out: true }
+        render json: { logout: 'SUCCES' }
       end
     end
   end

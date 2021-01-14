@@ -1,0 +1,6 @@
+{
+  "errors" : {
+    "email": "Ningún usuario fue encontrado con este email",
+    "password": "Contraseña incorrecta"
+  }
+}

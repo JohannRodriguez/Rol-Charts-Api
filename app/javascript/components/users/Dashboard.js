@@ -1,26 +1,38 @@
-import React from 'react';
+// Import Packages
+import React, { useState, useEffect} from 'react';
 import { Redirect } from 'react-router-dom';
-import dashboard_call from './api_calls/dashboard_call';
+import { useTranslation } from 'react-i18next';
+
+// Import Modules
+import api_call from '../../api/api_call';
 
 const Dashboard = props => {
-  const logout = () => {
-    dashboard_call(props.handleLogout);
+  const [response, setResponse] = useState(null);
+  const [lang, trans] = useTranslation(['global', 'something']);
+
+  const logout = async () => {
+    const response = await api_call('DELETE', '/api/v1/logout');
+    if(response.logout === 'SUCCES') {
+      console.log('Logged out');
+      return <Redirect to='/login' />
+    }
   };
 
-  return(
+  return (
     <>
-    { props.user.data === 'undefined' ?
-      null
-    : props.user.data === 'none' ?
-      <Redirect to='/login' />
-    : 
-      <>
-      <h1>Dashboard</h1>
-      <h2>{props.user.username || null}</h2>
-      <button onClick={() => logout()}>Logout</button>
-      <button onClick={() => {}}>Settings</button>
-      </>
-    }
+      { props.session.log === 'LOGGED_IN' ?
+        <>
+        <h1>{lang('title')}</h1>
+        <h1>{lang('something:smht')}</h1>
+        <button onClick={() => trans.changeLanguage('es')}>Español</button>
+        <button onClick={() => trans.changeLanguage('en')}>English</button>
+        <h2>{props.session.user.username}</h2>
+        <button onClick={() => logout()}>Logout</button>
+        <button onClick={() => {<Redirect to='settings' />}}>Settings</button>
+        </>
+      : 
+        <Redirect to='/login' />
+      }
     </>
   );
 };

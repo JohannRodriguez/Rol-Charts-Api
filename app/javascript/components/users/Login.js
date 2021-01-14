@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import login_call from './api_calls/login_call';
+import { Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+
+import api_call from '../../api/api_call';
 
 const Login = props => {
+  const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     email: '',
     password: '',
   });
-  const [response, setResponse] = useState(null);
+  const [lang] = useTranslation('login');
 
-  useEffect(() => {
-    if (response === '0-00') {
-      props.history.push('/');
-    }
-  });
-
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
-    login_call(field, setResponse, props.handleLogin);
+    const fetch = await api_call('POST', '/api/v1/sessions', {user: field});
+    setResponse(fetch.status);
   };
-
   const handleChange = event => {
     setField({
       ...field,
@@ -29,28 +27,34 @@ const Login = props => {
 
   return (
     <>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={field.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={field.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-      <p>{response}</p>
-      <button onClick={() => {props.history.push('/register');}}>Create Account</button>
+      {props.session.log === 'LOGGED_IN' ?
+        <Redirect to='/' />
+      :
+        <>
+          <h1>Login</h1>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="email" name="email" placeholder="Email"
+              value={field.email} onChange={handleChange} required
+            />
+            <input
+              type="password" name="password" placeholder="Password"
+              value={field.password} onChange={handleChange} required
+            />
+          <button type="submit">Login</button>
+          </form>
+          {response === 'BAD_USER' ?
+            <p>{lang('errors.email')}</p>
+          : response === 'BAD_PASSWORD' ?
+            <p>{lang('errors.password')}</p>
+          : response === 'SUCCESS' ?
+            <Redirect to='/' />
+          :
+            null
+          }
+          <button onClick={() => {<Redirect to='/register' />}}>Create Account</button>
+        </>
+      }
     </>
   );
 };

@@ -1,0 +1,6 @@
+{
+  "errors" : {
+    "email": "No user was found with this mail",
+    "password": "Incorrect password"
+  }
+}
