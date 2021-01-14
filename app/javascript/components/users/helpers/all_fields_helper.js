@@ -70,7 +70,7 @@ const checkValidations = (object) => {
   return true;
 };
 
-const createValidations = (show, setValidation) => {
+const createStates = (show, display, setValidation, setField) => {
   const data ={
     username: {
       length: {
@@ -125,21 +125,34 @@ const createValidations = (show, setValidation) => {
   }
 
   const validation = {}
+  const field = {}
 
   const data_keys = (Object.keys(data));
-  const show_keys = (Object.keys(show))
+  const show_keys = (Object.keys(show));
 
   for (let index = 0; index < show_keys.length; index++) {
     for (let key = 0; key < data_keys.length; key++) {
       if(show_keys[index] === data_keys[key]){
         validation[data_keys[key]] = data[data_keys[key]];
+        field[data_keys[key]] = display[data_keys[key]] || '';
       }
     }    
   }
 
   setValidation(validation)
+  setField(field);
+};
+
+const defaultFields = (field, validation, setValidation) => {
+  const keys = Object.keys(field);
+
+  for (let index = 0; index < keys.length; index++) {
+    if (field[keys[index]].length > 0) {
+      validateField(keys[index], field[keys[index]], field, validation, setValidation);
+    }    
+  }
 };
 
 
 export default validateField;
-export { checkValidations, createValidations };
+export { checkValidations, createStates, defaultFields };

@@ -9,7 +9,7 @@ class User < ApplicationRecord
     (?=.*[[:^alnum:]])
   /x
 
-  validates :username, presence: { message: 'presence' }, length: { in: 5...16, too_long: 'long', too_short: 'short' }, format: { with:  /\A[a-zA-Z0-9\_]+\z/, message: 'format' }, uniqueness: { case_sensitive: false, message: 'uniqueness' }
+  validates :username, presence: { message: 'presence' }, length: { in: 3...16, too_long: 'long', too_short: 'short' }, format: { with:  /\A[a-zA-Z0-9\_]+\z/, message: 'format' }, uniqueness: { case_sensitive: false, message: 'uniqueness' }
   validates :email, presence: { message: 'presence' }, uniqueness: { message: 'uniqueness' }, email: { message: 'email' }
   validates :password, presence: true, length: { in: 8...28, too_long: 'long', too_short: 'short' }, format: { with: PASSWORD_FORMAT, message: 'format' }, if: :password
   validates :status, inclusion: { in: %w(INACTIVE ACTIVE DEACTIVADED SUSPENDED BANNED), message: 'status' }

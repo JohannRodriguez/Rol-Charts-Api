@@ -17,6 +17,10 @@ const App = () => {
     }
   );
 
+  useEffect(() => {
+    checkLogin();
+  });
+
   const checkLogin = () => {
     api
       .get('/api/v1/log_status', { withCredentials: true })
@@ -38,9 +42,6 @@ const App = () => {
     ;
   };
 
-  useEffect(() => {
-    checkLogin();
-  });
 
   const handleLogin = () => {
     setLog({
@@ -66,14 +67,14 @@ const App = () => {
           handleLogout={handleLogout}
         />
       )}/>
+      <Route exact path='/settings' render={props => (
+        <Settings {...props} user={log.user}/>
+      )}/>
       <Route exact path='/login' render={props => (
         <Login {...props} handleLogin={handleLogin} />
       )}/>
       <Route exact path='/register' render={props => (
         <Register {...props} />
-      )}/>
-      <Route exact path='/settings' render={props => (
-        <Settings {...props} user={log.user}/>
       )}/>
       <Route exact path='/confirm_email' render={props => (
         <ConfirmEmail {...props} />

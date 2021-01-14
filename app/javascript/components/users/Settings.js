@@ -13,10 +13,18 @@ const Settings = props => {
 
   return (
     <div>
-      <h1>Settings</h1>
-      <h2>{props.user.username}</h2>
-      <UpdateUser {...props} />
-      <Destroy history={props.history} type="users" id={props.user.id} confirmDestroy={`destroy-${props.user.username}'s-account`} />
+      { props.user.data === 'undefined' ?
+        null
+      : props.user.data === 'none' ?
+        <Redirect to='/login' />
+      :
+      <>
+        <h1>Settings</h1>
+        <h2>{props.user.username}</h2>
+        <UpdateUser {...props} />
+        <Destroy history={props.history} type="users" id={props.user.id} confirmDestroy={`destroy-${props.user.username}'s-account`} />
+      </>
+      }
     </div>
   );
 };

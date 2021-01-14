@@ -5,7 +5,6 @@ const ResendEmail = () => {
   const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     email: '',
-    registrationErrors: '',
   });
 
   const resend = event => {

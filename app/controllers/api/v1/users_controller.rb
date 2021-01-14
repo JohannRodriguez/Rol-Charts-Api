@@ -12,11 +12,11 @@ module Api
         if auth_user
           session[:auth_status] = 'AUTH'
           session[:auth_time] = Time.now.to_i
-          render json: { status: 'USER-AUTH' }
+          render json: { status: 'USER_AUTH' }
         elsif @current_user
-          render json: { status: 'AUTH-BAD-PASSWORD'}
+          render json: { status: 'BAD_PASSWORD'}
         else
-          render json: { status: 'AUTH_NO_USER_FOUND' }
+          render json: { status: 'NO_USER_FOUND' }
         end
       end
 
@@ -28,9 +28,9 @@ module Api
           session[:auth_status] = 'NOT_AUTH'
           session[:auth_time] = 0
           UsersMailer.registration_confirmation(user).deliver
-          render json: { status: '1-0'}
+          render json: { status: 'SUCCES'}
         else
-          render json: { status: '1-1', error: user.errors }
+          render json: { status: 'BAD_FIELD', error: user.errors }
         end
       end
 
@@ -39,15 +39,15 @@ module Api
 
         if (Time.now.to_i - session[:auth_time]) > 18000
           session[:auth_status] = 'NOT_AUTH'
-          render json: { status: 'USER_NOT_AUTH' }
+          render json: { status: 'NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
-            render json: { status: 'USER-UPDATED' }
+            render json: { status: 'SUCCES' }
           else
-            render json: { status: 'USER-UPDATE-BAD-FIELD', error: user.errors }
+            render json: { status: 'BAD_FIELD', error: user.errors }
           end
         else
-          render json: { status: 'NO-USER-FOUND' }
+          render json: { status: 'NO_USER_FOUND' }
         end
       end
 
@@ -56,12 +56,12 @@ module Api
 
         if (Time.now.to_i - session[:auth_time]) > 18000
           session[:auth_status] = 'NOT_AUTH'
-          render json: { status: 'USER_NOT_AUTH' }
+          render json: { status: 'NOT_AUTH' }
         elsif user.destroy
           reset_session
-          render json: { status: 'USER-DELETED' }
+          render json: { status: 'SUCCES' }
         else
-          render json: { status: 'NO-USER-FOUND' }
+          render json: { status: 'NO_USER_FOUND' }
         end
       end
 
