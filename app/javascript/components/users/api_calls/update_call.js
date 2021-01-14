@@ -1,10 +1,7 @@
 import { default as api } from 'axios';
 
 const update_call = (object, type, call, url, setResponse) => {
-  const params = {
-
-  }
-
+  const params = {}
   params[type] = object
 
   switch (call) {

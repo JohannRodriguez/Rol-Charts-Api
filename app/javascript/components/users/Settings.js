@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import UpdateUser from './UpdateUser';
 import Destroy from '../global/Destroy';
 
 
 
 const Settings = props => {
-  useEffect(() => {
-    if (props.user.data === 'none') {
-      props.history.push('/login')
-    }
-  });
-
   return (
     <div>
       { props.user.data === 'undefined' ?
