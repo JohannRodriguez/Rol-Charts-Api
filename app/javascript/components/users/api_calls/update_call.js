@@ -3,6 +3,8 @@ import { default as api } from 'axios';
 const update_call = (field, setResponse) => {
   let { username, email, password, password_confirmation } = field;
 
+  console.log('calling api...');
+
   // for (let i = 0; i < array.length; i++) {
   //   const element = array[i];
     

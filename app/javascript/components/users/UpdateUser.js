@@ -8,10 +8,19 @@ const UpdateUser = props => {
       {props.history.push('/login')}
     }
   });
+
   return (
     <div className="update">
-      <h1>Update</h1>
-      <AllFields {...props} type={'update'}/>
+      {props.user ?
+        <>
+        <h1>Update</h1>
+        <AllFields {...props}
+          type={'update'}
+          show={{ username: true, password: true, password_confirmation: true}}
+        />
+        </>
+      : null
+      }
     </div>
   )
 }

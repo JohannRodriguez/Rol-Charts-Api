@@ -1,85 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import register_call from './api_calls/register_call';
 import update_call from './api_calls/update_call';
-import validateField, { checkValidations } from './helpers/all_fields_helper';
+import validateField, { checkValidations, createValidations } from './helpers/all_fields_helper';
 
 const AllFields = props => {
+  
   const [response, setResponse] = useState(null);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [field, setField] = useState({
-    username: '',
+    username: props.username_field || '',
     email: '',
     password: '',
     password_confirmation: '',
   });
-  const [validation, setValidation] = useState({
-    username: {
-      length: {
-        verify: null,
-        min: 3,
-        max: 16,
-      },
-      characters: {
-        verify: null,
-        special: {
-          verify: null,
-          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
-          response: 'bad',
-        },
-      },
-    },
-    password: {
-      length: {
-        verify: null,
-        min: 8,
-        max: 28,
-      },
-      match: {
-        verify: null,
-        compare: 'password_confirmation',
-      },
-      characters: {
-        verify: null,
-        lower_case: {
-          verify: null,
-          regex: /[a-z]/,
-          response: 'good',
-        },
-        upper_case: {
-          verify: null,
-          regex: /[A-Z]/,
-          response: 'good',
-        },
-        special: {
-          verify: null,
-          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
-          response: 'good',
-        },
-        number: {
-          verify: null,
-          regex: /[0-9]/,
-          response: 'good',
-        },
-      },
-    },
-    password_confirmation: { match: { verify: null, compare: 'password', } },
+  const [validation, setValidation] = useState(null);
+
+  useEffect(() => {
+    if (!validation) {
+      createValidations(props.show, setValidation);
+    }
   });
 
   const handleSubmit = event => {
     event.preventDefault();
     
-    console.log(validation);
-    console.log(checkValidations(validation));
-    // if (checkFields(validation, field)) {
-    //   if (props.type === 'register') {
-    //     register_call(field, setResponse);
-    //   } else if (props.type === 'update') {
-    //     update_call(field, setResponse);
-    //   }
-    // }
-    // else {
-    //   console.log('Not passed validations');
-    // }
+    if (checkValidations(validation)) {
+      if (props.type === 'register') {
+        register_call(field, setResponse);
+      } else if (props.type === 'update') {
+        update_call(field, setResponse);
+      }
+      else {
+        console.log('Incorrect path');
+      }
+    }
+    else {
+      console.log('Not passed validations');
+    }
   };
 
   const handleChange = event => {
@@ -98,39 +55,64 @@ const AllFields = props => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="User name"
-          value={field.username}
-          onChange={handleChange}
-          required
-        /> <br/>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={field.email}
-          onChange={handleChange}
-          required
-        /> <br/>
-        <input
-          type={visiblePassword ? "text" : "password"}
-          name="password"
-          placeholder="Password"
-          value={field.password}
-          onChange={handleChange}
-          required
-        /> <p onClick={visibilityToggle}>eye icon mock</p> <br/>
-        <input
-          type={visiblePassword ? "text" : "password"}
-          name="password_confirmation"
-          placeholder="Confirm Password"
-          value={field.password_confirmation}
-          onChange={handleChange}
-          required
-        />
+        {props.show.username ?
+          <>
+            <input
+              type="text"
+              name="username"
+              placeholder="User name"
+              value={field.username}
+              onChange={handleChange}
+              required
+            /> <br/>
+          </>
+        :
+          null
+        }
+        {props.show.email ?
+          <>
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              value={field.email}
+              onChange={handleChange}
+              required
+            /> <br/>
+          </>
+        :
+          null
+        }
+        {props.show.password ?
+          <>
+            <input
+              type={visiblePassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={field.password}
+              onChange={handleChange}
+              required
+            /> <p onClick={visibilityToggle}>eye icon mock</p>
+          </>
+        :
+          null
+        }
+        
+        {props.show.password ?
+          <>
+            <input
+              type={visiblePassword ? "text" : "password"}
+              name="password_confirmation"
+              placeholder="Confirm Password"
+              value={field.password_confirmation}
+              onChange={handleChange}
+              required
+            />
         <br/>
+          </>
+        :
+          null
+        }
         <button type="submit">{props.type}</button>
       </form>
     </>

@@ -70,6 +70,76 @@ const checkValidations = (object) => {
   return true;
 };
 
+const createValidations = (show, setValidation) => {
+  const data ={
+    username: {
+      length: {
+        verify: null,
+        min: 3,
+        max: 16,
+      },
+      characters: {
+        verify: null,
+        special: {
+          verify: null,
+          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+          response: 'bad',
+        },
+      },
+    },
+    password: {
+      length: {
+        verify: null,
+        min: 8,
+        max: 28,
+      },
+      match: {
+        verify: null,
+        compare: 'password_confirmation',
+      },
+      characters: {
+        verify: null,
+        lower_case: {
+          verify: null,
+          regex: /[a-z]/,
+          response: 'good',
+        },
+        upper_case: {
+          verify: null,
+          regex: /[A-Z]/,
+          response: 'good',
+        },
+        special: {
+          verify: null,
+          regex: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+          response: 'good',
+        },
+        number: {
+          verify: null,
+          regex: /[0-9]/,
+          response: 'good',
+        },
+      },
+    },
+    password_confirmation: { match: { verify: null, compare: 'password', } },
+  }
+
+  const validation = {}
+
+  const data_keys = (Object.keys(data));
+  const show_keys = (Object.keys(show))
+
+  for (let index = 0; index < show_keys.length; index++) {
+    for (let key = 0; key < data_keys.length; key++) {
+      if(show_keys[index] === data_keys[key]){
+        validation[data_keys[key]] = data[data_keys[key]];
+      }
+    }    
+  }
+
+  setValidation(validation)
+};
+
 
 export default validateField;
-export { checkValidations };
+export { checkValidations, createValidations };

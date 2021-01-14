@@ -17,7 +17,7 @@ const Dashboard = props => {
       <h1>Dashboard</h1>
       <h2>{props.user.username || null}</h2>
       <button onClick={() => logout()}>Logout</button>
-      <button onClick={() => {props.history.push('/setttings')}}>Settings</button>
+      <button onClick={() => {props.history.push('/settings')}}>Settings</button>
     </>
   );
 };
