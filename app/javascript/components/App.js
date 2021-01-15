@@ -9,28 +9,34 @@ import ResendEmail from './users/ResendEmail';
 import Settings from './users/Settings';
 
 const App = props => {
-  useEffect(() => {
-  });
+  const [session, setSession] = useState(props.session);
+
+  const login = status => {
+    setSession(status);
+  };
+  const logout = () => {
+    setSession({log: 'NOT_LOGGED_IN',})
+  };
 
   return (
     <Switch>
-      <Route exact path={'/'} render={() => (
-        <Dashboard session={props.session}/>
+      <Route exact path={'/'} render={getProps => (
+        <Dashboard {...getProps} session={session} logout={logout}/>
       )}/>
-      <Route exact path='/settings' render={props => (
-        <Settings user={props.session}/>
+      <Route exact path='/settings' render={getProps => (
+        <Settings {...getProps} session={props.session}/>
       )}/>
-      <Route exact path='/login' render={props => (
-        <Login session={props.session} />
+      <Route exact path='/login' render={getProps => (
+        <Login {...getProps} session={session} login={login} />
       )}/>
-      <Route exact path='/register' render={props => (
-        <Register session={props.session} />
+      <Route exact path='/register' render={getProps => (
+        <Register {...getProps} session={props.session} />
       )}/>
-      <Route exact path='/confirm_email' render={props => (
-        <ConfirmEmail {...props} />
+      <Route exact path='/confirm_email' render={getProps => (
+        <ConfirmEmail {...getProps} />
       )}/>
-      <Route exact path='/resend_email' render={props => (
-        <ResendEmail {...props} />
+      <Route exact path='/resend_email' render={getProps => (
+        <ResendEmail {...getProps} />
       )}/>
     </Switch>
   );

@@ -5,18 +5,25 @@ import { useTranslation } from 'react-i18next';
 import api_call from '../../api/api_call';
 
 const Login = props => {
-  const [response, setResponse] = useState(null);
+  const [response, setResponse] = useState({});
   const [field, setField] = useState({
     email: '',
     password: '',
   });
   const [lang] = useTranslation('login');
 
+  useEffect(() => {
+    if (response.status === 'SUCCESS') {
+      delete response.status;
+      props.login(response);
+    }
+  });
+
   const handleSubmit = async event => {
     event.preventDefault();
-
+    
     const fetch = await api_call('POST', '/api/v1/sessions', {user: field});
-    setResponse(fetch.status);
+    setResponse(fetch);
   };
   const handleChange = event => {
     setField({
@@ -31,28 +38,26 @@ const Login = props => {
         <Redirect to='/' />
       :
         <>
-          <h1>Login</h1>
+          <h1>{lang('title')}</h1>
           <form onSubmit={handleSubmit}>
             <input
-              type="email" name="email" placeholder="Email"
+              type="email" name="email" placeholder={lang('placeholders.email')}
               value={field.email} onChange={handleChange} required
             />
             <input
-              type="password" name="password" placeholder="Password"
+              type="password" name="password" placeholder={lang('placeholders.password')}
               value={field.password} onChange={handleChange} required
             />
-          <button type="submit">Login</button>
+          <button type="submit">{lang('buttons.login')}</button>
           </form>
-          {response === 'BAD_USER' ?
+          {response.status === 'BAD_USER' ?
             <p>{lang('errors.email')}</p>
-          : response === 'BAD_PASSWORD' ?
+          : response.status === 'BAD_PASSWORD' ?
             <p>{lang('errors.password')}</p>
-          : response === 'SUCCESS' ?
-            <Redirect to='/' />
           :
             null
           }
-          <button onClick={() => {<Redirect to='/register' />}}>Create Account</button>
+          <button onClick={() => {props.history.push('/register')}}>{lang('buttons.register')}</button>
         </>
       }
     </>
