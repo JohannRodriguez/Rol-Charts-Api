@@ -16,6 +16,7 @@ const Login = props => {
     if (response.status === 'SUCCESS') {
       delete response.status;
       props.login(response);
+      props.history.push('/');
     }
   });
 

@@ -42,7 +42,7 @@ module Api
           render json: { status: 'NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
           if user.update(update_user_params)
-            render json: { status: 'SUCCES' }
+            render json: { status: 'SUCCESS' }
           else
             render json: { status: 'BAD_FIELD', error: user.errors }
           end

@@ -30,7 +30,7 @@ const App = props => {
         <Login {...getProps} session={session} login={login} />
       )}/>
       <Route exact path='/register' render={getProps => (
-        <Register {...getProps} session={props.session} />
+        <Register {...getProps} session={session} />
       )}/>
       <Route exact path='/confirm_email' render={getProps => (
         <ConfirmEmail {...getProps} />

@@ -6,7 +6,7 @@ const validateField = (name, value, field, validation, setValidation) => {
 
   if (validation[name].length) {
     if (value.length === 0) {
-      validation[name].length.verify = 'bad';
+      validation[name].length.verify = 'short';
     } else if (value.length < validation[name].length.min) {
       validation[name].length.verify = 'short';
     } else if (value.length > validation[name].length.max) {
@@ -72,6 +72,7 @@ const checkValidations = (object) => {
 
 const createStates = (show, display, setValidation, setField) => {
   const data ={
+    email: null,
     username: {
       length: {
         verify: null,
@@ -133,7 +134,9 @@ const createStates = (show, display, setValidation, setField) => {
   for (let index = 0; index < show_keys.length; index++) {
     for (let key = 0; key < data_keys.length; key++) {
       if(show_keys[index] === data_keys[key]){
-        validation[data_keys[key]] = data[data_keys[key]];
+        if (data[data_keys[key]]) {
+          validation[data_keys[key]] = data[data_keys[key]];
+        }
         field[data_keys[key]] = display[data_keys[key]] || '';
       }
     }    

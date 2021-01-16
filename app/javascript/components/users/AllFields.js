@@ -1,10 +1,15 @@
+// Import Packages
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+// Import Components
 import Authenticate from './Authenticate';
 import register_call from './api_calls/register_call';
-import update_call from './api_calls/update_call';
 import validateField, { checkValidations, createStates, defaultFields } from './helpers/all_fields_helper';
+import api_call from '../../api/api_call';
 
 const AllFields = props => {
+  const [lang] = useTranslation('all_fields');
   const [response, setResponse] = useState(null);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [field, setField] = useState(null);
@@ -12,26 +17,26 @@ const AllFields = props => {
   const [validateDefault, setValidateDefault] = useState(false);
 
   useEffect(() => {
-    if (!props.user.data && !validation && !field) {
+    if (!validation && !field) {
       createStates(props.show, props.display, setValidation, setField);
     }
     if (field && !validateDefault) {
       defaultFields(field, validation, setValidation)
       setValidateDefault(true);
     }
-    if (response && response.status === 'SUCCES') {
-      window.location.reload();
-    }
   });
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
     
     if (checkValidations(validation)) {
       if (props.type === 'register') {
-        register_call(field, setResponse);
+        const fetch = await api_call('POST', `/api/v1/users`, { user: field, });
+        setResponse(fetch);
+        props.history.push('/');
       } else if (props.type === 'update') {
-        update_call(field, 'user', 'patch', `/api/v1/users/${props.user.id}`, setResponse);
+        const fetch = await api_call('PATCH', `/api/v1/users/${props.session.user.id}`, { user: field, });
+        setResponse(fetch);
       }
       else {
         console.log('Incorrect path');
@@ -61,25 +66,25 @@ const AllFields = props => {
         {props.show.username ?
           <>
             <input
-              type="text"
-              name="username"
-              placeholder="User name"
-              value={field ? field.username : ''}
-              onChange={handleChange}
-              required
-            /> <br/>
-            {validation ? 
-              <>
-              {validation.username.length.verify != 'good' ?
-                <p>{validation.username.length.verify}</p> : null
-              }
-              {validation.username.characters.verify != 'good' ?
-                <p>{validation.username.characters.verify}</p> : null
-              }
-              </>
+              type="text" name="username" placeholder={lang('placeholders.user')}
+              value={field ? field.username : ''} onChange={handleChange} required
+            />
+            {response && response.error && response.error.username ?
+              <p>{response.error.username}</p>
             :
               null
             }
+            {validation && validation.username.length.verify === 'short' ?
+              <p>{lang('val.user.short')}</p>
+            :validation && validation.username.length.verify === 'long' ?
+              <p>{lang('val.user.long')}</p>
+            :
+              null
+            }
+            {validation && validation.username.characters.verify === 'bad' ?
+              <p>{lang(('val.user.special'))}</p> : null
+            }
+            
           </>
         :
           null
@@ -87,13 +92,9 @@ const AllFields = props => {
         {props.show.email ?
           <>
             <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={field ? field.email : ''}
-              onChange={handleChange}
-              required
-            /> <br/>
+              type="email" name="email" placeholder={lang('placeholders.email')}
+              value={field ? field.email : ''} onChange={handleChange} required
+            />
           </>
         :
           null
@@ -101,23 +102,27 @@ const AllFields = props => {
         {props.show.password ?
           <>
             <input
-              type={visiblePassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={field ? field.password : ''}
-              onChange={handleChange}
-              required
-              
+              type={visiblePassword ? "text" : "password"} name="password" placeholder={lang('placeholders.password')}
+              value={field ? field.password : ''} onChange={handleChange} required
             />
             <p onClick={visibilityToggle}>eye icon mock</p>
-            {validation ? 
-              <>
-              <p>Length: {validation.password.length.verify === 'good' ? ':D': '·-·'}</p>
-              <p>Lower Caser: {validation.password.characters.lower_case.verify === 'good' ? ':D': '·-·'}</p>
-              <p>Upper Caser: {validation.password.characters.upper_case.verify === 'good' ? ':D': '·-·'}</p>
-              <p>Number: {validation.password.characters.number.verify === 'good' ? ':D': '·-·'}</p>
-              <p>Special Character: {validation.password.characters.special.verify === 'good' ? ':D': '·-·'}</p>
-              </>
+            <p>{lang('val.password.length')}: {validation && validation.password.length.verify === 'good' ? ':D': '·-·'}</p>
+            <p>{lang('val.password.lower_c')}: {validation && validation.password.characters.lower_case.verify === 'good' ? ':D': '·-·'}</p>
+            <p>{lang('val.password.lower_c')}: {validation && validation && validation.password.characters.upper_case.verify === 'good' ? ':D': '·-·'}</p>
+            <p>{lang('val.password.number')}: {validation && validation.password.characters.number.verify === 'good' ? ':D': '·-·'}</p>
+            <p>{lang('val.password.special')}: {validation && validation.password.characters.special.verify === 'good' ? ':D': '·-·'}</p>
+          </>
+        :
+          null
+        }
+        {props.show.password_confirmation ?
+          <>
+            <input
+              type={visiblePassword ? "text" : "password"} name="password_confirmation" placeholder={lang('placeholders.password_confirmation')}
+              value={field ? field.password_confirmation : ''} onChange={handleChange} required
+            />
+            {validation && validation.password_confirmation.match.verify === 'bad' ?
+              <p>{lang('val.password_confirmation')}</p>
             :
               null
             }
@@ -125,27 +130,11 @@ const AllFields = props => {
         :
           null
         }
-        {props.show.password ?
-          <>
-            <input
-              type={visiblePassword ? "text" : "password"}
-              name="password_confirmation"
-              placeholder="Confirm Password"
-              value={field ? field.password_confirmation : ''}
-              onChange={handleChange}
-              required
-            /> <br/>
-            {validation ?
-              <p>{validation.password_confirmation.match.verify || null}</p>
-            : null }
-          </>
-        :
-          null
-        }
-        <button type="submit">{props.type}</button>
+        <button type="submit">{props.button}</button>
       </form>
-      {!response ? null :
-      response.status === 'NOT_AUTH' ?
+      {!response ?
+        null
+      : response.status === 'NOT_AUTH' ?
         <Authenticate />
       :
         null

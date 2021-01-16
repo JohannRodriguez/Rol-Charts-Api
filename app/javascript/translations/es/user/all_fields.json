@@ -1,0 +1,23 @@
+{
+  "placeholders": {
+    "user": "Nombre",
+    "email": "Correo",
+    "password": "Contraseña",
+    "password_confirmation": "Confirmar contraseña"
+  },
+  "val": {
+    "user": {
+      "short": "El nombre debe tener al menos 3 caracteres",
+      "long": "El nombre debe tener menos de 16 caracteres",
+      "special": "El nombre solo puede contener caracteres alfanuméricos y guiones bajos"
+    },
+    "password": {
+      "length": "Largo",
+      "lower_c": "Minúscula",
+      "upper_c": "Mayúscula",
+      "number": "Número",
+      "special": "Caracter especial"
+    },
+    "password_confirmation": "Las contraseñas no coinciden"
+  } 
+}

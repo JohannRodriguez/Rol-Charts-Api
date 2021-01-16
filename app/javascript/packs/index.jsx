@@ -1,37 +1,34 @@
 // Import Packages
+import { BrowserRouter, Route } from 'react-router-dom';
+import i18next from 'i18next';
+import { I18nextProvider } from 'react-i18next';
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
-import i18next from 'i18next';
-import { default as api } from 'axios';
 
 // Import Components
-import App from '../components/App'
 import api_call from '../api/api_call';
+import App from '../components/App'
 
 // Import Resources
 // Resources Languages
 import login_en from '../translations/en/user/login.json';
+
+import all_fields_es from '../translations/es/user/all_fields.json';
 import login_es from '../translations/es/user/login.json';
-import something_es from '../translations/es/something.json';
-import global_es from '../translations/es/global.json';
-import something_en from '../translations/en/something.json';
-import global_en from '../translations/en/global.json';
+import settings_es from '../translations/es/user/settings.json'
 
 i18next.init({
   interpolation: { escapeValue: false, },
   lng: 'es',
   resources: {
     es: {
+      all_fields: all_fields_es,
       login: login_es,
-      global: global_es,
-      something: something_es,
+      settings: settings_es,
     },
     en: {
       login: login_en,
-      global: global_en,
-      something: something_en,
+      settings: settings_es,
     },
   },
 });

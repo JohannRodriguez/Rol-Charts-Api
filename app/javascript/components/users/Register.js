@@ -1,4 +1,6 @@
 import React from 'react'
+import { Redirect } from 'react-router-dom';
+
 import AllFields from './AllFields';
 
 const Register = props => {
@@ -9,11 +11,12 @@ const Register = props => {
       :
         <>
           <h1>Register</h1>
-          <AllFields
+          <AllFields {...props}
             type={'register'}
             show={{ username: true, email: true, password: true, password_confirmation: true}}
+            display={{}}
           />
-          <button onClick={() => {<Redirect to='/login' />}}>Login</button>
+          <button onClick={() => {props.history.push('/login')}}>Login</button>
         </>
       }
      
