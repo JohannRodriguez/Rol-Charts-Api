@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 
 // Import Components
 import Authenticate from './Authenticate';
-import register_call from './api_calls/register_call';
 import validateField, { checkValidations, createStates, defaultFields } from './helpers/all_fields_helper';
 import api_call from '../../api/api_call';
 
 const AllFields = props => {
   const [lang] = useTranslation('all_fields');
+
   const [response, setResponse] = useState(null);
   const [visiblePassword, setVisiblePassword] = useState(false);
   const [field, setField] = useState(null);
@@ -69,8 +69,8 @@ const AllFields = props => {
               type="text" name="username" placeholder={lang('placeholders.user')}
               value={field ? field.username : ''} onChange={handleChange} required
             />
-            {response && response.error && response.error.username ?
-              <p>{response.error.username}</p>
+            {response && response.error && response.error.username[0] === 'uniqueness' ?
+              <p>{lang('error.uniqueness')}</p>
             :
               null
             }
@@ -132,9 +132,7 @@ const AllFields = props => {
         }
         <button type="submit">{props.button}</button>
       </form>
-      {!response ?
-        null
-      : response.status === 'NOT_AUTH' ?
+      {response && response.status === 'NOT_AUTH' ?
         <Authenticate />
       :
         null

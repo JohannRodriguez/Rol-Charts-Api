@@ -5,6 +5,9 @@
     "password": "Contraseña",
     "password_confirmation": "Confirmar contraseña"
   },
+  "error": {
+    "uniqueness": "Este nombre de usuario no está disponible"
+  },
   "val": {
     "user": {
       "short": "El nombre debe tener al menos 3 caracteres",

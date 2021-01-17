@@ -1,14 +1,21 @@
-import React, { useState } from 'react';
-import authenticate_call from './api_calls/authenticate_call';
+// Import Packages
+import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+// Import Components
+import api_call from '../../api/api_call';
 
 const Authenticate = () => {
+  const [lang] = useTranslation('authenticate');
+
   const [field, setField] = useState({password: ''});
   const [response, setResponse] = useState(null);
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
-    authenticate_call(field, setResponse);
+    const fetch = await api_call('POST', '/api/v1/authenticate', {user: field});
+    setResponse(fetch);
   };
 
   const handleChange = event => {
@@ -20,31 +27,30 @@ const Authenticate = () => {
 
   return (
     <div>
-      { response != 'USER-AUTH' ?
+      {response && response.status === 'USER_AUTH' ?
+        <p>{lang('success')}</p>
+      :
         <>
-          <h1>Authenticate</h1>
+          <h1>{lang('title')}</h1>
           <form onSubmit={handleSubmit}>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder={lang('placeholder')}
               value={field.password}
               onChange={handleChange}
               required
             />
-            <button type="submit">Authenticate</button>
+            <button type="submit">{lang('button')}</button>
           </form>
-          {response === 'AUTH-BAD-PASSWORD' ?
-            <p>Inconrrect password</p>
-          :
-          response === 'AUTH_NO_USER_FOUND' ?
-            <p>User not found</p>
+          {response && response.status === 'BAD_PASSWORD' ?
+            <p>{lang('error.password')}</p>
+          : response && response.status === 'NO_USER_FOUND' ?
+            <p>{lang('error.user')}</p>
           :
             null
           }
         </>
-      :
-        <p>User was succesfully autheticated</p>
       }
     </div>
   );
