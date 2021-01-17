@@ -7,12 +7,13 @@ import { useTranslation } from 'react-i18next';
 import api_call from '../../api/api_call';
 
 const Login = props => {
+  const [lang] = useTranslation('login');
+
   const [response, setResponse] = useState({});
   const [field, setField] = useState({
     email: '',
     password: '',
   });
-  const [lang] = useTranslation('login');
 
   useEffect(() => {
     if (response.status === 'SUCCESS') {

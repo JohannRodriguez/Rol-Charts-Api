@@ -59,7 +59,7 @@ module Api
           render json: { status: 'NOT_AUTH' }
         elsif user.destroy
           reset_session
-          render json: { status: 'SUCCES' }
+          render json: { status: 'SUCCESS' }
         else
           render json: { status: 'NO_USER_FOUND' }
         end
