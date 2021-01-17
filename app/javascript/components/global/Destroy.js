@@ -1,19 +1,28 @@
+// Import Packages
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+
+// Import Components
 import Authenticate from '../users/Authenticate';
-import destroy_call from './api_calls/destroy_call';
+import api_call from '../../api/api_call';
 
 const Destroy = props => {
+  const [lang] = useTranslation('destroy');
+
   const [modal, setModal] = useState(false);
   const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     destroy: '',
   });
 
-  const handleSubmit = event => {
+  const handleSubmit = async event => {
     event.preventDefault();
 
     if (field.destroy === props.confirmDestroy) {
-      destroy_call(props.type, props.id, setResponse);
+      const fetch = await api_call('DELETE', `/api/v1/${props.type}/${props.id}`);
+      setResponse(fetch.status);
+    } else {
+      setResponse('NOT_MATCH');
     }
   };
 
@@ -32,18 +41,20 @@ const Destroy = props => {
   };
 
   useEffect(() => {
-    if (response === 'USER-DELETED') {
-      {props.history.push('/login')}
+    if (response === 'SUCCESS') {
+      window.location.reload()
     }
   });
 
   return (
     <div className={`destroy_${props.type}`}>
-      <button onClick={openModal}>Delete Account</button>
+      <button onClick={openModal}>{lang('buttons.delete')}</button>
       {modal ?
         <div className={`destroy_${props.type}_modal`}>
+          <h3>{lang('warning')}</h3>
+          <p>{lang('message')}</p>
+          <p>{lang('destroy.d1')} {props.confirmDestroy} {lang('destroy.d2')}</p>
           <form onSubmit={handleSubmit}>
-            <p>Write {props.confirmDestroy} below to delete it permanently</p>
             <input
               type="text"
               name="destroy"
@@ -51,10 +62,12 @@ const Destroy = props => {
               onChange={handleChange}
               required
             />
-            <button type="submit">destroy</button>
+            <button type="submit">{lang('buttons.submit')}</button>
             <p onClick={closeModal}>X</p>
           </form>
-          {response === 'USER_NOT_AUTH' ?
+          {response === 'NOT_MATCH' ?
+            <p>{lang('match')} {props.confirmDestroy}</p>
+          : response === 'NOT_AUTH' ?
             <Authenticate />
           :
             null

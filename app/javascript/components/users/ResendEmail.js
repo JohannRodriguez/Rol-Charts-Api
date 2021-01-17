@@ -1,16 +1,23 @@
-import React, { useState } from 'react'
-import resend_email_call from './api_calls/resend_email_call';
+// Import Packagesmport Packages
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+// Import Components
+import api_call from '../../api/api_call';
 
 const ResendEmail = () => {
+  const [lang] = useTranslation('email');
+
   const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     email: '',
   });
 
-  const resend = event => {
+  const resend = async event => {
     event.preventDefault();
 
-    resend_email_call(field, setResponse);
+    const fetch = await api_call('POST', '/api/v1/email_resend', {user: field});
+    setResponse(fetch.status);
   };
 
   const handleChange = event => {
@@ -22,26 +29,27 @@ const ResendEmail = () => {
 
   return (
     <>
-      <h1>Resend email</h1>
+      <h1>{lang('resend.title')}</h1>
       <form onSubmit={resend}>
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder={lang('resend.placeholder')}
           value={field.email}
           onChange={handleChange}
           required
         />
-        <button type="submit">Resend Email</button>
+        <button type="submit">{lang('resend.buttons.resend')}</button>
       </form>
-      {response === '5-00' ?
-        <p>Email was succesfully resended</p>
-      : response === '5-01' ?
-        <p>This email has already been verified</p>
-      : response === '5-11' ?
-        <p>Not user found with this email</p>
+      <button onClick={() => {props.history.push('/')}}>{lang('resend.buttons.dashboard')}</button>
+      {response === 'SUCCESS' ?
+        <p>{lang('resend.succes')}</p>
+      : response === 'VERIFIED' ?
+        <p>{lang('resend.verified')}</p>
+      : response === 'NO_USER' ?
+        <p>{lang('resend.failure')}</p>
       :
-        <p>{response}</p>
+        null
       }
     </>
   )

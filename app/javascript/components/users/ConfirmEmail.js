@@ -1,26 +1,30 @@
+// Import Packages
 import React, { useState, useEffect } from 'react';
-import confirm_email_call from './api_calls/confirm_email_call';
+import { useTranslation } from 'react-i18next';
+
+// Import Components
+import api_call from '../../api/api_call';
 
 const ConfirmEmail = props => {
-  const [token] = useState(props.location.search.split('?token=')[1]);
+  const [lang] = useTranslation('email');
+  const [token] = useState(props.location.search.split('?token=')[1] || null);
   const [response, setResponse] = useState('No token detected');
 
-  
-
-  useEffect(() => {
+  useEffect(async () => {
     if (token) {
-      confirm_email_call(token, setResponse);
+      const fetch = await api_call('POST', '/api/v1/email_confirmation', {token: token});
+      setResponse(fetch.status);
     }
   });
 
   return (
     <>
-      {response === '5-0' ? 
-        <h2>Your email was succesfully verified, you can close this tab and login to your account</h2>
-      : response === '5-1' ?
-        <h2>Soemthing went wrong, this email is already verified or you request to resend the verification</h2>
+      {response === 'SUCCESS' ? 
+        <h2>{lang('confirm.success')}</h2>
+      : response === 'NOT_FOUND' ?
+        <h2>{lang('confirm.error')}</h2>
       :
-        <h2>{response}</h2>
+        <h2>{lang('confirm.no_token')}</h2>
       }
     </>
   );

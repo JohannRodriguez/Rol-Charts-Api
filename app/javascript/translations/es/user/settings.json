@@ -1,0 +1,11 @@
+{
+  "title": "Configuración",
+  "buttons": {
+    "dashboard": "Inicio",
+    "account": "Subir"
+  },
+  "account": {
+    "title": "Ajustes de cuenta"
+  },
+  "destroy": "Cuenta"
+}

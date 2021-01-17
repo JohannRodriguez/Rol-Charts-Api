@@ -1,0 +1,18 @@
+{
+  "confirm": {
+    "success": "Este email ha sido verificado correctamente, puedes cerrar esta pestaña.",
+    "error": "Este email ya ha sido verificado o solicitaste una nueva confirmación",
+    "no_token": "Solicitud incorrecta, si crees que esto es un error intenta reenviar tu código de confirmación"
+  },
+  "resend": {
+    "title": "Reenviar email",
+    "placeholder": "Correo",
+    "buttons": {
+      "resend": "Reenviar Correo",
+      "dashboard": "Inicio"
+    },
+    "succes": "El correo ha sido reenivado correctamente",
+    "verified": "Este usuario ya ha sido verificado",
+    "failure": "Ningún usuario ha sido encontrado con este correo"
+  }
+}

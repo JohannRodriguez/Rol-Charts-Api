@@ -1,0 +1,15 @@
+{
+  "title": "Log In",
+  "placeholders": {
+    "email": "Email",
+    "password": "Password"
+  },
+  "buttons": {
+    "login": "Login",
+    "register": "Create new account"
+  },
+  "errors" : {
+    "email": "No user was found with this mail",
+    "password": "Incorrect password"
+  }
+}

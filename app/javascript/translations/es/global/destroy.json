@@ -1,0 +1,13 @@
+{
+  "buttons": {
+    "delete": "Eliminar cuenta",
+    "submit": "Confirmar"
+  },
+  "warning": "Advertencia",
+  "message": "Esta acción no puede ser deshecha, una vez realizada no podrá recuperar los datos que elimine",
+  "destroy": {
+    "d1": "Escribe",
+    "d2": "debajo para confirmar su decisión"
+  },
+  "match": "Campo incorrecto. -.- Debes poner:"
+}

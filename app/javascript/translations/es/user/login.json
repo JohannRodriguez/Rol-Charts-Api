@@ -1,0 +1,15 @@
+{
+  "title": "Iniciar Sesión",
+  "placeholders": {
+    "email": "Correo",
+    "password": "Contraseña"
+  },
+  "buttons": {
+    "login": "Iniciar sesión",
+    "register": "Crear nueva cuenta"
+  },
+  "errors" : {
+    "email": "Ningún usuario fue encontrado con este email",
+    "password": "Contraseña incorrecta"
+  }
+}

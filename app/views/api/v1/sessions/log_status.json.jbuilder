@@ -1,4 +1,4 @@
-json.loged_in 'LOGGED_IN'
+json.log 'LOGGED_IN'
 json.user do
   json.id @current_user.id
   json.username @current_user.username
