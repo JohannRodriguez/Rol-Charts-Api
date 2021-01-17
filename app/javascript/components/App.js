@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Dashboard from './users/Dashboard';
@@ -24,7 +24,7 @@ const App = props => {
         <Dashboard {...getProps} session={session} logout={logout}/>
       )}/>
       <Route exact path='/settings' render={getProps => (
-        <Settings {...getProps} session={props.session}/>
+        <Settings {...getProps} session={session}/>
       )}/>
       <Route exact path='/login' render={getProps => (
         <Login {...getProps} session={session} login={login} />
