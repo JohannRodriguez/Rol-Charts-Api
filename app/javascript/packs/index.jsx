@@ -15,8 +15,10 @@ import login_en from '../translations/en/user/login.json';
 
 import all_fields_es from '../translations/es/user/all_fields.json';
 import authenticate_es from '../translations/es/user/authenticate.json';
+import email_es from '../translations/es/email/email.json';
 import login_es from '../translations/es/user/login.json';
-import settings_es from '../translations/es/user/settings.json'
+import register_es from '../translations/es/user/register.json';
+import settings_es from '../translations/es/user/settings.json';
 
 i18next.init({
   interpolation: { escapeValue: false, },
@@ -25,7 +27,9 @@ i18next.init({
     es: {
       all_fields: all_fields_es,
       authenticate: authenticate_es,
+      email: email_es,
       login: login_es,
+      register: register_es,
       settings: settings_es,
     },
     en: {

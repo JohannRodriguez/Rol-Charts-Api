@@ -7,9 +7,9 @@ module Api
         user = User.find_by(confirm_token: params[:token])
         if user
           user.email_activate
-          render json: { status: '5-0' }
+          render json: { status: 'SUCCESS' }
         else
-          render json: { status: '5-1' }
+          render json: { status: 'NOT_FOUND' }
         end
       end
 
@@ -18,11 +18,11 @@ module Api
 
         if user and user.status === 'INACTIVE'
           UsersMailer.registration_confirmation(user).deliver
-          render json: { status: '5-00' }
+          render json: { status: 'SUCCESS' }
         elsif user
-          render json: { status: '5-01' }
+          render json: { status: 'VERIFIED' }
         else
-          render json: { status: '5-11' }
+          render json: { status: 'NO_USER' }
         end
       end
 

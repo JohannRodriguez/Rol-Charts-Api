@@ -1,7 +1,9 @@
+// Import Packages
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
+// Import Components
 import api_call from '../../api/api_call';
 
 const Login = props => {
