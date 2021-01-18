@@ -4,7 +4,7 @@ module Api
       include CurrentUserConcern
 
       def index
-        characters = User.all.collect(&:name)
+        characters = @current_user.characters.all.collect(&:name)
         render json: characters
       end
 
