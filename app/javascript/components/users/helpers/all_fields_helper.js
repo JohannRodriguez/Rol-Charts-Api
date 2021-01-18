@@ -1,7 +1,14 @@
-const validateField = (name, value, field, validation, setValidation) => {
-  
+const validateField = (name, value, field, validation, setValidation, users, username) => {
   if (!validation[name]) {
     return;
+  }
+
+  if (validation[name].uniqueness) {
+    if (users && users.includes(value) && value != username) {
+      validation[name].uniqueness.verify = 'bad';
+    } else {
+      validation[name].uniqueness.verify = 'good';
+    }
   }
 
   if (validation[name].length) {
@@ -74,6 +81,9 @@ const createStates = (show, display, setValidation, setField) => {
   const data ={
     email: null,
     username: {
+      uniqueness: {
+        verify: null,
+      },
       length: {
         verify: null,
         min: 3,

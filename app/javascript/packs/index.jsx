@@ -17,6 +17,7 @@ import all_fields_es from '../translations/es/user/all_fields.json';
 import authenticate_es from '../translations/es/user/authenticate.json';
 import destroy_es from '../translations/es/global/destroy.json';
 import login_es from '../translations/es/user/login.json';
+import register_es from '../translations/es/user/register.json';
 import settings_es from '../translations/es/user/settings.json';
 
 const getLang = session => {
@@ -48,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         authenticate: authenticate_es,
         destroy: destroy_es,
         login: login_es,
+        register: register_es,
         settings: settings_es,
       },
       en: {

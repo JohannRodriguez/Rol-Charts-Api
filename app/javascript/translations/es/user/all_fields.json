@@ -22,5 +22,9 @@
       "special": "Caracter especial"
     },
     "password_confirmation": "Las contraseñas no coinciden"
-  } 
+  },
+  "buttons": {
+    "update": "Confirmar cambios",
+    "register": "Registrarse"
+  }
 }
