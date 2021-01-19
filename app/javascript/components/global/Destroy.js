@@ -20,7 +20,6 @@ const Destroy = props => {
     if (field.destroy === props.confirmDestroy) {
       const fetch = await api_call('DELETE', `/api/v1/${props.type}/${props.id}`);
       setResponse(fetch.status);
-      window.location.reload();
     } else {
       setResponse('NOT_MATCH');
     }

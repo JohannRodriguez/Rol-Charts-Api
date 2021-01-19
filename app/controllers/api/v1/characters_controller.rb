@@ -23,7 +23,21 @@ module Api
       end
 
       def destroy
-        
+        character = Character.find_by(id: params[:id])
+        user = @current_user if @current_user[:id] === character[:user_id]
+
+        if (Time.now.to_i - session[:auth_time]) > 18000
+          session[:auth_status] = 'NOT_AUTH'
+          render json: { status: 'NOT_AUTH' }
+        elsif user
+          if character.destroy
+            render json: { status: 'SUCCESS' }
+          else
+            render json: { status: 'FAILURE' }
+          end
+        else
+          render json: { status: 'NO_PERMIT' }
+        end
       end
 
       private
