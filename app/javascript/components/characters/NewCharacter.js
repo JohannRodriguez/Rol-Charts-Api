@@ -84,7 +84,7 @@ const NewCharacter = props => {
           }
           <input
             type="text" name="universe" placeholder={lang('placeholders.universe')}
-            value={field.email} onChange={handleChange}
+            value={field.universe} onChange={handleChange}
           />
           <button type="submit">{lang('button')}</button>
         </form>

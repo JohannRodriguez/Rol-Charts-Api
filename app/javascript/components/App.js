@@ -10,6 +10,7 @@ import NewCharacter from './characters/NewCharacter';
 import Register from './users/Register';
 import ResendEmail from './users/ResendEmail';
 import Settings from './users/Settings';
+import Characters from './characters/Characters';
 
 const App = props => {
   const [session, setSession] = useState(props.session);
@@ -34,6 +35,9 @@ const App = props => {
       )}/>
       <Route exact path='/register' render={getProps => (
         <Register {...getProps} session={session} />
+      )}/>
+      <Route exact path='/characters' render={getProps => (
+        <Characters {...getProps} session={session} />
       )}/>
       <Route exact path='/new_character' render={getProps => (
         <NewCharacter {...getProps} session={session} />

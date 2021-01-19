@@ -1,5 +1,5 @@
 // Import Packages
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 // Import Modules
@@ -40,6 +40,7 @@ const Dashboard = props => {
         }
         <button onClick={() => logout()}>Logout</button>
         <button onClick={() => {props.history.push('/settings')}}>Settings</button>
+        <button onClick={() => {props.history.push('/characters')}}>Characters</button>
         </> 
       :
         <Redirect to='/login' />

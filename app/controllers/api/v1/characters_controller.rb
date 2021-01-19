@@ -29,7 +29,7 @@ module Api
       private
 
       def character_params
-        params.require(:character).permit(:name, :bio, :universe)
+        params.require(:character).permit(:name, :alias, :bio, :universe)
       end
     end
   end
