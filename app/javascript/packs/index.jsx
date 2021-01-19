@@ -15,6 +15,7 @@ import login_en from '../translations/en/user/login.json';
 
 import all_fields_es from '../translations/es/user/all_fields.json';
 import authenticate_es from '../translations/es/user/authenticate.json';
+import character_es from '../translations/es/character/character.json';
 import characters_es from '../translations/es/character/characters.json';
 import destroy_es from '../translations/es/global/destroy.json';
 import login_es from '../translations/es/user/login.json';
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       es: {
         all_fields: all_fields_es,
         authenticate: authenticate_es,
+        character: character_es,
         characters: characters_es,
         destroy: destroy_es,
         login: login_es,

@@ -4,13 +4,13 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: 'json'} do
     namespace :v1 do
-      resources :characters, only: [:index, :create, :update, :destroy]
+      resources :characters, only: [:index, :show, :create, :update, :destroy]
 
       resources :sessions, only: [:create]
       get :log_status, to: 'sessions#log_status'
       delete :logout, to: 'sessions#logout'
 
-      resources :users, only: [:index, :create, :update, :destroy]
+      resources :users, only: [:index, :show, :create, :update, :destroy]
       post :authenticate, to: 'users#authenticate'
 
       

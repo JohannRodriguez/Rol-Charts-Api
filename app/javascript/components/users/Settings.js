@@ -10,7 +10,7 @@ import UpdateUser from './UpdateUser';
 const Settings = props => {
   const [lang] = useTranslation('settings');
 
-  const [modale, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   return (
     <div>
@@ -20,8 +20,9 @@ const Settings = props => {
       <>
         <h1>{lang('title')}</h1>
         <h2>{props.session.user.username}</h2>
-        <button onClick={() => {props.history.push('/')}}>{lang('button')}</button>
+        <button onClick={() => {props.history.push('/')}}>{lang('buttons.dashboard')}</button>
         <UpdateUser {...props} />
+        <button onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
         <Destroy modal={modal} setModal={setModal} type="users" id={props.session.user.id} confirmDestroy={`${lang('destroy')}/${props.session.user.username}`} />
       </>
       }

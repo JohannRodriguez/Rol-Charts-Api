@@ -40,7 +40,7 @@ const Dashboard = props => {
         }
         <button onClick={() => logout()}>Logout</button>
         <button onClick={() => {props.history.push('/settings')}}>Settings</button>
-        <button onClick={() => {props.history.push('/characters')}}>Characters</button>
+        <button onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>Characters</button>
         </> 
       :
         <Redirect to='/login' />

@@ -1,8 +1,16 @@
 {
-  "title": "Mis Personajes",
-  "buttons": {
-    "new": "Nuevo personaje",
-    "destroy": "Eliminar personaje"
+  "title": {
+    "owner": "Mis Personajes",
+    "viewer": "Personajes"
   },
-  "destroy": "Personajes"
+  "buttons": {
+    "dashboard": "inicio",
+    "new": "Nuevo personaje",
+    "see": "Ver personaje"
+  },
+  "empty_chars": "Todavía no has creado ningún personaje ¡Intenta crear uno!",
+  "errors": {
+    "no_user": "No existe un usario con el nombre: ",
+    "bad_request": "Hay problemas para procesar tu solicitud"
+  }
 }

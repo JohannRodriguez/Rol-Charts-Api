@@ -4,8 +4,33 @@ module Api
       include CurrentUserConcern
 
       def index
-        characters = @current_user.characters.all
-        render json: characters
+        user = User.find(params[:user])
+        characters = user.characters.all
+ 
+        if user
+          render json: characters
+        else
+          render json: { status: 'NO_USER' }
+        end
+      end
+
+      def show
+        user = User.find(params[:user])
+        character = user.characters.find_by(name: params[:id])
+
+        if character
+          render json: { status: 'SUCCESS', character: {
+              user_id: character.user_id,
+              id: character.id,
+              name: character.name,
+              alias: character.alias,
+              bio: character.bio,
+              universe: character.universe
+            }
+          }
+        else
+          render json: { status: 'NO_CHARACTER' }
+        end
       end
 
       def create
@@ -26,11 +51,11 @@ module Api
         character = Character.find_by(id: params[:id])
         user = @current_user if @current_user[:id] === character[:user_id]
 
-        if (Time.now.to_i - session[:auth_time]) > 18000
-          session[:auth_status] = 'NOT_AUTH'
-          render json: { status: 'NOT_AUTH' }
-        elsif user
-          if character.destroy
+        if user
+          if (Time.now.to_i - session[:auth_time]) > 18000
+            session[:auth_status] = 'NOT_AUTH'
+            render json: { status: 'NOT_AUTH' }
+          elsif character.destroy
             render json: { status: 'SUCCESS' }
           else
             render json: { status: 'FAILURE' }

@@ -1,0 +1,9 @@
+{
+  "button": "Eliminar personaje",
+  "errors": {
+    "no_user": "Ningún usuario fue encontrado con este nombre: ",
+    "no_character1": "No se ha encontrado ningún personaje con este nombre: ",
+    "no_character2": "Para el usuario: ",
+    "bad_request": "Hubo un error al procesar tu solicitud"
+  }
+}

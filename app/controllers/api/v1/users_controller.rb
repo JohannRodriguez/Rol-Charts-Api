@@ -8,6 +8,20 @@ module Api
         render json: users
       end
 
+      def show
+        user = User.find_by(username: params[:id])
+
+        if user
+          render json: { status: 'SUCCESS', user: {
+              id: user.id,
+              username: user.username
+            }
+          }
+        else
+          render json: { status: 'NO_USER' }
+        end
+      end
+
       def authenticate
         auth_user = @current_user.try(:authenticate, params[:user][:password])
 

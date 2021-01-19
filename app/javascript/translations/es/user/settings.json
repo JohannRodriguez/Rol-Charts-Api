@@ -1,6 +1,9 @@
 {
   "title": "Configuración",
-  "button": "Inicio",
+  "buttons": {
+    "dashboard": "Inicio",
+    "destroy": "Eliminar cuenta"
+  },
   "account": {
     "title": "Ajustes de cuenta"
   },
