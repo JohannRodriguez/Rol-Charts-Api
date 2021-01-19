@@ -19,7 +19,7 @@ const NewCharacter = props => {
   });
 
   useEffect(() => {
-    if (response === 'SUCCESS') {
+    if (response && response.status === 'SUCCESS') {
       props.history.push('/characters');
     }
   });
@@ -53,7 +53,7 @@ const NewCharacter = props => {
             type="text" name="name" placeholder={lang('placeholders.name')}
             value={field.email} onChange={handleChange} required
           />
-          {!validation || response && response.error.inlcudes('uniqueness') ?
+          {!validation || response && response.error && response.error.includes('uniqueness') ?
             <p>{lang('error')}</p> : null
           }
           <textarea
