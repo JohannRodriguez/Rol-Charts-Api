@@ -18,7 +18,7 @@ const Settings = props => {
       <>
         <h1>{lang('title')}</h1>
         <h2>{props.session.user.username}</h2>
-        <button onClick={() => {props.history.push('/')}}>{lang('buttons.dashboard')}</button>
+        <button onClick={() => {props.history.push('/')}}>{lang('button')}</button>
         <UpdateUser {...props} />
         <Destroy history={props.history} type="users" id={props.session.user.id} confirmDestroy={`${lang('destroy')}/${props.session.user.username}`} />
       </>

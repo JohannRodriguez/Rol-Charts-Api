@@ -1,0 +1,14 @@
+{
+  "title": "Nuevo Personaje",
+  "placeholders": {
+    "name": "Nombre",
+    "alias": "Alias",
+    "bio": "Biografía/Descripción",
+    "universe": "Universo"
+  },
+  "button": "Crear",
+  "errors": {
+    "uniqueness": "Ya tienes a un personaje con este nombre",
+    "length": "Esto es demasiado largo"
+  }
+}

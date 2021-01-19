@@ -1,9 +1,6 @@
 {
   "title": "Configuración",
-  "buttons": {
-    "dashboard": "Inicio",
-    "account": "Subir"
-  },
+  "button": "Inicio",
   "account": {
     "title": "Ajustes de cuenta"
   },
