@@ -124,7 +124,7 @@ const AllFields = props => {
               {validation && validation.password.characters.lower_case.verify === 'good' ? ':D' : '·-·'}
             </p>
             <p>
-              {lang('val.password.lower_c')}:
+              {lang('val.password.upper_c')}:
               {validation && validation && validation.password.characters.upper_case.verify === 'good' ? ':D' : '·-·'}
             </p>
             <p>

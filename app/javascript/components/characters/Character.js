@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 // Import Components
 import api_call from '../../api/api_call';
 import Destroy from '../global/Destroy';
-import ownership from './helpers/global';
 
 const Character = props => {
   const [lang] = useTranslation('character');
