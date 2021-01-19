@@ -5,15 +5,24 @@ import { useTranslation } from 'react-i18next';
 
 // Import Components
 import api_call from '../../api/api_call';
-import validate from './helpers/new_character_helper';
+import validate, { checkValidations } from './helpers/new_character_helper';
 
 const NewCharacter = props => {
   const [lang] = useTranslation('new_character');
 
   const [response, setResponse] = useState(null);
-  const [validation, setValidation] = useState(true);
+  const [validation, setValidation] = useState({
+    name: {
+      uniqueness: true,
+      length: true,
+    },
+    alias: { length: true, },
+    bio: { length: true, },
+    universe: { length: true, },
+  });
   const [field, setField] = useState({
     name: '',
+    alias: '',
     bio: '',
     universe: '',
   });
@@ -38,7 +47,7 @@ const NewCharacter = props => {
       [event.target.name]: event.target.value
     });
 
-    validate(event.target.value, props.session.characters, setValidation);
+    validate(event.target.name, event.target.value, props.session.characters, validation, setValidation);
   };
 
   return (
@@ -51,15 +60,28 @@ const NewCharacter = props => {
         <form onSubmit={handleSubmit}>
           <input
             type="text" name="name" placeholder={lang('placeholders.name')}
-            value={field.email} onChange={handleChange} required
+            value={field.name} onChange={handleChange} required
           />
-          {!validation || response && response.error && response.error.includes('uniqueness') ?
-            <p>{lang('error')}</p> : null
+          {validation.name.uniqueness === 'bad' ?
+            <p>{lang('errors.uniqueness')}</p> : null
+          }
+          {validation.name.length === 'bad' ?
+            <p>{lang('errors.length')}</p> : null
+          }
+          <input
+            type="text" name="alias" placeholder={lang('placeholders.alias')}
+            value={field.alias} onChange={handleChange}
+          />
+          {validation.alias.length === 'bad' ?
+            <p>{lang('errors.length')}</p> : null
           }
           <textarea
             name="bio" placeholder={lang('placeholders.bio')}
             value={field.bio} onChange={handleChange}
           />
+          {validation.bio.length === 'bad' ?
+            <p>{lang('errors.length')}</p> : null
+          }
           <input
             type="text" name="universe" placeholder={lang('placeholders.universe')}
             value={field.email} onChange={handleChange}

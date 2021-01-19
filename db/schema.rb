@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_01_18_161558) do
   create_table "characters", force: :cascade do |t|
     t.integer "user_id"
     t.string "name"
+    t.string "alias"
     t.text "bio"
     t.string "universe"
     t.datetime "created_at", precision: 6, null: false
