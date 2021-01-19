@@ -1,0 +1,9 @@
+{
+  "title": "Nuevo Personaje",
+  "placeholders": {
+    "name": "Nombre",
+    "bio": "Biografía/Descripción",
+    "universe": "Universo"
+  },
+  "button": "Crear"
+}

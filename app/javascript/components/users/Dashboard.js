@@ -8,11 +8,12 @@ import api_call from '../../api/api_call';
 const Dashboard = props => {
   const [characters, setCharacters] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
     if (!characters) {
-      const fetch = await api_call('GET', '/api/v1/characters');
-      const arr = [props.session.user.username];
-      arr.concat(fetch);
+      let arr = [props.session.user.username];
+      if (props.session.characters.length > 0) {
+        arr = arr.concat(props.session.characters);
+      }
       setCharacters(arr);
     }
   });

@@ -19,7 +19,8 @@ module Api
               username: auth_user.username,
               status: auth_user.status,
               email: auth_user.email,
-            }
+            },
+            characters: auth_user.characters.all.collect(&:name)
           }
         elsif user
           render json: { status: 'BAD_PASSWORD' }

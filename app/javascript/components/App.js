@@ -1,10 +1,13 @@
+// Import Packages
 import React, { useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
+// Import Components
+import ConfirmEmail from './users/ConfirmEmail';
 import Dashboard from './users/Dashboard';
 import Login from './users/Login';
+import NewCharacter from './characters/NewCharacter';
 import Register from './users/Register';
-import ConfirmEmail from './users/ConfirmEmail';
 import ResendEmail from './users/ResendEmail';
 import Settings from './users/Settings';
 
@@ -31,6 +34,9 @@ const App = props => {
       )}/>
       <Route exact path='/register' render={getProps => (
         <Register {...getProps} session={session} />
+      )}/>
+      <Route exact path='/new_character' render={getProps => (
+        <NewCharacter {...getProps} session={session} />
       )}/>
       <Route exact path='/confirm_email' render={getProps => (
         <ConfirmEmail {...getProps} />
