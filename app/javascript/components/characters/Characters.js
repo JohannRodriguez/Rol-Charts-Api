@@ -1,12 +1,18 @@
 // Import Packages
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Import Modules
 import api_call from '../../api/api_call';
+import Destroy from '../global/Destroy';
 
 const Characters = props => {
+  const [lang] = useTranslation('characters');
+
   const [characters, setCharacters] = useState(null);
+  const [destroys, setDestroys] = useState({ id: '', message: '', });
+  const [modal, setModal] = useState(false);
 
   useEffect(async () => {
     if (!characters) {
@@ -15,11 +21,19 @@ const Characters = props => {
     }
   });
 
+  const modalData = (id, name) => {
+    setDestroys({
+      id,
+      message: `${lang('destroy')}/${props.session.user.username}/${name}`,
+    });
+  };
+
   return (
     <>
       {props.session.log === 'LOGGED_IN' ?
       <>
-        <button onClick={() => {props.history.push('/new_character')}}>New character</button>
+        <h1>{lang('title')}</h1>
+        <button onClick={() => {props.history.push('/new_character')}}>{lang('buttons.new')}</button>
         <div>
           {characters ? characters.map(character =>
             <div key={`${character.id}-character`}>
@@ -33,9 +47,13 @@ const Characters = props => {
               {character.bio ?
                 <p key={`${character.id}-bio`}>{character.bio}</p>
               : null}
-            </div>  
+              <button onClick={() => {modalData(character.id, character.name); setModal(true);}}>
+                {lang('buttons.destroy')}
+              </button>
+            </div>
           ) : null }
         </div>
+        <Destroy modal={modal} setModal={setModal} type="characters" id={destroys.id} confirmDestroy={destroys.message} />
       </>
       :
         <Redirect to='/login' />

@@ -9,7 +9,6 @@ import api_call from '../../api/api_call';
 const Destroy = props => {
   const [lang] = useTranslation('destroy');
 
-  const [modal, setModal] = useState(false);
   const [response, setResponse] = useState(null);
   const [field, setField] = useState({
     destroy: '',
@@ -21,6 +20,7 @@ const Destroy = props => {
     if (field.destroy === props.confirmDestroy) {
       const fetch = await api_call('DELETE', `/api/v1/${props.type}/${props.id}`);
       setResponse(fetch.status);
+      window.location.reload();
     } else {
       setResponse('NOT_MATCH');
     }
@@ -33,13 +33,6 @@ const Destroy = props => {
     });
   };
 
-  const openModal = () => {
-    setModal(true);
-  };
-  const closeModal = () => {
-    setModal(false);
-  };
-
   useEffect(() => {
     if (response === 'SUCCESS') {
       window.location.reload()
@@ -47,23 +40,20 @@ const Destroy = props => {
   });
 
   return (
-    <div className={`destroy_${props.type}`}>
-      <button onClick={openModal}>{lang('buttons.delete')}</button>
-      {modal ?
+    <>
+    {props.modal ?
+      <div className={`destroy_${props.type}`}>
+        <p onClick={() => {props.setModal(false)}}>X</p>
         <div className={`destroy_${props.type}_modal`}>
           <h3>{lang('warning')}</h3>
           <p>{lang('message')}</p>
           <p>{lang('destroy.d1')} {props.confirmDestroy} {lang('destroy.d2')}</p>
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
-              name="destroy"
-              value={field.destroy}
-              onChange={handleChange}
-              required
+              type="text" name="destroy" value={field.destroy}
+              onChange={handleChange} required
             />
-            <button type="submit">{lang('buttons.submit')}</button>
-            <p onClick={closeModal}>X</p>
+            <button type="submit">{lang('button')}</button>
           </form>
           {response === 'NOT_MATCH' ?
             <p>{lang('match')} {props.confirmDestroy}</p>
@@ -73,8 +63,9 @@ const Destroy = props => {
             null
           }
         </div>
-      : null}
-    </div>
+      </div>
+    : null}
+    </>
   )
 };
 

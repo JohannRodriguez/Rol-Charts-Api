@@ -9,7 +9,7 @@ const Dashboard = props => {
   const [characters, setCharacters] = useState(null);
 
   useEffect(() => {
-    if (!characters) {
+    if (!characters && props.session.log === 'LOGGED_IN') {
       let arr = [props.session.user.username];
       if (props.session.characters.length > 0) {
         arr = arr.concat(props.session.characters);

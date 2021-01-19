@@ -1,0 +1,8 @@
+{
+  "title": "Mis Personajes",
+  "buttons": {
+    "new": "Nuevo personaje",
+    "destroy": "Eliminar personaje"
+  },
+  "destroy": "Personaje"
+}
