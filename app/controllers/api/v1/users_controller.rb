@@ -4,6 +4,22 @@ module Api
       include CurrentUserConcern
       
       def index
+        users = User.all.collect(&:username)
+        render json: users
+      end
+
+      def show
+        user = User.find_by(username: params[:id])
+
+        if user
+          render json: { status: 'SUCCESS', user: {
+              id: user.id,
+              username: user.username
+            }
+          }
+        else
+          render json: { status: 'NO_USER' }
+        end
       end
 
       def authenticate
@@ -28,7 +44,7 @@ module Api
           session[:auth_status] = 'NOT_AUTH'
           session[:auth_time] = 0
           UsersMailer.registration_confirmation(user).deliver
-          render json: { status: 'SUCCES'}
+          render json: { status: 'SUCCESS' }
         else
           render json: { status: 'BAD_FIELD', error: user.errors }
         end

@@ -2,7 +2,7 @@
   "title": "Configuración",
   "buttons": {
     "dashboard": "Inicio",
-    "account": "Subir"
+    "destroy": "Eliminar cuenta"
   },
   "account": {
     "title": "Ajustes de cuenta"

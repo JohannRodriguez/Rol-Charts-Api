@@ -5,3 +5,4 @@ json.user do
   json.status @current_user.status
   json.email @current_user.email
 end
+json.characters @current_user.characters.all.collect(&:name)

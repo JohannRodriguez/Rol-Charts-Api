@@ -10,19 +10,24 @@ import api_call from '../../api/api_call';
 const AllFields = props => {
   const [lang] = useTranslation('all_fields');
 
-  const [response, setResponse] = useState(null);
-  const [visiblePassword, setVisiblePassword] = useState(false);
   const [field, setField] = useState(null);
+  const [response, setResponse] = useState(null);
+  const [users, setUsers] = useState(null);
   const [validation, setValidation] = useState(null);
   const [validateDefault, setValidateDefault] = useState(false);
+  const [visiblePassword, setVisiblePassword] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!validation && !field) {
       createStates(props.show, props.display, setValidation, setField);
     }
     if (field && !validateDefault) {
       defaultFields(field, validation, setValidation)
       setValidateDefault(true);
+    }
+    if (!users) {
+      const fetch = await api_call('GET', `/api/v1/users`);
+      setUsers(fetch);
     }
   });
 
@@ -31,7 +36,7 @@ const AllFields = props => {
     
     if (checkValidations(validation)) {
       if (props.type === 'register') {
-        const fetch = await api_call('POST', `/api/v1/users`, { user: field, });
+        const fetch = await api_call('POST', '/api/v1/users', { user: field, });
         setResponse(fetch);
         props.history.push('/');
       } else if (props.type === 'update') {
@@ -53,7 +58,9 @@ const AllFields = props => {
       [event.target.name]: event.target.value
     });
 
-    validateField(event.target.name, event.target.value, field, validation, setValidation);
+    validateField(event.target.name, event.target.value, field,
+      validation, setValidation, users, props.session.user.username
+    );
   };
 
   const visibilityToggle = () => {
@@ -69,19 +76,21 @@ const AllFields = props => {
               type="text" name="username" placeholder={lang('placeholders.user')}
               value={field ? field.username : ''} onChange={handleChange} required
             />
-            {response && response.error && response.error.username[0] === 'uniqueness' ?
-              <p>{lang('error.uniqueness')}</p>
-            :
-              null
+            {validation && validation.username.uniqueness.verify === 'bad' ||
+             response && response.error && response.error.username.includes('uniqueness') ?
+              <p>{lang('error.uniqueness')}</p> : null
             }
-            {validation && validation.username.length.verify === 'short' ?
+            {validation && validation.username.length.verify === 'short' ||
+             response && response.error && response.error.username.includes('short') ?
               <p>{lang('val.user.short')}</p>
-            :validation && validation.username.length.verify === 'long' ?
+            :validation && validation.username.length.verify === 'long' ||
+             response && response.error && response.error.username.includes('long') ?
               <p>{lang('val.user.long')}</p>
             :
               null
             }
-            {validation && validation.username.characters.verify === 'bad' ?
+            {validation && validation.username.characters.verify === 'bad' ||
+             response && response.error && response.error.username.includes('format') ?
               <p>{lang(('val.user.special'))}</p> : null
             }
             
@@ -106,11 +115,26 @@ const AllFields = props => {
               value={field ? field.password : ''} onChange={handleChange} required
             />
             <p onClick={visibilityToggle}>eye icon mock</p>
-            <p>{lang('val.password.length')}: {validation && validation.password.length.verify === 'good' ? ':D': '·-·'}</p>
-            <p>{lang('val.password.lower_c')}: {validation && validation.password.characters.lower_case.verify === 'good' ? ':D': '·-·'}</p>
-            <p>{lang('val.password.lower_c')}: {validation && validation && validation.password.characters.upper_case.verify === 'good' ? ':D': '·-·'}</p>
-            <p>{lang('val.password.number')}: {validation && validation.password.characters.number.verify === 'good' ? ':D': '·-·'}</p>
-            <p>{lang('val.password.special')}: {validation && validation.password.characters.special.verify === 'good' ? ':D': '·-·'}</p>
+            <p>
+              {lang('val.password.length')}:
+              {validation && validation.password.length.verify === 'good' ? ':D' : '·-·'}
+            </p>
+            <p>
+              {lang('val.password.lower_c')}:
+              {validation && validation.password.characters.lower_case.verify === 'good' ? ':D' : '·-·'}
+            </p>
+            <p>
+              {lang('val.password.upper_c')}:
+              {validation && validation && validation.password.characters.upper_case.verify === 'good' ? ':D' : '·-·'}
+            </p>
+            <p>
+              {lang('val.password.number')}:
+              {validation && validation.password.characters.number.verify === 'good' ? ':D' : '·-·'}
+            </p>
+            <p>
+              {lang('val.password.special')}:
+              {validation && validation.password.characters.special.verify === 'good' ? ':D' : '·-·'}
+            </p>
           </>
         :
           null
@@ -130,7 +154,7 @@ const AllFields = props => {
         :
           null
         }
-        <button type="submit">{props.button}</button>
+        <button type="submit">{lang(`buttons.${props.type}`)}</button>
       </form>
       {response && response.status === 'NOT_AUTH' ?
         <Authenticate />

@@ -1,5 +1,5 @@
 // Import Packages
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -9,6 +9,8 @@ import UpdateUser from './UpdateUser';
 
 const Settings = props => {
   const [lang] = useTranslation('settings');
+
+  const [modal, setModal] = useState(false);
 
   return (
     <div>
@@ -20,7 +22,8 @@ const Settings = props => {
         <h2>{props.session.user.username}</h2>
         <button onClick={() => {props.history.push('/')}}>{lang('buttons.dashboard')}</button>
         <UpdateUser {...props} />
-        <Destroy history={props.history} type="users" id={props.session.user.id} confirmDestroy={`${lang('destroy')}/${props.session.user.username}`} />
+        <button onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
+        <Destroy modal={modal} setModal={setModal} type="users" id={props.session.user.id} confirmDestroy={`${lang('destroy')}/${props.session.user.username}`} />
       </>
       }
     </div>

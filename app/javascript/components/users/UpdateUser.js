@@ -13,7 +13,6 @@ const UpdateUser = props => {
       <h1>{lang('account.title')}</h1>
       <AllFields {...props}
         type={'update'}
-        button={lang('buttons.account')}
         show={{ username: true, password: true, password_confirmation: true}}
         display={{ username: props.session.user.username }}
       />

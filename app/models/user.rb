@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :characters, dependent: :destroy
   before_create :set_token
   
   PASSWORD_FORMAT = /\A
