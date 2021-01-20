@@ -44,7 +44,20 @@ module Api
       end
 
       def update
-        
+        character = @current_user.characters.find(params[:id])
+
+        if character
+          if (Time.now.to_i - session[:auth_time]) > 18000
+            session[:auth_status] = 'NOT_AUTH'
+            render json: { status: 'NOT_AUTH' }
+          elsif character.update(character_params)
+            render json: { status: 'SUCCESS' }
+          else
+            render json: { status: 'FAILURE' }
+          end
+        else
+          render json: 'NO_CHARACTER'
+        end
       end
 
       def destroy

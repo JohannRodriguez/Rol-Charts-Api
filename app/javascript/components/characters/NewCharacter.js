@@ -36,7 +36,7 @@ const NewCharacter = props => {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    if (validation) {
+    if (checkValidations(validation)) {
       const fetch = await api_call('POST', '/api/v1/characters', { character: field, });
       setResponse(fetch);
     }
@@ -75,6 +75,13 @@ const NewCharacter = props => {
           {validation.alias.length === 'bad' ?
             <p>{lang('errors.length')}</p> : null
           }
+          <input
+            type="text" name="universe" placeholder={lang('placeholders.universe')}
+            value={field.universe} onChange={handleChange}
+          />
+          {validation.universe.length === 'bad' ?
+            <p>{lang('errors.length')}</p> : null
+          }
           <textarea
             name="bio" placeholder={lang('placeholders.bio')}
             value={field.bio} onChange={handleChange}
@@ -82,10 +89,6 @@ const NewCharacter = props => {
           {validation.bio.length === 'bad' ?
             <p>{lang('errors.length')}</p> : null
           }
-          <input
-            type="text" name="universe" placeholder={lang('placeholders.universe')}
-            value={field.universe} onChange={handleChange}
-          />
           <button type="submit">{lang('button')}</button>
         </form>
       </div>
