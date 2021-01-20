@@ -23,6 +23,7 @@ const Character = props => {
     name: {
       uniqueness: true,
       length: true,
+      required: true,
     },
     alias: { length: true, },
     bio: { length: true, },
@@ -75,18 +76,21 @@ const Character = props => {
           {owner ?
             <button onClick={() => {
               setOpenFields(openFields ? false : true);
-            }}>{lang('button.edit')}</button>
+            }}>{lang('buttons.edit')}</button>
           : null}
           <h1>{charRes.character.name}</h1>
           {openFields ?
             <>
               <input type="text" name="name" placeholder={lang('placeholders.name')}
-              value={field.name} onChange={handleChange} required/>
+              value={field.name} onChange={handleChange} />
               {validation.name.uniqueness === 'bad' ?
                 <p>{lang('errors.uniqueness')}</p> : null
               }
               {validation.name.length === 'bad' ?
                 <p>{lang('errors.length')}</p> : null
+              }
+              {validation.name.required === 'bad' ?
+                <p>{lang('errors.required')}</p> : null
               }
             </>
           : null}
@@ -126,14 +130,14 @@ const Character = props => {
               }
             </>
           : null}
-          {openFields ? <button onClick={handleSubmit}>{lang('buttons.edit')}</button> : null}
+          {openFields ? <button onClick={handleSubmit}>{lang('buttons.patch')}</button> : null}
           {owner ?
             <>
               <button onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
               {modal?
                 <Destroy modal={modal} setModal={setModal} type="characters"
                   id={charRes.character.id}
-                  confirmDestroy={`Characters/${usrRes.user.username}/${charRes.character.name}`}
+                  confirmDestroy={`${lang('delete')}/${usrRes.user.username}/${charRes.character.name}`}
                 />
               : null}
             </>

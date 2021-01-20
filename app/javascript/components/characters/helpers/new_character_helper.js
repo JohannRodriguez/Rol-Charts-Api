@@ -11,6 +11,14 @@ const validate = (name, value, characters, validation, setValidation) => {
     }
   }
 
+  if (validation[name].required) {
+    if (value.length === 0) {
+      validation[name].required = 'bad';
+    } else {
+      validation[name].required = 'good';
+    }
+  }
+
   if (validation[name].length) {
     let max = 20;
     if (name === 'bio') {

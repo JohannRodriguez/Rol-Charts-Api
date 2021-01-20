@@ -1,9 +1,23 @@
 {
-  "button": "Eliminar personaje",
+  "buttons": {
+    "edit": "Editar",
+    "destroy": "Eliminar personaje",
+    "patch": "Confirmar cambios"
+  },
+  "placeholders": {
+    "name": "Nombre",
+    "alias": "Alias",
+    "bio": "Biografía/Descripción",
+    "universe": "Universo"
+  },
   "errors": {
     "no_user": "Ningún usuario fue encontrado con este nombre: ",
     "no_character1": "No se ha encontrado ningún personaje con este nombre: ",
     "no_character2": "Para el usuario: ",
-    "bad_request": "Hubo un error al procesar tu solicitud"
-  }
+    "bad_request": "Hubo un error al procesar tu solicitud",
+    "uniqueness": "Ya tienes a un personaje con este nombre",
+    "length": "Este campo es demasiado largo",
+    "required": "Necesitas llenar este campo"
+  },
+  "delete": "Personajes"
 }

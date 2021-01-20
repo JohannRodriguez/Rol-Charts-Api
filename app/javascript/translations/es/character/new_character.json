@@ -9,6 +9,6 @@
   "button": "Crear",
   "errors": {
     "uniqueness": "Ya tienes a un personaje con este nombre",
-    "length": "Esto es demasiado largo"
+    "length": "Este campo es demasiado largo"
   }
 }
