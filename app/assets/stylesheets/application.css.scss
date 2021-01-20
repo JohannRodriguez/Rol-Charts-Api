@@ -1,0 +1,84 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ $dark: rgb(34, 38, 41);
+ $highlight: rgb(68, 112, 173);
+ $letter-light: rgb(203, 203, 207);
+
+ body {
+  background-color: $dark;
+  margin: 0;
+  height: 100%;
+  font-family: 'Roboto';
+ }
+
+ .app {
+   display: flex;
+   color: $letter-light;
+ }
+
+ nav,
+ main,
+ .groups {
+   display: block;
+ }
+
+ main {
+   flex-basis: 40%;
+   height: 3000px;
+ }
+
+ nav,
+ .groups {
+   flex-basis: 25%;
+   position: -webkit-sticky;
+   position: sticky;
+   top: 0;
+   height: 100vh;
+ }
+
+ nav {
+    ul {
+      padding: 0;
+    }
+    .link,
+    p {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+      list-style: none;
+      padding: 10px;
+      width: fit-content;
+      display: flex;
+      align-items: center;
+    }
+    p {
+      margin: 10px 0;
+    }
+    svg {
+      width: 30px;
+      margin-right: 20px;
+    }
+    .links {
+      border-bottom: 1px solid $letter-light;
+      width: fit-content;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      margin-left: 15px;
+    }
+    .highlight {
+      color: $highlight;
+    }
+ }

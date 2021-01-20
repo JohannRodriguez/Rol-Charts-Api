@@ -27,21 +27,21 @@ const Dashboard = props => {
   return (
     <>
       {props.session.log === 'LOGGED_IN' ?
-        <>
-        <h2>{props.session.user.username}</h2>
-        {characters && characters.length > 0 ?
-          <select>
-            {characters.map(character =>
-              <option key={character} value={character}>{character}</option>
-            )}
-          </select>
-        :
-          null
-        }
-        <button onClick={() => logout()}>Logout</button>
-        <button onClick={() => {props.history.push('/settings')}}>Settings</button>
-        <button onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>Characters</button>
-        </> 
+        <main>
+          <h2>{props.session.user.username}</h2>
+          {characters && characters.length > 0 ?
+            <select>
+              {characters.map(character =>
+                <option key={character} value={character}>{character}</option>
+              )}
+            </select>
+          :
+            null
+          }
+          <button onClick={() => logout()}>Logout</button>
+          <button onClick={() => {props.history.push('/settings')}}>Settings</button>
+          <button onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>Characters</button>
+        </main> 
       :
         <Redirect to='/login' />
       }
