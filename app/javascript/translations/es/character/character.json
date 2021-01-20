@@ -17,7 +17,8 @@
     "bad_request": "Hubo un error al procesar tu solicitud",
     "uniqueness": "Ya tienes a un personaje con este nombre",
     "length": "Este campo es demasiado largo",
-    "required": "Necesitas llenar este campo"
+    "required": "Necesitas llenar este campo",
+    "bad_fields": "Hay campos que aún debes corregir antes de poder confirmar"
   },
   "delete": "Personajes"
 }

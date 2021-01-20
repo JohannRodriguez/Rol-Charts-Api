@@ -57,8 +57,12 @@ const Character = props => {
   });
 
   const handleSubmit = async () => {
-    const fetch = await api_call('PATCH', `/api/v1/characters/${charRes.character.id}`, { character: field });
-    setResponse(fetch);
+    if (checkValidations(validation)) {
+      const fetch = await api_call('PATCH', `/api/v1/characters/${charRes.character.id}`, { character: field });
+      setResponse(fetch);
+    } else {
+      setResponse('BAD_FIELDS');
+    }
   };  
   const handleChange = event => {
     setField({
@@ -130,6 +134,7 @@ const Character = props => {
               }
             </>
           : null}
+          {response === 'BAD_FIELDS' ? <p>{lang('errors.bad_fields')}</p>: null}
           {openFields ? <button onClick={handleSubmit}>{lang('buttons.patch')}</button> : null}
           {owner ?
             <>

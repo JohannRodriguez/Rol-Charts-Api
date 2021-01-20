@@ -39,6 +39,8 @@ const NewCharacter = props => {
     if (checkValidations(validation)) {
       const fetch = await api_call('POST', '/api/v1/characters', { character: field, });
       setResponse(fetch);
+    } else {
+      setResponse('BAD_FIELDS');
     }
   };
   const handleChange = event => {
@@ -89,6 +91,7 @@ const NewCharacter = props => {
           {validation.bio.length === 'bad' ?
             <p>{lang('errors.length')}</p> : null
           }
+          {response === 'BAD_FIELDS' ? <p>{lang('errors.bad_fields')}</p>: null}
           <button type="submit">{lang('button')}</button>
         </form>
       </div>
