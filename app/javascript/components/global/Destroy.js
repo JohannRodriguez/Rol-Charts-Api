@@ -41,22 +41,33 @@ const Destroy = props => {
   return (
     <>
     {props.modal ?
-      <div className={`destroy_${props.type}`}>
-        <p onClick={() => {props.setModal(false)}}>X</p>
-        <div className={`destroy_${props.type}_modal`}>
-          <h3>{lang('warning')}</h3>
-          <p>{lang('message')}</p>
-          <p>{lang('destroy.d1')} {props.confirmDestroy} {lang('destroy.d2')}</p>
+      <div className="destroy">
+        <div className="bg" onClick={() => {props.setModal(false)}}></div>
+        <div className="action">
+          <div className="go-back">
+            <div className="close-msg">
+              <p>{lang('go_back.1')}</p>
+              <p>{lang('go_back.2')}</p>
+            </div>
+            <p className="close" onClick={() => {props.setModal(false)}}>X</p>
+          </div>
+          <div className="warning">
+            <h1>{lang('warning')}</h1>
+            <p>{props.message}</p>
+          </div>
           <form onSubmit={handleSubmit}>
-            <input
+            <p>{lang('destroy.d1')} <strong>{props.confirmDestroy}</strong> {lang('destroy.d2')}</p>
+            <input className="blue-focus"
               type="text" name="destroy" value={field.destroy}
               onChange={handleChange} required
             />
-            <button type="submit">{lang('button')}</button>
+            <br/>
+            {response === 'NOT_MATCH' ?
+              <p className="incorrect">{lang('match')} <strong>{props.confirmDestroy}</strong></p>  
+            : null }
+            <button className="delete-btn" type="submit">{lang('button')}</button>
           </form>
-          {response === 'NOT_MATCH' ?
-            <p>{lang('match')} {props.confirmDestroy}</p>
-          : response === 'NOT_AUTH' ?
+          {response === 'NOT_AUTH' ?
             <Authenticate />
           :
             null

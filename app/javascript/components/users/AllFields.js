@@ -72,7 +72,7 @@ const AllFields = props => {
       <form onSubmit={handleSubmit}>
         {props.show.username ?
           <>
-            <input
+            <input className="blue-focus"
               type="text" name="username" placeholder={lang('placeholders.user')}
               value={field ? field.username : ''} onChange={handleChange} required
             />

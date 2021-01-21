@@ -13,114 +13,278 @@
  *= require_tree .
  *= require_self
  */
- $dark: rgb(34, 38, 41);
- $highlight: rgb(68, 112, 173);
- $letter-light: rgb(227, 227, 231);
+ $dark: rgb(12, 18, 27);
+ $light-grey: rgb(95, 99, 102);
+ $blue: rgb(68, 112, 173);
+ $yellow: rgb(182, 165, 18);
+ $light: rgb(227, 227, 231);
+ $red: rgb(184, 20, 8);
+ $dark-red:  rgb(116, 12, 12);
+ $grey: rgb(37, 43, 51);
+ $bg: rgba(0, 0, 0, 0.6);
 
- body {
+body {
   background-color: $dark;
   margin: 0;
   height: 100%;
   font-family: 'Roboto';
- }
+  font-size: 18px;
+}
 
- .app {
-   display: flex;
-   color: $letter-light;
- }
+.app {
+  display: flex;
+  color: $light;
+}
 
- nav,
- main,
- .groups {
-   display: block;
- }
+nav,
+main,
+.groups {
+  display: block;
+}
 
- main {
-   flex-basis: 50%;
-   height: 3000px;
- }
+main {
+  flex-basis: 50%;
+  position: relative;
+}
 
- nav,
- .groups {
-   flex-basis: 25%;
-   position: -webkit-sticky;
-   position: sticky;
-   top: 0;
-   height: 100vh;
- }
+.blue-focus {
+  background-color: $light;
+  border-radius: 5px;
+  border: 1px solid $light-grey;
+  transition: 0.2s;
 
- nav {
-    ul {
-      padding: 0;
-    }
-    .link,
-    p {
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 20px;
-      list-style: none;
-      padding: 10px;
-      width: fit-content;
-      display: flex;
-      align-items: center;
-    }
-    p {
-      margin: 10px 0;
-    }
-    svg {
-      width: 30px;
-      margin-right: 20px;
-    }
-    .links {
-      border-bottom: 1px solid $letter-light;
-      width: fit-content;
-      padding-right: 20px;
-      padding-bottom: 20px;
-      margin-left: 15px;
-    }
-    .highlight {
-      color: $highlight;
-    }
- }
+  &:focus {
+    outline: none;
+    -webkit-box-shadow: 0px 0px 6px 1px $blue; 
+    box-shadow: 0px 0px 1px 2px $blue;
+    transition: 0.2s;
+  }
+}
 
- main {
-   header {
+.delete-btn {
+  cursor: pointer;
+  color: $red;
+  width: fit-content;
+  padding: 5px 15px;
+  background-color: $grey;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  border: 1px solid $light-grey;
+  transition: 0.1s;
+  letter-spacing: 2px;
+  
+  &:hover {
+    background-color: $red;
+    color: $light;
+    transition: 0.2s;
+  }
+  &:focus {
+    outline: none;
+    -webkit-box-shadow: 0px 0px 6px 1px $dark-red; 
+    box-shadow: 0px 0px 1px 2px $dark-red;
+    transition: 0.2s;
+  }
+}
+
+.destroy {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+
+  .bg {
     width: 100%;
-    height: 55px;
-    border-bottom: 1px solid $letter-light;
-    padding: 5px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
+    height: 100%;
+    background-color: $bg;
+    position: absolute;
+    z-index: -1;
+  }
+  .action {
     background-color: $dark;
-    margin-bottom: 10px;
+    width: fit-content;
+    padding: 10px;
+    padding-bottom: 30px;
+    margin: auto;
+    border: 1px solid $light;
+    border-radius: 10px;
+    position: relative;
+    text-align: center;
+    top: 8vh;
 
-    input {
-      border-radius: 20px;
-      padding: 5px;
-      background-color: $letter-light;
-      border: none;
-      width: 150px;
-      transition: 0.5s;
-      &:focus {
-        outline: none;
-        -webkit-box-shadow: 0px 0px 6px 1px $highlight; 
-        box-shadow: 0px 0px 6px 1px $highlight;
+    .go-back {
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0px 10px 15px;
+      margin: 0 5px;
+      border-bottom: 1px solid $blue;
+      
+      p {
+        margin: 0;
+      }
+    }
+    .warning {
+      box-sizing: border-box;
+      width: calc(100% - 60px);
+      padding: 0 40px;
+      margin: auto;
+      border-bottom: 1px solid $yellow;
+
+      h1 {
+        color: $yellow;
+      }
+      p {
+        line-height: 26px;
+        font-size: 21px;
+        max-width: 600px;
+      }
+    }
+    .close {
+      right: 10px;
+      top: 10px;
+      color: $light;
+      border: 2px solid $light;
+      border-radius: 50%;
+      width: fit-content;
+      font-weight: bold;
+      font-size: 18px;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: 0.1s;
+
+      &:hover {
+        color: $blue;
+        border-color: $blue;
+        transition: 0.1s;
+      }
+    }
+    form {
+      margin-top: 30px;
+
+      .incorrect {
+        margin-top: 0;
+      }
+      input {
+        margin: 10px 0 15px;
         width: 300px;
-        transition: 0.5s;
+        height: 25px;
+        font-size: 18px;
+      }
+      button {
+        letter-spacing: 0;
       }
     }
-    select {
-      background-color: $dark;
-      border: 1px solid $letter-light;
-      padding:  5px;
-      color: $letter-light;
-      &:focus {
-        outline: none;
-      }
+  }
+}
+
+.danger {
+  position: absolute;
+  bottom: 0;
+}
+
+nav,
+.groups {
+  flex-basis: 25%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+nav {
+  ul {
+    padding: 0;
+  }
+  .link,
+  p {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    list-style: none;
+    padding: 10px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+  }
+  p {
+    margin: 10px 0;
+  }
+  svg {
+    width: 30px;
+    margin-right: 20px;
+  }
+  .links {
+    border-bottom: 1px solid $light;
+    width: fit-content;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    margin-left: 15px;
+  }
+  .highlight {
+    color: $blue;
+  }
+}
+
+main {
+  header {
+  width: 100%;
+  height: 55px;
+  border-bottom: 1px solid $light;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: $dark;
+  margin-bottom: 10px;
+
+  input {
+    border-radius: 20px;
+    padding: 5px;
+    background-color: $light;
+    border: none;
+    width: 150px;
+    transition: 0.5s;
+    &:focus {
+      outline: none;
+      -webkit-box-shadow: 0px 0px 6px 1px $blue; 
+      box-shadow: 0px 0px 6px 1px $blue;
+      width: 300px;
+      transition: 0.5s;
     }
-   }
+  }
+  select {
+    background-color: $dark;
+    border: 1px solid $light;
+    padding:  5px;
+    color: $light;
+    &:focus {
+      outline: none;
+    }
+  }
  }
+}
+
+.settings {
+ display: flex;
+
+ .menu {
+  flex-basis: 30%;
+  margin: 15px;
+
+    .menu-btn {
+      cursor: pointer;
+      padding: 10px 5px;
+      border-radius: 3px;
+      border-bottom: 1px solid $light;
+
+      &:hover {
+        background-color: $light-grey;
+      }
+    }
+  }
+}
