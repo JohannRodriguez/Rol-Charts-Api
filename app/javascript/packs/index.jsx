@@ -17,6 +17,7 @@ import all_fields_es from '../translations/es/user/all_fields.json';
 import authenticate_es from '../translations/es/user/authenticate.json';
 import character_es from '../translations/es/character/character.json';
 import characters_es from '../translations/es/character/characters.json';
+import dashboard_es from '../translations/es/user/dashboard.json';
 import destroy_es from '../translations/es/global/destroy.json';
 import login_es from '../translations/es/user/login.json';
 import navbar_es from '../translations/es/global/navbar.json';
@@ -55,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         authenticate: authenticate_es,
         character: character_es,
         characters: characters_es,
+        dashboard: dashboard_es,
         destroy: destroy_es,
         login: login_es,
         navbar: navbar_es,

@@ -1,12 +1,16 @@
 // Import Packages
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Import Modules
 import api_call from '../../api/api_call';
 
 const Dashboard = props => {
+  const [lang] = useTranslation('dashboard');
+
   const [characters, setCharacters] = useState(null);
+  const [field, setField] = useState({ search: '', });
 
   useEffect(() => {
     if (!characters && props.session.log === 'LOGGED_IN') {
@@ -23,21 +27,28 @@ const Dashboard = props => {
     await api_call('DELETE', '/api/v1/logout');
     props.logout();
   };
+  const handleChange = event => {
+    setField({
+      ...field,
+      [event.target.name]: event.target.value
+    });
+  };
 
   return (
     <>
       {props.session.log === 'LOGGED_IN' ?
         <main>
-          <h2>{props.session.user.username}</h2>
-          {characters && characters.length > 0 ?
-            <select>
-              {characters.map(character =>
-                <option key={character} value={character}>{character}</option>
-              )}
+          <header>
+            <select name="filter" id="filter">
+              <option value="trending">{lang('options.trending')}</option>
+              <option value="follow">{lang('options.follow')}</option>
+              <option value="latest">{lang('options.latest')}</option>
             </select>
-          :
-            null
-          }
+            <input
+              type="text" name="search" placeholder={lang('placeholder')}
+              value={field.search} onChange={handleChange}
+            />
+          </header>
           <button onClick={() => logout()}>Logout</button>
           <button onClick={() => {props.history.push('/settings')}}>Settings</button>
           <button onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>Characters</button>
