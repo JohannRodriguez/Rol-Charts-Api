@@ -17,8 +17,10 @@ import all_fields_es from '../translations/es/user/all_fields.json';
 import authenticate_es from '../translations/es/user/authenticate.json';
 import character_es from '../translations/es/character/character.json';
 import characters_es from '../translations/es/character/characters.json';
+import dashboard_es from '../translations/es/user/dashboard.json';
 import destroy_es from '../translations/es/global/destroy.json';
 import login_es from '../translations/es/user/login.json';
+import navbar_es from '../translations/es/global/navbar.json';
 import new_character_es from '../translations/es/character/new_character.json';
 import register_es from '../translations/es/user/register.json';
 import settings_es from '../translations/es/user/settings.json';
@@ -43,6 +45,8 @@ const getLang = session => {
 
 document.addEventListener('DOMContentLoaded', async () => {
   const session = await api_call('GET', '/api/v1/log_status');
+  const app = document.createElement('div');
+  app.className = 'app';
   i18next.init({
     interpolation: { escapeValue: false, },
     lng: getLang(session),
@@ -52,8 +56,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         authenticate: authenticate_es,
         character: character_es,
         characters: characters_es,
+        dashboard: dashboard_es,
         destroy: destroy_es,
         login: login_es,
+        navbar: navbar_es,
         new_character: new_character_es,
         register: register_es,
         settings: settings_es,
@@ -73,6 +79,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         )} />
       </BrowserRouter>
     </I18nextProvider>,
-    document.body.appendChild(document.createElement('div')),
+    document.body.appendChild(app),
   )
 })

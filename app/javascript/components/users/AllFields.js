@@ -69,12 +69,13 @@ const AllFields = props => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className="all-fields" onSubmit={handleSubmit}>
         {props.show.username ?
           <>
-            <input
+            <input className="blue-focus" id="username"
               type="text" name="username" placeholder={lang('placeholders.user')}
               value={field ? field.username : ''} onChange={handleChange} required
+              autoComplete="off"
             />
             {validation && validation.username.uniqueness.verify === 'bad' ||
              response && response.error && response.error.username.includes('uniqueness') ?
@@ -117,23 +118,28 @@ const AllFields = props => {
             <p onClick={visibilityToggle}>eye icon mock</p>
             <p>
               {lang('val.password.length')}:
-              {validation && validation.password.length.verify === 'good' ? ':D' : '·-·'}
+              {validation && validation.password.length.verify === 'good' ?
+                <span className="good">  :D</span> : <span className="bad">  :|</span>}
             </p>
             <p>
               {lang('val.password.lower_c')}:
-              {validation && validation.password.characters.lower_case.verify === 'good' ? ':D' : '·-·'}
+              {validation && validation.password.characters.lower_case.verify === 'good' ? 
+                <span className="good">  :D</span> : <span className="bad">  :|</span>}
             </p>
             <p>
               {lang('val.password.upper_c')}:
-              {validation && validation && validation.password.characters.upper_case.verify === 'good' ? ':D' : '·-·'}
+              {validation && validation && validation.password.characters.upper_case.verify === 'good' ?
+                <span className="good">  :D</span> : <span className="bad">  :|</span>}
             </p>
             <p>
               {lang('val.password.number')}:
-              {validation && validation.password.characters.number.verify === 'good' ? ':D' : '·-·'}
+              {validation && validation.password.characters.number.verify === 'good' ?
+                <span className="good">  :D</span> : <span className="bad">  :|</span>}
             </p>
             <p>
               {lang('val.password.special')}:
-              {validation && validation.password.characters.special.verify === 'good' ? ':D' : '·-·'}
+              {validation && validation.password.characters.special.verify === 'good' ?
+                <span className="good">  :D</span> : <span className="bad"> :|</span>}
             </p>
           </>
         :
@@ -153,8 +159,8 @@ const AllFields = props => {
           </>
         :
           null
-        }
-        <button type="submit">{lang(`buttons.${props.type}`)}</button>
+        } <br/>
+        <button className="submit" type="submit">{lang(`buttons.${props.type}`)}</button>
       </form>
       {response && response.status === 'NOT_AUTH' ?
         <Authenticate />
