@@ -58,8 +58,12 @@ const AllFields = props => {
       [event.target.name]: event.target.value
     });
 
+    let checkUsername = null;
+    if (props.session.user) {
+      checkUsername = props.session.username
+    }
     validateField(event.target.name, event.target.value, field,
-      validation, setValidation, users, props.session.user.username
+      validation, setValidation, users, checkUsername
     );
   };
 

@@ -19,6 +19,7 @@ import character_es from '../translations/es/character/character.json';
 import characters_es from '../translations/es/character/characters.json';
 import dashboard_es from '../translations/es/user/dashboard.json';
 import destroy_es from '../translations/es/global/destroy.json';
+import email_es from '../translations/es/email/email.json';
 import login_es from '../translations/es/user/login.json';
 import navbar_es from '../translations/es/global/navbar.json';
 import new_character_es from '../translations/es/character/new_character.json';
@@ -26,21 +27,17 @@ import register_es from '../translations/es/user/register.json';
 import settings_es from '../translations/es/user/settings.json';
 
 const getLang = session => {
-  let lang = session.lang;
-  if (lang) {
-    return lang
+  if (session.lang) {
+    return session.lang
   } else {
-    switch (navigator.language.split('-')[0]) {
-      case 'es':
-      case 'en':
-        lang = navigator.language.split('-')[0];
-        break;
-      default:
-        lang = 'en';
-        break;
+    const languages = ['es', 'en'];
+    for (let index = 0; index < languages.length; index++) {
+      if (navigator.language.split('-').includes(languages[index])) {
+        return languages[index];
+      }
     }
+    return 'en';
   }
-  return lang;
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -58,6 +55,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         characters: characters_es,
         dashboard: dashboard_es,
         destroy: destroy_es,
+        email: email_es,
         login: login_es,
         navbar: navbar_es,
         new_character: new_character_es,

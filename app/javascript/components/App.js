@@ -26,9 +26,11 @@ const App = props => {
 
   return (
     <>
-    <Route path='/' render={getProps => (
-      <NavBar {...getProps} session={session} />
-    )}/>
+    {props.session.status === 'LOGGED_IN' ?
+      <Route path='/' render={getProps => (
+        <NavBar {...getProps} session={session} />
+      )}/>
+    : null}
     <Switch>
       <Route exact path='/' render={getProps => (
         <Dashboard {...getProps} session={session} logout={logout}/>
