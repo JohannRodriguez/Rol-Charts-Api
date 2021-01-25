@@ -52,7 +52,7 @@ const Destroy = props => {
             <p className="close" onClick={() => {props.setModal(false)}}>X</p>
           </div>
           <div className="warning">
-            <h1>{lang('warning')}</h1>
+            <p className="warn-title">{lang('warning')}</p>
             <p>{props.message}</p>
           </div>
           <form onSubmit={handleSubmit}>

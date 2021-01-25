@@ -10,7 +10,7 @@ import Destroy from '../global/Destroy';
 const Settings = props => {
   const [lang] = useTranslation('settings');
 
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
 
   return (
     <>
@@ -18,31 +18,51 @@ const Settings = props => {
       <>
       <main className="settings">
         <div className="menu">
-          <div className="menu-btn" onClick={() => {props.history.push({ search: '?tab=account'})}}>
+          <h2>{lang('title')}</h2>
+          <div
+            className={props.location.search === '?tab=account' ?
+              'highlight menu-btn' : 'menu-btn'}
+            onClick={() => {props.history.push({ search: '?tab=account'})}}
+          >
             <span>{lang('menu.account')}</span>
           </div>
-          <div className="menu-btn" onClick={() => {props.history.push({ search: '?tab=security'})}}>
+          <div
+            className={props.location.search === '?tab=security' ?
+              'highlight menu-btn' : 'menu-btn'}
+            onClick={() => {props.history.push({ search: '?tab=security'})}}
+          >
             <span>{lang('menu.security')}</span>
           </div>
         </div>
-        <div>
-        {props.location.search === '?tab=account' ?
-        <>
-          <h2>{lang('titles.account')}</h2>
-          <AllFields {...props}
-            type={'update'}
-            show={{ username: true, }}
-            display={{ username: props.session.user.username }}
-          />
-          <div className="danger">
-            <p className="delete-btn"
-              onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</p>
-          </div>
-        </>
-        : props.location.search === '?tab=security' ?
-          <p>{lang('titles.security')}</p>
-        :null
-        }
+        <div className="tabs">
+          {props.location.search === '?tab=account' ?
+          <>
+            <h2>{lang('titles.account')}</h2>
+            <div className="arguments">
+              <AllFields {...props}
+                type={'update'}
+                show={{ username: true, }}
+                display={{ username: props.session.user.username }}
+              />
+              <div className="danger">
+                <button className="delete-btn"
+                  onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
+              </div>
+            </div>
+          </>
+          : props.location.search === '?tab=security' ?
+          <> 
+            <h2>{lang('titles.security')}</h2>
+            <div className="arguments">
+              <AllFields {...props}
+                type={'update'}
+                show={{ password: true, password_confirmation: true, }}
+                display={{}}
+              />
+            </div>
+          </>
+          :null
+          }
         </div>
       </main>
       <Destroy modal={modal} setModal={setModal}
