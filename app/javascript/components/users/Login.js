@@ -41,18 +41,18 @@ const Login = props => {
       {props.session.log === 'LOGGED_IN' ?
         <Redirect to='/' />
       :
-        <>
+        <div className="login">
           <h1>{lang('title')}</h1>
           <form onSubmit={handleSubmit}>
-            <input
+            <input className="blue-focus"
               type="email" name="email" placeholder={lang('placeholders.email')}
-              value={field.email} onChange={handleChange} required
+              value={field.email} onChange={handleChange}
             />
-            <input
+            <input className="blue-focus"
               type="password" name="password" placeholder={lang('placeholders.password')}
-              value={field.password} onChange={handleChange} required
+              value={field.password} onChange={handleChange}
             />
-          <button type="submit">{lang('buttons.login')}</button>
+          <button className="login-btn" type="submit">{lang('buttons.login')}</button>
           </form>
           {response.status === 'BAD_USER' ?
             <p>{lang('errors.email')}</p>
@@ -61,8 +61,15 @@ const Login = props => {
           :
             null
           }
-          <button onClick={() => {props.history.push('/register')}}>{lang('buttons.register')}</button>
-        </>
+          <div className="login-adt">
+            <div>
+              <p>{lang('forgot.message')}</p><span>{lang('forgot.link')}</span><br/>
+            </div>
+            <div>
+              <p>{lang('register.message')}</p><span onClick={() => {props.history.push('/register')}}>{lang('register.link')}</span>
+            </div>
+          </div>
+        </div>
       }
     </>
   );
