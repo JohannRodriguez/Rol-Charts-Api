@@ -42,17 +42,12 @@ main,
   display: block;
 }
 
-main {
-  flex-basis: 50%;
-  position: relative;
-}
-
 .blue-focus {
   transition: 0.2s;
 
   &:focus {
     outline: none;
-    -webkit-box-shadow: 0px 0px 6px 1px $blue; 
+    -webkit-box-shadow: 0px 0px 1px 2px $blue; 
     box-shadow: 0px 0px 1px 2px $blue;
     transition: 0.2s;
   }
@@ -112,6 +107,7 @@ button {
   }
   .action {
     background-color: $dark;
+    width: -moz-fit-content;
     width: fit-content;
     padding-bottom: 30px;
     margin: auto;
@@ -136,6 +132,8 @@ button {
       box-sizing: border-box;
       width: calc(100% - 60px);
       margin: auto;
+      border-bottom: 1px solid $grey;
+
 
       .warn-title {
         color: $yellow;
@@ -144,6 +142,8 @@ button {
         line-height: 26px;
         font-size: 21px;
         max-width: 600px;
+        padding-right: 10px;
+        padding-left: 10px;
       }
     }
     .close {
@@ -161,7 +161,7 @@ button {
       }
     }
     form {
-      margin-top: 30px;
+      margin: 30px 5px 5px;
 
       .incorrect {
         margin-top: 0;
@@ -198,6 +198,7 @@ nav {
   justify-content: flex-end;
   padding: 0 60px;
   box-sizing: border-box;
+
   .link,
   p {
     cursor: pointer;
@@ -208,6 +209,12 @@ nav {
     width: fit-content;
     display: flex;
     align-items: center;
+
+    svg {
+      stroke: $light-grey;
+      stroke-width: 6px;
+      fill: none;
+    }
   }
   p {
     margin: 10px 0;
@@ -226,48 +233,54 @@ nav {
   }
   .highlight {
     color: $blue;
+
+    svg {
+      fill: $blue;
+      stroke: $blue;
+    }
   }
 }
 
 main {
-  header {
-  width: 100%;
-  height: 55px;
-  border-bottom: 1px solid $light;
-  padding: 5px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background-color: $dark;
-  margin-bottom: 10px;
+  flex-basis: 50%;
+  position: relative;
 
-  input {
-    border-radius: 20px;
+  header {
+    width: 100%;
+    height: 55px;
+    border-bottom: 1px solid $light;
     padding: 5px;
-    background-color: $light;
-    border: none;
-    width: 150px;
-    transition: 0.5s;
-    &:focus {
-      outline: none;
-      -webkit-box-shadow: 0px 0px 6px 1px $blue; 
-      box-shadow: 0px 0px 6px 1px $blue;
-      width: 300px;
-      transition: 0.5s;
-    }
-  }
-  select {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
     background-color: $dark;
-    border: 1px solid $light;
-    padding:  5px;
-    color: $light;
-    &:focus {
-      outline: none;
+    margin-bottom: 10px;
+
+    .search {
+      border-radius: 20px;
+      color: $dark;
+      padding: 5px;
+      background-color: $light;
+      border: none;
+      width: 150px;
+      transition: 0.5s;
+      &:focus {
+        width: 300px;
+        transition: 0.5s;
+      }
     }
-  }
+    select {
+      background-color: $dark;
+      border: 1px solid $light;
+      padding:  5px;
+      color: $light;
+      &:focus {
+        outline: none;
+      }
+    }
  }
 }
 

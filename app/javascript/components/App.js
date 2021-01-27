@@ -26,7 +26,7 @@ const App = props => {
 
   return (
     <>
-    {props.session.status === 'LOGGED_IN' ?
+    {session.log === 'LOGGED_IN' ?
       <Route path='/' render={getProps => (
         <NavBar {...getProps} session={session} />
       )}/>

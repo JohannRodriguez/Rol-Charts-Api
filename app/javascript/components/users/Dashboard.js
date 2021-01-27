@@ -44,7 +44,7 @@ const Dashboard = props => {
               <option value="follow">{lang('options.follow')}</option>
               <option value="latest">{lang('options.latest')}</option>
             </select>
-            <input
+            <input className="search blue-focus"
               type="text" name="search" placeholder={lang('placeholder')}
               value={field.search} onChange={handleChange}
             />

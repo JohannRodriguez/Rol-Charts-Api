@@ -56,7 +56,7 @@ const Settings = props => {
             <div className="arguments">
               <AllFields {...props}
                 type={'update'}
-                show={{ password: true, password_confirmation: true, }}
+                show={{ password: true, password_confirmation: true }}
                 display={{}}
               />
             </div>
