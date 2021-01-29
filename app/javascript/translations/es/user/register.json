@@ -9,5 +9,9 @@
   "buttons": {
     "register": "Regístrate",
     "login": "Iniciar sesión"
+  },
+  "labels": {
+    "birthday": "Fecha de nacimiento",
+    "sex": "Sexo"
   }
 }

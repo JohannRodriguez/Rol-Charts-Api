@@ -1,9 +1,11 @@
 // Import Packages
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
+import PickDate from './PickDate';
+import Sex from './Sex';
 
 const Register = props => {
   const [lang] = useTranslation('register');
@@ -13,7 +15,10 @@ const Register = props => {
     email: '',
     password: '',
     password_confirmation: '',
-    birthday: '',
+    day: new Date().getDate(),
+    month: new Date().getMonth,
+    year: new Date().getFullYear(),
+    sex: '',
   });
 
   const handleSubmit = event => {
@@ -34,7 +39,12 @@ const Register = props => {
         <Redirect to='/' />
       :
         <div className="register">
-          <h1>{lang('title')}</h1>
+          <header>
+            <h1>{lang('title')}</h1>
+            <p className="register-link"
+              onClick={() => {props.history.push('/login')}}
+            >{lang('buttons.login')}</p>
+          </header>
           <form onSubmit={handleSubmit}>
             <input className="blue-focus"
               type="username" name="username"
@@ -56,11 +66,12 @@ const Register = props => {
               placeholder={lang('placeholders.password_confirmation')}
               value={field.password_confirmation} onChange={handleChange}
             />
+            <p className="label">{lang('labels.birthday')}</p>
+            <PickDate change={handleChange} />
+            <p className="label">{lang('labels.sex')}</p>
+            <Sex change={handleChange} /> <br/>
             <button className="login-btn" type="submit">{lang('buttons.register')}</button>
           </form>
-          <p className="register-link"
-            onClick={() => {props.history.push('/login')}}
-          >{lang('buttons.login')}</p>
         </div>
       }
      
