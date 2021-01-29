@@ -1,4 +1,13 @@
 {
   "title": "Registro",
-  "button": "Iniciar sesión"
+  "placeholders": {
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "password_confirmation": "Confirmar contraseña"
+  },
+  "buttons": {
+    "register": "Regístrate",
+    "login": "Iniciar sesión"
+  }
 }

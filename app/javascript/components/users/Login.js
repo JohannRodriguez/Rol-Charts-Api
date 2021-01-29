@@ -52,15 +52,15 @@ const Login = props => {
               type="password" name="password" placeholder={lang('placeholders.password')}
               value={field.password} onChange={handleChange}
             />
-          <button className="login-btn" type="submit">{lang('buttons.login')}</button>
+            {response.status === 'BAD_USER' ?
+              <p>{lang('errors.email')}</p>
+            : response.status === 'BAD_PASSWORD' ?
+              <p>{lang('errors.password')}</p>
+            :
+              null
+            }
+            <button className="login-btn" type="submit">{lang('buttons.login')}</button>
           </form>
-          {response.status === 'BAD_USER' ?
-            <p>{lang('errors.email')}</p>
-          : response.status === 'BAD_PASSWORD' ?
-            <p>{lang('errors.password')}</p>
-          :
-            null
-          }
           <div className="login-adt">
             <div>
               <p>{lang('forgot.message')}</p><span>{lang('forgot.link')}</span><br/>

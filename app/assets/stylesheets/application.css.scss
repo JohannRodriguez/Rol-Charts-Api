@@ -15,8 +15,8 @@
  */
  $dark: rgb(1, 7, 17);
  $light-grey: rgb(95, 99, 102);
- $blue: rgb(67, 137, 235);
- $yellow: rgb(215, 170, 62);
+ $hover-blue: rgb(46, 93, 160);
+ $blue: rgb(66, 136, 235);
  $light: rgb(241, 241, 241);
  $red: rgb(158, 19, 9);
  $dark-red:  rgb(116, 12, 12);
@@ -63,19 +63,16 @@ button {
   border-radius: 20px;
   font-size: 15px;
   font-weight: bold;
-  transition: 0.1s;
+  transition: 0.2s;
   height: 35px;
 
   &:hover {
-    background-color: $light-grey;
-    color: $blue;
+    background-color: $hover-blue;
     transition: 0.2s;
+    box-sizing: border-box;
   }
   &:focus {
     outline: none;
-    -webkit-box-shadow: 0px 0px 1px 2px $blue; 
-    box-shadow: 0px 0px 1px 2px $blue;
-    transition: 0.2s;
   }
 }
 
@@ -135,10 +132,6 @@ button {
       margin: auto;
       border-bottom: 1px solid $grey;
 
-
-      .warn-title {
-        color: $yellow;
-      }
       p {
         line-height: 26px;
         font-size: 21px;
@@ -393,6 +386,27 @@ input {
       &:hover {
         text-decoration: underline;
       }
+    }
+  }
+}
+
+.register {
+  width: 400px;
+  margin: auto;
+
+  input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 10px 0;
+  }
+
+  .register-link {
+    color: $blue;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
