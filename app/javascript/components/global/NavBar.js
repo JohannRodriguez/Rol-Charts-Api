@@ -24,7 +24,10 @@ const NavBar = props => {
     <nav>
       <div className="links">
         <p>Logo</p>
-        <div className={path.includes(props.session.user.username) ? 'highlight link' : 'link'}
+        <div className={
+          path.includes(props.session.user.username)
+          && !path.includes('characters') ?
+          'highlight link' : 'link'}
           onClick={() => {redirect(props.session.user.username)}}>
           <svg viewBox="0 0 24 24">
             <g>
@@ -41,6 +44,26 @@ const NavBar = props => {
             </g>
           </svg>
           <span>{lang('dashboard')}</span>
+        </div>
+        <div className={path.includes('characters') ? 'highlight link' : 'link'}
+          onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>
+          <svg viewBox="0 0 100 100">
+            <g>
+              <path d="M50 2 c-55 0, -30 78, -45 91 q-5 5, 5 5
+              h85 q5 0 ,0 -5 c-15 -15, 5 -93, -45 -91z
+              M50 8 c35 0, 35 60, 0 65
+              c-35 -5, -35 -65, 0 -65z
+              M38 18 l-5 9 q5 5, 10 0 l-5 -9z
+              M62 18 l-5 9 q5 5, 10 0 l-5 -9z
+              M38 34.5 c-7 0, -7 6, 0 6 c7 0, 7 -6, 0 -6 z
+              M62 34.5 c-7 0, -7 6, 0 6 c7 0, 7 -6, 0 -6 z
+              M38 61 l5 -13 q-5 -5, -10 0 l5 13z
+              M62 61 l5 -13 q-5 -5, -10 0 l5 13z
+              M45 58 c0 7, 10 7, 10 0z
+              "></path>
+            </g>
+          </svg>
+          <span>{lang('characters')}</span>
         </div>
         <div className={path.includes('friends') ? 'highlight link' : 'link'}
           onClick={() => {redirect('friends')}}>
@@ -66,9 +89,14 @@ const NavBar = props => {
         </div>
         <div className={path.includes('bookmarks') ? 'highlight link' : 'link'}
           onClick={() => {redirect('bookmarks')}}>
-          <svg viewBox="0 0 24 24">
+          <svg viewBox="0 0 100 100">
             <g>
-              <path fill="currentColor" d="M19.9 23.5c-.157 0-.312-.05-.442-.144L12 17.928l-7.458 5.43c-.228.164-.53.19-.782.06-.25-.127-.41-.385-.41-.667V5.6c0-1.24 1.01-2.25 2.25-2.25h12.798c1.24 0 2.25 1.01 2.25 2.25v17.15c0 .282-.158.54-.41.668-.106.055-.223.082-.34.082zM12 16.25c.155 0 .31.048.44.144l6.71 4.883V5.6c0-.412-.337-.75-.75-.75H5.6c-.413 0-.75.338-.75.75v15.677l6.71-4.883c.13-.096.285-.144.44-.144z"></path>
+              <path d="
+              M50 1 h-25 q-9 0, -9 9 v83
+              q0 10, 10 0 l24 -30 l24 30
+              q10 10, 10 0 v-83
+              q0 -9, -9 -9z
+              "></path>
             </g>
           </svg>
           <span>{lang('bookmarks')}</span>
@@ -78,8 +106,9 @@ const NavBar = props => {
           <svg viewBox="0 0 100 100">
             <g>
               <path d="
-                M15 1 h70 l14 34 h-99 l15 -34z
-
+                M15 4 l-14 27 c0 10, 19 10, 19 0
+                c0 10, 19 10, 19 0c0 10, 19 10, 19 0c0 10, 19 10, 19 0c0 10, 19 10, 19 0
+                l-14 -27 q-3 -4, -6 -3 h-55 q-3 0, -6 3 z
                 M5 60 v28 c0 7, 3 10, 10 10
                 h 35 c7 0, 10 -7, 10 -10
                 v-18 c2 -18, 22 -18, 24 0 
@@ -88,26 +117,34 @@ const NavBar = props => {
                 c-7 0, -15 0, -15 15 v12
                 q0 5, -5 5 h-17 q-5 0, -5 -5 v-20
                 q0 -5, -5 -5 h-4 q-5 0, -5 5 z
-
               "></path>
             </g>
           </svg>
           <span>{lang('marketplace')}</span>
         </div>
         <div className="link">
-          <svg viewBox="0 0 24 24">
+          <svg viewBox="0 0 100 100">
             <g>
-              <path fill="currentColor" d="M21.697 16.468c-.02-.016-2.14-1.64-2.103-6.03.02-2.532-.812-4.782-2.347-6.335C15.872 2.71 14.01 1.94 12.005 1.93h-.013c-2.004.01-3.866.78-5.242 2.174-1.534 1.553-2.368 3.802-2.346 6.334.037 4.33-2.02 5.967-2.102 6.03-.26.193-.366.53-.265.838.102.308.39.515.712.515h4.92c.102 2.31 1.997 4.16 4.33 4.16s4.226-1.85 4.327-4.16h4.922c.322 0 .61-.206.71-.514.103-.307-.003-.645-.263-.838zM12 20.478c-1.505 0-2.73-1.177-2.828-2.658h5.656c-.1 1.48-1.323 2.66-2.828 2.66zM4.38 16.32c.74-1.132 1.548-3.028 1.524-5.896-.018-2.16.644-3.982 1.913-5.267C8.91 4.05 10.397 3.437 12 3.43c1.603.008 3.087.62 4.18 1.728 1.27 1.285 1.933 3.106 1.915 5.267-.024 2.868.785 4.765 1.525 5.896H4.38z"></path>
+              <path d="
+              M50 4 c-50 0, -15 50, -46 75
+              h93 c-31 -15, 4 -75,-46 -75z
+              M30 79 c0 25, 40 25, 40 0z
+              "></path>
             </g>
           </svg>
           <span>{lang('notifications')}</span>
         </div>
         <div className={path.includes('settings') ? 'highlight link' : 'link'}
           onClick={() => {redirect('settings?tab=account')}}>
-          <svg viewBox="0 0 24 24">
+          <svg viewBox="0 0 100 100">
             <g>
-              <path fill="currentColor" d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path>
-              <path fill="currentColor" d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z"></path>
+              <path d="
+              M50 1 c-65 0, -65 98, 0 98
+              c65 0, 65 -98, 0 -98z
+              M50 40 c15 0, 15 20, 0 20 c-15 0, -15 -20, 0 -20z
+              M50 18 c15 0, 15 20, 0 20 c-15 0, -15 -20, 0 -20z
+              M50 62 c15 0, 15 20, 0 20 c-15 0, -15 -20, 0 -20z
+              "></path>
             </g>
           </svg>
           <span>{lang('settings')}</span>
@@ -118,4 +155,3 @@ const NavBar = props => {
 };
 
 export default NavBar;
-// fill="currentColor"
