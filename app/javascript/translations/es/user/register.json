@@ -7,7 +7,10 @@
     "password_confirmation": "Confirmar contraseña"
   },
   "buttons": {
-    "register": "Regístrate",
+    "reg": {
+      "main": "Regístrate",
+      "secondary": "Comienza tu aventura"
+    },
     "login": "Iniciar sesión"
   },
   "labels": {

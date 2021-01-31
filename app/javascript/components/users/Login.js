@@ -44,14 +44,18 @@ const Login = props => {
         <div className="login">
           <h1>{lang('title')}</h1>
           <form onSubmit={handleSubmit}>
-            <input className="blue-focus"
-              type="email" name="email" placeholder={lang('placeholders.email')}
-              value={field.email} onChange={handleChange}
-            />
-            <input className="blue-focus"
-              type="password" name="password" placeholder={lang('placeholders.password')}
-              value={field.password} onChange={handleChange}
-            />
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="email" name="email" placeholder={lang('placeholders.email')}
+                value={field.email} onChange={handleChange}
+              />
+            </div>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="password" name="password" placeholder={lang('placeholders.password')}
+                value={field.password} onChange={handleChange}
+              />
+            </div>
             {response.status === 'BAD_USER' ?
               <p>{lang('errors.email')}</p>
             : response.status === 'BAD_PASSWORD' ?

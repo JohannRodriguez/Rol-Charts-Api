@@ -1,20 +1,172 @@
 $light: rgb(241, 241, 241);
+$blue: rgb(94, 147, 207);
+$focus-blue: rgb(111, 162, 221);
+$shadow-blue: rgba(5, 5, 14, 0.5);
+$dark: rgb(27, 32, 39);
+$placeholder: rgb(167, 185, 197);
 
 ::placeholder,
 ::-moz-placeholder,
 ::-webkit-input-placeholder{
-  color: $light;
+  color: $placeholder;
   opacity: 1;
 }
 
-.blue-focus {
+input {
+  background-color: $dark;
+  color: $light;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
   transition: 0.2s;
 
   &:focus {
     outline: none;
-    -webkit-box-shadow: 0px 0px 5px 2px $blue; 
-    box-shadow: 0px 0px 5px 2px $blue;
-    border-color: $blue;
+    -webkit-box-shadow: 0px 0px 4px 2px $focus-blue; 
+    box-shadow: 0px 0px 4px 2px $focus-blue;
+    border-color: $focus-blue;
     transition: 0.2s;
+  }
+}
+
+.dfi-bv01 {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
+  .fi-bv01 {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+  }
+}
+
+.label {
+  font-size: 14px;
+  color: $light;
+}
+
+.select {
+  background-color: $dark;
+  border-radius: 5px;
+  color: $light;
+  position: relative;
+
+  &::after {
+    content: '\02EF';
+    position: absolute;
+    right: 5px;
+    top: -28px;
+    color: $placeholder;
+    font-size: 40px;
+    z-index: 0;
+  }
+  &:hover::after {
+    color: $blue;
+  }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0;
+    background-image: none;
+    background: none;
+    color: $placeholder;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    padding: 7px;
+    position: relative;
+    z-index: 10;
+    padding-right: 25px;
+  }
+}
+
+.f-gbv01::before {
+  content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background: linear-gradient(340deg, $blue, rgb(44, 63, 85));
+    border-radius: inherit;
+    z-index: -1;
+    margin: -1px;
+}
+
+.db-sbv01 {
+  height: 40px;
+  width: 100%;
+  position: relative;
+  &:hover {
+    .fb-sbv01 {
+      margin-top: -6px;
+      transition: 0.3s;
+      -webkit-box-shadow: 0px 6px 15px 6px $shadow-blue;
+      -moz-box-shadow: 0px 6px 15px 6px $shadow-blue;
+      box-shadow: 0px 6px 15px 6px $shadow-blue;
+
+      .sb-msg {
+        display: inline-block;
+        position: absolute;
+        opacity: 0;
+        left: 0;
+        right: 0;
+        margin-left: -200px;
+        letter-spacing: 5px;
+        transform: skewX(25deg);
+        animation: sbtn-in 0.35s linear 0.12s forwards;
+      }
+      .mb-msg {
+        animation: btn-out 0.35s linear forwards;
+      }
+    }
+  }
+}
+.fb-sbv01 {
+  font-size: 18px;
+  width: 100%;
+  height: 45px;
+  border-radius: 25px;
+  transition: 0.3s;
+  overflow: hidden;
+  .mb-msg {
+    display: inline-block;
+    animation: btn-in 0.5s linear;
+  }
+  .sb-msg {
+    display: none;
+  }
+}
+
+@keyframes sbtn-in {
+  30% {
+    opacity: 0;
+  }
+  100% {
+    margin-left: 0;
+    transform: skewX(0deg);
+    opacity: 100%;
+    letter-spacing: 0;
+  }
+}
+@keyframes btn-out {
+  100% {
+    transform: skewX(40deg) translateX(100px);
+    letter-spacing: 5px;
+    opacity: 0;
+    display: none;
+  }
+}
+@keyframes btn-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

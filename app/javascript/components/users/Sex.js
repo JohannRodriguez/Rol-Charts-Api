@@ -6,7 +6,7 @@ const Sex = props => {
   const [lang] = useTranslation('sex');
 
   return (
-    <div className="select">
+    <div className="select f-gbv01 sex">
       <select onChange={props.change} name="sex" id="sex">
         <option value="neutro">{lang('neutro')}</option>
         <option value="female">{lang('female')}</option>

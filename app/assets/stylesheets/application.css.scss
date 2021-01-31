@@ -13,10 +13,10 @@
  *= require_tree .
  *= require_self
  */
-$dark: rgb(24, 32, 51);
+$blue: rgb(93, 146, 207);
+$dark: rgb(27, 32, 39);
 $light-grey: rgb(95, 99, 102);
 $hover-blue: rgb(46, 93, 160);
-$blue: rgb(66, 136, 235);
 $light: rgb(241, 241, 241);
 $red: rgb(158, 19, 9);
 $dark-red:  rgb(116, 12, 12);
@@ -42,8 +42,6 @@ main,
   display: block;
 }
 
-
-
 button {
   cursor: pointer;
   border: none;
@@ -56,11 +54,6 @@ button {
   transition: 0.2s;
   height: 35px;
 
-  &:hover {
-    background-color: $hover-blue;
-    transition: 0.2s;
-    box-sizing: border-box;
-  }
   &:focus {
     outline: none;
   }
@@ -329,16 +322,6 @@ main {
   }
 }
 
-input {
-  background-color: $dark;
-  border: 1px solid $light;
-  color: $light;
-  font-size: 14px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-
 .login {
   display: block;
   width: 400px;
@@ -355,15 +338,6 @@ input {
     height: 50px;
     font-size: 18px;
   }
-  .login-btn {
-    display: block;
-    font-size: 18px;
-    width: 100%;
-    height: 40px;
-    margin: 20px 0;
-    border-radius: 20px;
-  }
-
   .login-adt {
     display: block;
     font-size: 14px;
@@ -399,28 +373,20 @@ input {
     align-items: center;
   }
   input {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
     margin: 10px 0;
   }
   .register-link {
     color: $blue;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
 
     &:hover {
       text-decoration: underline;
     }
   }
-  .label {
-    font-size: 14px;
-    color: $light-grey;
-  }
-  button {
-    width: 100%;
-    height: 40px;
+  .sex {
+    margin-bottom: 30px;
   }
 }
 
@@ -434,45 +400,5 @@ input {
     &:first-of-type {
       margin-left: 0;
     }
-  }
-}
-
-.select {
-  background-color: $dark;
-  border-radius: 5px;
-  border: 1px solid $light-grey;
-  color: $light;
-  position: relative;
-
-  &::after {
-    content: '\02EF';
-    position: absolute;
-    right: 5px;
-    top: -28px;
-    color: $light-grey;
-    font-size: 40px;
-    z-index: 0;
-  }
-  &:hover::after {
-    color: $blue;
-  }
-  select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    appearance: none;
-    outline: 0;
-    box-shadow: none;
-    border: 0;
-    background-image: none;
-    background: none;
-    color: $light-grey;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    padding: 7px;
-    position: relative;
-    z-index: 10;
-    padding-right: 25px;
   }
 }

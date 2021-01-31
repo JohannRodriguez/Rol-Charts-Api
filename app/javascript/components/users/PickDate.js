@@ -19,7 +19,7 @@ const PickDate = props => {
 
   return (
     <div className="date">
-      <div className="select">
+      <div className="select f-gbv01">
         <select onChange={props.change}
         name="day" defaultValue={date.getDate()}>
           {days.map(key =>
@@ -29,7 +29,7 @@ const PickDate = props => {
           )}
         </select>
       </div>
-      <div className="select">
+      <div className="select f-gbv01">
         <select onChange={props.change}
         name="month" defaultValue={lang(`${date.getMonth() + 1}`)}>
           {months.map(key =>
@@ -39,7 +39,7 @@ const PickDate = props => {
           )}
         </select>
       </div>
-      <div className="select">
+      <div className="select f-gbv01">
         <select onChange={props.change}
         name="year" defaultValue={date.getFullYear()}>
           {years.reverse().map(key =>

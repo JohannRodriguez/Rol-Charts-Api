@@ -46,37 +46,50 @@ const Register = props => {
             >{lang('buttons.login')}</p>
           </header>
           <form onSubmit={handleSubmit}>
-            <input className="blue-focus"
-              type="username" name="username"
-              placeholder={lang('placeholders.username')}
-              value={field.username} onChange={handleChange}
-            />
-            <input className="blue-focus"
-              type="email" name="email"
-              placeholder={lang('placeholders.email')}
-              value={field.email} onChange={handleChange}
-            />
-            <input className="blue-focus"
-              type="password" name="password"
-              placeholder={lang('placeholders.password')}
-              value={field.password} onChange={handleChange}
-            />
-            <input className="blue-focus"
-              type="password" name="password_confirmation"
-              placeholder={lang('placeholders.password_confirmation')}
-              value={field.password_confirmation} onChange={handleChange}
-            />
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="username" name="username"
+                placeholder={lang('placeholders.username')}
+                value={field.username} onChange={handleChange}
+              />
+            </div>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="email" name="email"
+                placeholder={lang('placeholders.email')}
+                value={field.email} onChange={handleChange}
+              />
+            </div>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="password" name="password"
+                placeholder={lang('placeholders.password')}
+                value={field.password} onChange={handleChange}
+              />
+            </div>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="password" name="password_confirmation"
+                placeholder={lang('placeholders.password_confirmation')}
+                value={field.password_confirmation} onChange={handleChange}
+              />
+            </div>
             <p className="label">{lang('labels.birthday')}</p>
             <PickDate change={handleChange} />
             <p className="label">{lang('labels.sex')}</p>
-            <Sex change={handleChange} /> <br/>
-            <button className="login-btn" type="submit">{lang('buttons.register')}</button>
+            <Sex change={handleChange} />
+            <div className="db-sbv01">
+              <button className="fb-sbv01" type="submit">
+                <span className="sb-msg">{lang('buttons.reg.secondary')}</span>
+                <span className="mb-msg">{lang('buttons.reg.main')}</span>
+              </button>
+            </div>
           </form>
         </div>
       }
      
     </>
   )
-}
+};
 
-export default Register
+export default Register;
