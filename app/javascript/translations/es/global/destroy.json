@@ -1,10 +1,13 @@
-{
-  "button": "Confirmar",
+{ 
+  "go_back": {
+    "1": "Aún estás a tiempo de volver",
+    "2": "No te avergüences por ello"
+  },
+  "button": "Confirmar ¡No le temo a nada!",
   "warning": "Advertencia",
-  "message": "Esta acción no puede ser deshecha, una vez realizada no podrá recuperar los datos que elimine",
   "destroy": {
     "d1": "Escribe",
-    "d2": "debajo para confirmar su decisión"
+    "d2": "debajo para confirmar tu decisión"
   },
   "match": "Campo incorrecto. -.- Debes poner:"
 }

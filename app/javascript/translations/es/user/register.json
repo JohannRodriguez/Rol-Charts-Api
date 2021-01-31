@@ -1,4 +1,20 @@
 {
   "title": "Registro",
-  "button": "Iniciar sesión"
+  "placeholders": {
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "password_confirmation": "Confirmar contraseña"
+  },
+  "buttons": {
+    "reg": {
+      "main": "Regístrate",
+      "secondary": "Comienza tu aventura"
+    },
+    "login": "Iniciar sesión"
+  },
+  "labels": {
+    "birthday": "Fecha de nacimiento",
+    "sex": "Sexo"
+  }
 }

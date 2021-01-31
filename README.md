@@ -28,10 +28,49 @@ Additional description about the project and its features.
 To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
+- ruby 3.0.0
+- ruby on rails 6.1.1
+- yarn 1.22.10
+- node 14.15.1
+- postgresql
 
 ### Setup
+If you don't know how to work with postgres, run the following commands, this will give you permission to create the database.
+Otherwise skip to installation.
+
+- First you need to know the name of your system, you should see it on your terminal
+- Now you need to access the psql console, on your terminal type:
+```
+$ sudo -u postgres psql
+```
+- Finally, you have to create the user the user by running:
+```
+postgres=# CREATE USER your_username WITH PASSWORD 'passwordInsideQuotes' CREATEDB;
+```
+- If you did it correctly you should see a message like this:
+```
+CREATE ROLE
+```
+- You can check your users with:
+```
+postgres=# \du
+```
+- You you should have a similar output:
+
+- That's it! you now can close the console using:
+```
+postgres=# \q
+```
+
 
 ### Install
+
+```
+$ yarn
+$ bundle install
+$ rails db:create
+$ rails db:migrate
+```
 
 ### Usage
 

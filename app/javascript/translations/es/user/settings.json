@@ -1,11 +1,18 @@
 {
   "title": "Configuración",
   "buttons": {
-    "dashboard": "Inicio",
     "destroy": "Eliminar cuenta"
   },
-  "account": {
-    "title": "Ajustes de cuenta"
+  "titles": {
+    "account": "Ajustes de cuenta",
+    "security": "Ajustes de seguridad"
   },
-  "destroy": "Cuenta"
+  "destroy": {
+    "type": "Cuenta",
+    "message": "Esta acción no puede ser deshecha, una vez realizada nunca podrás recuperar tu cuenta y se eliminarán todas las publiciaciones, personajes y grupos que te pertenezcan (Piénsatelo, \"nunca\" puede ser muchísimo tiempo)."
+  },
+  "menu": {
+    "account": "Cuenta",
+    "security": "Seguridad"
+  }
 }

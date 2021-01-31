@@ -1,0 +1,8 @@
+{
+  "options": {
+    "trending": "Populares",
+    "follow": "Seguidos",
+    "latest": "Últimos"
+  },
+  "placeholder": "Búsqueda"
+}

@@ -4,8 +4,8 @@ import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
+import AllFields from './AllFields';
 import Destroy from '../global/Destroy';
-import UpdateUser from './UpdateUser';
 
 const Settings = props => {
   const [lang] = useTranslation('settings');
@@ -13,20 +13,68 @@ const Settings = props => {
   const [modal, setModal] = useState(false);
 
   return (
-    <div>
-      {props.session.log === 'NOT_LOGGED_IN' ?
-        <Redirect to='/login' />
-      :
+    <>
+      {props.session.log === 'LOGGED_IN' ?
       <>
-        <h1>{lang('title')}</h1>
-        <h2>{props.session.user.username}</h2>
-        <button onClick={() => {props.history.push('/')}}>{lang('buttons.dashboard')}</button>
-        <UpdateUser {...props} />
-        <button onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
-        <Destroy modal={modal} setModal={setModal} type="users" id={props.session.user.id} confirmDestroy={`${lang('destroy')}/${props.session.user.username}`} />
+      <main className="settings">
+        <div className="menu">
+          <h2>{lang('title')}</h2>
+          <div
+            className={props.location.search === '?tab=account' ?
+              'highlight menu-btn' : 'menu-btn'}
+            onClick={() => {props.history.push({ search: '?tab=account'})}}
+          >
+            <span>{lang('menu.account')}</span>
+          </div>
+          <div
+            className={props.location.search === '?tab=security' ?
+              'highlight menu-btn' : 'menu-btn'}
+            onClick={() => {props.history.push({ search: '?tab=security'})}}
+          >
+            <span>{lang('menu.security')}</span>
+          </div>
+        </div>
+        <div className="tabs">
+          {props.location.search === '?tab=account' ?
+          <>
+            <h2>{lang('titles.account')}</h2>
+            <div className="arguments">
+              <AllFields {...props}
+                type={'update'}
+                show={{ username: true, }}
+                display={{ username: props.session.user.username }}
+              />
+              <div className="danger">
+                <button className="delete-btn"
+                  onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
+              </div>
+            </div>
+          </>
+          : props.location.search === '?tab=security' ?
+          <> 
+            <h2>{lang('titles.security')}</h2>
+            <div className="arguments">
+              <AllFields {...props}
+                type={'update'}
+                show={{ password: true, password_confirmation: true }}
+                display={{}}
+              />
+            </div>
+          </>
+          :null
+          }
+        </div>
+      </main>
+      <Destroy modal={modal} setModal={setModal}
+        message={lang('destroy.message')}
+        type="users" id={props.session.user.id} 
+        confirmDestroy={`${lang('destroy.type')}/${props.session.user.username}`}
+      />
       </>
+      :
+        <Redirect to='/login' />
       }
-    </div>
+    </>
   );
 };
 

@@ -41,28 +41,39 @@ const Login = props => {
       {props.session.log === 'LOGGED_IN' ?
         <Redirect to='/' />
       :
-        <>
+        <div className="login">
           <h1>{lang('title')}</h1>
           <form onSubmit={handleSubmit}>
-            <input
-              type="email" name="email" placeholder={lang('placeholders.email')}
-              value={field.email} onChange={handleChange} required
-            />
-            <input
-              type="password" name="password" placeholder={lang('placeholders.password')}
-              value={field.password} onChange={handleChange} required
-            />
-          <button type="submit">{lang('buttons.login')}</button>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="email" name="email" placeholder={lang('placeholders.email')}
+                value={field.email} onChange={handleChange}
+              />
+            </div>
+            <div className="dfi-bv01 f-gbv01">
+              <input className="fi-bv01"
+                type="password" name="password" placeholder={lang('placeholders.password')}
+                value={field.password} onChange={handleChange}
+              />
+            </div>
+            {response.status === 'BAD_USER' ?
+              <p>{lang('errors.email')}</p>
+            : response.status === 'BAD_PASSWORD' ?
+              <p>{lang('errors.password')}</p>
+            :
+              null
+            }
+            <button className="login-btn" type="submit">{lang('buttons.login')}</button>
           </form>
-          {response.status === 'BAD_USER' ?
-            <p>{lang('errors.email')}</p>
-          : response.status === 'BAD_PASSWORD' ?
-            <p>{lang('errors.password')}</p>
-          :
-            null
-          }
-          <button onClick={() => {props.history.push('/register')}}>{lang('buttons.register')}</button>
-        </>
+          <div className="login-adt">
+            <div>
+              <p>{lang('forgot.message')}</p><span>{lang('forgot.link')}</span><br/>
+            </div>
+            <div>
+              <p>{lang('register.message')}</p><span onClick={() => {props.history.push('/register')}}>{lang('register.link')}</span>
+            </div>
+          </div>
+        </div>
       }
     </>
   );

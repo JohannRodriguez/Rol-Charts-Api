@@ -6,7 +6,16 @@
   },
   "buttons": {
     "login": "Iniciar sesión",
-    "register": "Crear nueva cuenta"
+    "register": "Crear nueva cuenta",
+    "forgot": "¿Olvidaste tu contraseña?"
+  },
+  "forgot": {
+    "message": "¿Olvidaste tu contraseña?",
+    "link": "recupérala aquí"
+  },
+  "register": {
+    "message": "¿Aún no eres miembro?",
+    "link": "registrase"
   },
   "errors" : {
     "email": "Ningún usuario fue encontrado con este email",
