@@ -5,15 +5,26 @@ import { useTranslation } from 'react-i18next';
 
 // Import Components
 import api_call from '../../api/api_call';
+import Errors from './Errors';
 import Gender from './Gender';
 import PickDate from './PickDate';
-import Errors from './Errors';
+import validate from './helpers/validation';
 
 const Register = props => {
   const [lang] = useTranslation('register');
 
-  const [field, setField] = useState({
-    username: '',
+  const [fields, setFields] = useState({
+    username: {
+      field: '',
+      validation: {
+        min: 3,
+        max: 16,
+        presence: true,
+        exclude: {
+          special: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+        },
+      },
+    },
     email: '',
     password: '',
     password_confirmation: '',
@@ -23,33 +34,37 @@ const Register = props => {
     gender: 'neutral',
   });
   const [response, setResponse] = useState({});
-  const [validation, setValidation] = useState('true');
-
-  const handleSubmit = async event => {
-    event.preventDefault();
-    const fetch = await api_call('POST', '/api/v1/users', { user: {
-      username: field.username,
-      email: field.email,
-      password: field.password,
-      password_confirmation: field.password_confirmation,
-      birthday: `${field.year}-${field.month + 1}-${field.day}`,
-      gender: field.gender,
-    }, });
-    setResponse(fetch)
-  }
+  const [validation, setValidation] = useState({first: true});
 
   useEffect(() => {
-    console.log(response);
+    console.log(validation);
     if (response && response.status === 'SUCCESS') {
       props.history.push('/');
     }
   });
 
+  const handleSubmit = async event => {
+    event.preventDefault();
+    const fetch = await api_call('POST', '/api/v1/users', { user: {
+      username: fields.username,
+      email: fields.email,
+      password: fields.password,
+      password_confirmation: fields.password_confirmation,
+      birthday: `${fields.year}-${fields.month + 1}-${fields.day}`,
+      gender: fields.gender,
+    }, });
+    setResponse(fetch)
+  }
   const handleChange = event => {
-    setField({
-      ...field,
-      [event.target.name]: event.target.value
+    setFields({
+      ...fields,
+      [event.target.name]: {
+        ...fields[event.target.name],
+        field: event.target.value
+      }
     });
+
+    validate(event.target.name, event.target.value, fields, validation, setValidation);
   }
 
   return (
@@ -69,7 +84,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="username" name="username"
                 placeholder={lang('placeholders.username')}
-                value={field.username} onChange={handleChange}
+                value={fields.username.field} onChange={handleChange}
               />
             </div>
             <Errors type='username' error={response.error ? response.error.username : null} />
@@ -77,7 +92,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="email" name="email"
                 placeholder={lang('placeholders.email')}
-                value={field.email} onChange={handleChange}
+                value={fields.email} onChange={handleChange}
               />
             </div>
             <Errors type='email' error={response.error ? response.error.email : null} />
@@ -85,7 +100,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="password" name="password"
                 placeholder={lang('placeholders.password')}
-                value={field.password} onChange={handleChange}
+                value={fields.password} onChange={handleChange}
               />
             </div>
             <Errors type='password' error={response.error ? response.error.password : null} />
@@ -93,7 +108,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="password" name="password_confirmation"
                 placeholder={lang('placeholders.password_confirmation')}
-                value={field.password_confirmation} onChange={handleChange}
+                value={fields.password_confirmation} onChange={handleChange}
               />
             </div>
             <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
@@ -101,7 +116,7 @@ const Register = props => {
             <PickDate change={handleChange} />
             <p className="label">{lang('labels.gender')}</p>
             <Gender change={handleChange} />
-            {validation === 'true' ?
+            {Object.keys(validation).length === 0 ?
               <div className="db-sbv01 db-sbvt">
                 <button className="fb-sbv01" type="submit">
                   <span className="sb-msg">{lang('buttons.reg.secondary')}</span>

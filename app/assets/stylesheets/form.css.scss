@@ -7,9 +7,19 @@ $shadow: rgba(5, 5, 14, 0.5);
 $dark: rgb(27, 32, 39);
 $placeholder: rgb(167, 185, 197);
 
-::placeholder,
-::-moz-placeholder,
-::-webkit-input-placeholder{
+::placeholder {
+  color: $placeholder;
+  opacity: 1;
+}
+::-moz-placeholder {
+  color: $placeholder;
+  opacity: 1;
+}
+::-webkit-input-placeholder {
+  color: $placeholder;
+  opacity: 1;
+}
+::-ms-placeholder {
   color: $placeholder;
   opacity: 1;
 }
