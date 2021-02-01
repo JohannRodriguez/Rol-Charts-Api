@@ -1,7 +1,9 @@
 $light: rgb(241, 241, 241);
 $blue: rgb(94, 147, 207);
 $focus-blue: rgb(111, 162, 221);
-$shadow-blue: rgba(5, 5, 14, 0.5);
+$validate-blue: rgb(21, 77, 112);
+$validate-grey: rgb(122, 128, 131);
+$shadow: rgba(5, 5, 14, 0.5);
 $dark: rgb(27, 32, 39);
 $placeholder: rgb(167, 185, 197);
 
@@ -98,17 +100,21 @@ input {
     margin: -1px;
 }
 
-.db-sbv01 {
-  height: 40px;
-  width: 100%;
-  position: relative;
+.db-sbvt {
+  .sb-msg {
+    display: none;
+  }
+  .mb-msg {
+    display: inline-block;
+    animation: btn-in 0.5s linear;
+  }
   &:hover {
     .fb-sbv01 {
       margin-top: -6px;
       transition: 0.3s;
-      -webkit-box-shadow: 0px 6px 15px 6px $shadow-blue;
-      -moz-box-shadow: 0px 6px 15px 6px $shadow-blue;
-      box-shadow: 0px 6px 15px 6px $shadow-blue;
+      -webkit-box-shadow: 0px 6px 15px 6px $shadow;
+      -moz-box-shadow: 0px 6px 15px 6px $shadow;
+      box-shadow: 0px 6px 15px 6px $shadow;
 
       .sb-msg {
         display: inline-block;
@@ -127,6 +133,12 @@ input {
     }
   }
 }
+.db-sbv01 {
+  height: 45px;
+  border-radius: 25px;
+  width: 100%;
+  position: relative;
+}
 .fb-sbv01 {
   font-size: 18px;
   width: 100%;
@@ -134,12 +146,35 @@ input {
   border-radius: 25px;
   transition: 0.3s;
   overflow: hidden;
-  .mb-msg {
-    display: inline-block;
-    animation: btn-in 0.5s linear;
+}
+
+.db-sbvf {
+  &:hover {
+    .mb-msg {
+      transition: 0.4s;
+      opacity: 0;
+    }
+    .sb-msg {
+      transition: 1.5s;
+      opacity: 1;
+    }
   }
   .sb-msg {
-    display: none;
+    display: inline-block;
+    transition: 0.4s;
+    opacity: 0;
+    position: absolute;
+    left: 0; right: 0;
+    font-size: 16px;
+  }
+  .fb-sbv01 {
+    background-color: $validate-blue;
+  }
+  .mb-msg {
+    transition: 1s;
+  }
+  span {
+    color: $validate-grey;
   }
 }
 

@@ -1,0 +1,24 @@
+{
+  "username": {
+    "presence": "El nombre de usuario no puede estar en blanco.",
+    "short": "El nombre de usuario debe tener un mínimo de 3 caracteres.",
+    "long": "El nombre de usuario debe tener un máximo de 16 carateres.",
+    "format": "El nombre de usuario no puede contener caracteres especials, solo números, letras y guiones bajos.",
+    "uniqueness": "Este nombre de usario ya está en uso, intenta elegir otro."
+  },
+  "email": {
+    "presence": "Tu correo electrónico no puede estar en blanco.",
+    "uniqueness": "Este correo electrónico ya está en uso.",
+    "email": "Debes ingresar un correo electrónico válido."
+  },
+  "password": {
+    "can't be blank": "Debes proporcionar una contraseña.",
+    "short": "La contraseña debe tener un mínimo de 8 caracteres.",
+    "long": "La contraseña debe tener un máximo de 28 carateres.",
+    "format": "La contraseña debe contener una letra mayúscula, una letra minúscula, un número y un caracter especial."
+  },
+  "password_confirmation": {
+    "presence": "Debes confirmar tu contraseña.",
+    "doesn't match Password": "Las contraseñas no coinciden"
+  }
+}

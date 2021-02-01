@@ -84,11 +84,11 @@ module Api
       private
 
       def create_user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :birthday, :gender)
       end
 
       def update_user_params
-        params.require(:user).permit(:username, :password, :password_confirmation)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :gender)
       end
     end
   end
