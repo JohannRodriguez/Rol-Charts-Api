@@ -4,12 +4,12 @@ import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
-import api_call from '../../api/api_call';
 import Errors from './Errors';
 import Gender from './Gender';
 import PickDate from './PickDate';
 import { getFields, submit, validationChange } from './helpers/handler';
 import validationFields from './helpers/validationFields';
+import PasswordCharacters from './PasswordCharacters';
 
 const Register = props => {
   const [lang] = useTranslation('register');
@@ -93,11 +93,15 @@ const Register = props => {
               onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
             />
           </div>
+          {fields.password ?
+            <PasswordCharacters value={fields.password.field} regexes={fields.password.validation.include} />
+          : null}
           {Object.keys(validation).length > 0 ?
             <Errors type='password' error={Array.isArray(validation.password) ? passArr(validation.password) : null } />
           :
             <Errors type='password' error={response.error ? response.error.password : null} />
           }
+          
           <div className="dfi-bv01 f-gbv01">
             <input className="fi-bv01"
               type="password" name="password_confirmation" placeholder={lang('placeholders.password_confirmation')}

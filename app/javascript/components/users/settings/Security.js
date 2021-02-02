@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 // Import Components
 import Errors from '../Errors';
 import { getFields, submit, validationChange } from '../helpers/handler';
+import PasswordCharacters from '../PasswordCharacters';
 import validationFields from '../helpers/validationFields';
 
 const Security = props => {
@@ -18,7 +19,6 @@ const Security = props => {
   });
 
   useEffect(() => {
-    console.log(fields);
     if (response.status) {
       props.setResponse(response);
       setResponse({});
@@ -31,6 +31,11 @@ const Security = props => {
     }
   });
 
+  const passArr = arr => {
+    arr.splice(arr.indexOf('is invalid'));
+    return arr;
+  };
+
   return (
     <form onSubmit={e => submit(e, 'PATCH', `/api/v1/users/${props.user.id}`, getFields(fields, 'user'), setResponse)}>
       <div className="dfi-bv01 f-gbv01">
@@ -41,8 +46,11 @@ const Security = props => {
           onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
         />
       </div>
+      {fields.password ?
+        <PasswordCharacters value={fields.password.field} regexes={fields.password.validation.include} />
+      : null}
       {Object.keys(validation).length > 0 ?
-        <Errors type='password' error={Array.isArray(validation.password) ? validation.password : null } />
+        <Errors type='password' error={Array.isArray(validation.password) ? passArr(validation.password) : null } />
       :
         <Errors type='password' error={response.error ? response.error.password : null} />
       }
