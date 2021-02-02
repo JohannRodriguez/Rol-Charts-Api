@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Account from './settings/Account';
 import Destroy from '../global/Destroy';
 import Authenticate from './Authenticate';
+import Security from './settings/Security';
 
 const Settings = props => {
   const [lang] = useTranslation('settings');
@@ -16,7 +17,6 @@ const Settings = props => {
   const [modal, setModal] = useState(false);
 
   useEffect(() => {
-    console.log(response);
     if (response.status === 'NOT_AUTH') {
       setModal(true);
       setResponse({});
@@ -60,7 +60,7 @@ const Settings = props => {
           <> 
             <h2>{lang('titles.security')}</h2>
             <div className="arguments">
-              
+              <Security user={props.session.user} setResponse={setResponse} />
             </div>
           </>
           :null
