@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
-import AllFields from './AllFields';
+import Account from './settings/Account';
 import Destroy from '../global/Destroy';
 
 const Settings = props => {
@@ -39,11 +39,7 @@ const Settings = props => {
           <>
             <h2>{lang('titles.account')}</h2>
             <div className="arguments">
-              <AllFields {...props}
-                type={'update'}
-                show={{ username: true, }}
-                display={{ username: props.session.user.username }}
-              />
+              <Account user={props.session.user} />
               <div className="danger">
                 <button className="delete-btn"
                   onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
@@ -54,11 +50,7 @@ const Settings = props => {
           <> 
             <h2>{lang('titles.security')}</h2>
             <div className="arguments">
-              <AllFields {...props}
-                type={'update'}
-                show={{ password: true, password_confirmation: true }}
-                display={{}}
-              />
+              
             </div>
           </>
           :null

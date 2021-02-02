@@ -7,7 +7,7 @@ const Gender = props => {
 
   return (
     <div className="select f-gbv01 gender">
-      <select onChange={props.change} name="gender" id="gender">
+      <select onChange={props.change} name="gender" id="gender" defaultValue={props.default || 'neutral'}>
         <option value="neutral">{lang('neutral')}</option>
         <option value="female">{lang('female')}</option>
         <option value="male">{lang('male')}</option>

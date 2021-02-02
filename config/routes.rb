@@ -13,8 +13,6 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :create, :update, :destroy]
       post :authenticate, to: 'users#authenticate'
 
-      
-
       post :email_confirmation, to: 'emails#email_confirmation'
       post :email_resend, to: 'emails#email_resend'
       patch :email_correction, to: 'emails#email_correction'

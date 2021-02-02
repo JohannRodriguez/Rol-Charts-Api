@@ -107,17 +107,6 @@ const Register = props => {
     }, });
     setResponse(fetch)
   };
-  const handleChange = event => {
-    setFields({
-      ...fields,
-      [event.target.name]: {
-        ...fields[event.target.name],
-        field: event.target.value
-      }
-    });
-
-    validate(event.target.name, event.target.value, fields, validation, setValidation);
-  };
   const passArr = arr => {
     arr.splice(arr.indexOf('is invalid'));
     return arr;
@@ -139,8 +128,8 @@ const Register = props => {
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="username" name="username"
-                placeholder={lang('placeholders.username')}
-                value={fields.username.field} onChange={handleChange}
+                placeholder={lang('placeholders.username')} value={fields.username.field} 
+                onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
               />
             </div>
             {Object.keys(validation).length > 0 ?
@@ -152,7 +141,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="email" name="email"
                 placeholder={lang('placeholders.email')}
-                value={fields.email.field} onChange={handleChange}
+                value={fields.email.field} onChange={e => validationChange(e, fields, setFields)}
               />
             </div>
             {Object.keys(validation).length > 0 ?
@@ -164,7 +153,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="password" name="password"
                 placeholder={lang('placeholders.password')}
-                value={fields.password.field} onChange={handleChange}
+                value={fields.password.field} onChange={e => validationChange(e, fields, setFields)}
               />
             </div>
             {Object.keys(validation).length > 0 ?
@@ -177,7 +166,7 @@ const Register = props => {
               <input className="fi-bv01"
                 type="password" name="password_confirmation"
                 placeholder={lang('placeholders.password_confirmation')}
-                value={fields.password_confirmation.field} onChange={handleChange}
+                value={fields.password_confirmation.field} onChange={e => validationChange(e, fields, setFields)}
               />
             </div>
             {Object.keys(validation).length > 0 ?

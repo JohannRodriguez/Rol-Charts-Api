@@ -1,3 +1,4 @@
+json.status 'SUCCESS'
 json.log 'LOGGED_IN'
 json.user do
   json.id @current_user.id
