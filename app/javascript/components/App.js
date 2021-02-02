@@ -17,9 +17,6 @@ import Settings from './users/Settings';
 const App = props => {
   const [session, setSession] = useState(props.session);
 
-  const login = session => {
-    setSession(session);
-  };
   const logout = () => {
     setSession({log: 'NOT_LOGGED_IN',})
   };
@@ -33,16 +30,16 @@ const App = props => {
     : null}
     <Switch>
       <Route exact path='/' render={getProps => (
-        <Dashboard {...getProps} session={session} logout={logout}/>
+        <Dashboard {...getProps} session={session} logout={logout} />
       )}/>
       <Route exact path='/settings' render={getProps => (
-        <Settings {...getProps} session={session}/>
+        <Settings {...getProps} session={session} />
       )}/>
       <Route exact path='/login' render={getProps => (
-        <Login {...getProps} session={session} login={login} />
+        <Login {...getProps} session={session} />
       )}/>
       <Route exact path='/register' render={getProps => (
-        <Register {...getProps} session={session} login={login} />
+        <Register {...getProps} session={session} />
       )}/>
       <Route exact path='/:user/characters' render={getProps => (
         <Characters {...getProps} session={session} />

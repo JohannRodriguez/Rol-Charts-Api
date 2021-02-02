@@ -23,7 +23,6 @@ const Register = props => {
   });
 
   useEffect(async () => {
-    console.log(fields);
     if (Object.keys(fields).length === 0) {
       validationFields({ username: '', email: '', password: '',
         password_confirmation: '', day: { field: new Date().getDate() },

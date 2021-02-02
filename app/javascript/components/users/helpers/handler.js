@@ -7,8 +7,11 @@ export const submit = async (event, method, url, obj, setResponse) => {
   const fetch = await api_call(method, url, obj);
   setResponse(fetch);
 };
-export const change = () => {
-
+export const change = (event, field, setField) => {
+  setField({
+    ...field,
+    [event.target.name]: event.target.value
+  });
 };
 export const validationChange = (event, fields, setFields, validation, setValidation) => {
   setFields({
