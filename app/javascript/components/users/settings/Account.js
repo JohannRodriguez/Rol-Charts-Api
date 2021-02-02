@@ -32,7 +32,6 @@ const Account = props => {
     }
   });
 
-  e => submit(e, 'PATCH', `/api/v1/users/${props.user.id}`, getFields(fields, 'user'), setResponse)
   return (
     <form onSubmit={e => submit(e, 'PATCH', `/api/v1/users/${props.user.id}`, getFields(fields, 'user'), setResponse)}>
       <div className="dfi-bv01 f-gbv01">

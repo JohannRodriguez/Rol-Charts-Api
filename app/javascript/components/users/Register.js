@@ -8,66 +8,14 @@ import api_call from '../../api/api_call';
 import Errors from './Errors';
 import Gender from './Gender';
 import PickDate from './PickDate';
-import validate from './helpers/validation';
+import { getFields, submit, validationChange } from './helpers/handler';
+import validationFields from './helpers/validationFields';
 
 const Register = props => {
   const [lang] = useTranslation('register');
   const [m] = useTranslation('months');
 
-  const [fields, setFields] = useState({
-    username: {
-      field: '',
-      validation: {
-        min: 3,
-        max: 16,
-        presence: true,
-        exclude: {
-          special: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
-        },
-        uniqueness: 'pending',
-      },
-    },
-    email: {
-      field: '',
-      validation: {
-        email: true,
-        presence: true,
-        uniqueness: 'pending',
-      },
-    },
-    password: {
-      field: '',
-      validation: {
-        min: 8,
-        max: 26,
-        presence: true,
-        match: {
-          test: 'password_confirmation',
-          target: 'password_confirmation',
-        },
-        include: {
-          special: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
-          low_case: /[a-z]/,
-          up_case: /[A-Z]/,
-          number: /[0-9]/,
-        },
-      },
-    },
-    password_confirmation: {
-      field: '',
-      validation: {
-        presence: true,
-        match: {
-          test: 'password',
-          target: 'password_confirmation',
-        },
-      },
-    },
-    day: { field: new Date().getDate() },
-    month: { field: m(`${new Date().getMonth() + 1}`)},
-    year: { field: new Date().getFullYear() },
-    gender: { field: 'neutral' },
-  });
+  const [fields, setFields] = useState({});
   const [response, setResponse] = useState({});
   const [validation, setValidation] = useState({
     username: { first: true }, email: { first: true }, password: { first: true },
@@ -75,41 +23,32 @@ const Register = props => {
   });
 
   useEffect(async () => {
-    const lists = ['username', 'email'];
-    lists.map(async list => {
-      if (fields[list].validation.uniqueness === 'pending') {
-        setFields({
-          ...fields,
-          [list]: {
-            ...fields[list],
-            validation: {
-              ...fields[list].validation,
-              uniqueness: await api_call('GET', `/api/v1/users?list=${list}`),
-            }
-          }
-        });
-      }
-    });
+    console.log(fields);
+    if (Object.keys(fields).length === 0) {
+      validationFields({ username: '', email: '', password: '',
+        password_confirmation: '', day: { field: new Date().getDate() },
+        month: { field: m(`${new Date().getMonth() + 1}`)},
+        year: { field: new Date().getFullYear() }, gender: 'neutral',
+        }, setFields
+      );
+    }
     if (response.status === 'SUCCESS') {
       location.reload();
     }
   });
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-    const fetch = await api_call('POST', '/api/v1/users', { user: {
-      username: fields.username.field,
-      email: fields.email.field,
-      password: fields.password.field,
-      password_confirmation: fields.password_confirmation.field,
-      birthday: `${fields.year.field}-${fields.month.field}-${fields.day.field}`,
-      gender: fields.gender.field,
-    }, });
-    setResponse(fetch)
-  };
   const passArr = arr => {
     arr.splice(arr.indexOf('is invalid'));
     return arr;
+  };
+  const setBirthday = () => {
+    const obj = fields;
+    const birthday = `${obj.year.field}-${obj.month.field}-${obj.day.field}`;
+    delete obj.day;
+    delete obj.month;
+    delete obj.year;
+    obj.birthday = { field: birthday };
+    return obj;
   };
 
   return (
@@ -123,11 +62,11 @@ const Register = props => {
             onClick={() => {props.history.push('/login')}}
           >{lang('buttons.login')}</p>
         </header>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={e => submit(e, 'POST', '/api/v1/users/', getFields(setBirthday(), 'user'), setResponse)}>
           <div className="dfi-bv01 f-gbv01">
             <input className="fi-bv01"
-              type="text" name="username"
-              placeholder={lang('placeholders.username')} value={fields.username.field} 
+              type="text" name="username" placeholder={lang('placeholders.username')}
+              value={fields.username ? fields.username.field : ''} 
               onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
             />
           </div>
@@ -138,9 +77,9 @@ const Register = props => {
           }
           <div className="dfi-bv01 f-gbv01">
             <input className="fi-bv01"
-              type="email" name="email"
-              placeholder={lang('placeholders.email')}
-              value={fields.email.field} onChange={e => validationChange(e, fields, setFields)}
+              type="email" name="email" placeholder={lang('placeholders.email')}
+              value={fields.email ? fields.email.field : ''}
+              onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
             />
           </div>
           {Object.keys(validation).length > 0 ?
@@ -150,9 +89,9 @@ const Register = props => {
           }
           <div className="dfi-bv01 f-gbv01">
             <input className="fi-bv01"
-              type="password" name="password"
-              placeholder={lang('placeholders.password')}
-              value={fields.password.field} onChange={e => validationChange(e, fields, setFields)}
+              type="password" name="password" placeholder={lang('placeholders.password')}
+              value={fields.password ? fields.password.field : ''}
+              onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
             />
           </div>
           {Object.keys(validation).length > 0 ?
@@ -162,9 +101,9 @@ const Register = props => {
           }
           <div className="dfi-bv01 f-gbv01">
             <input className="fi-bv01"
-              type="password" name="password_confirmation"
-              placeholder={lang('placeholders.password_confirmation')}
-              value={fields.password_confirmation.field} onChange={e => validationChange(e, fields, setFields)}
+              type="password" name="password_confirmation" placeholder={lang('placeholders.password_confirmation')}
+              value={fields.password_confirmation ? fields.password_confirmation.field : ''}
+              onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
             />
           </div>
           {Object.keys(validation).length > 0 ?
@@ -173,9 +112,9 @@ const Register = props => {
             <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
           }
           <p className="label">{lang('labels.birthday')}</p>
-          <PickDate change={handleChange} />
+          <PickDate fields={fields} setFields={setFields} validation={validation} setValidation={setValidation} />
           <p className="label">{lang('labels.gender')}</p>
-          <Gender change={handleChange} />
+          <Gender fields={fields} setFields={setFields} validation={validation} setValidation={setValidation} />
           {Object.keys(validation).length === 0 ?
             <div className="db-sbv01 db-sbvt">
               <button className="fb-sbv01" type="submit">
