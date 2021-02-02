@@ -12,6 +12,7 @@ import validate from './helpers/validation';
 
 const Register = props => {
   const [lang] = useTranslation('register');
+  const [m] = useTranslation('months');
 
   const [fields, setFields] = useState({
     username: {
@@ -23,38 +24,89 @@ const Register = props => {
         exclude: {
           special: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
         },
+        uniqueness: 'pending',
       },
     },
-    email: '',
-    password: '',
-    password_confirmation: '',
-    day: new Date().getDate(),
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
-    gender: 'neutral',
+    email: {
+      field: '',
+      validation: {
+        email: true,
+        presence: true,
+        uniqueness: 'pending',
+      },
+    },
+    password: {
+      field: '',
+      validation: {
+        min: 8,
+        max: 26,
+        presence: true,
+        match: {
+          test: 'password_confirmation',
+          target: 'password_confirmation',
+        },
+        include: {
+          special: /[¿¡`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/,
+          low_case: /[a-z]/,
+          up_case: /[A-Z]/,
+          number: /[0-9]/,
+        },
+      },
+    },
+    password_confirmation: {
+      field: '',
+      validation: {
+        presence: true,
+        match: {
+          test: 'password',
+          target: 'password_confirmation',
+        },
+      },
+    },
+    day: { field: new Date().getDate() },
+    month: { field: m(`${new Date().getMonth() + 1}`)},
+    year: { field: new Date().getFullYear() },
+    gender: { field: 'neutral' },
   });
   const [response, setResponse] = useState({});
-  const [validation, setValidation] = useState({first: true});
+  const [validation, setValidation] = useState({
+    username: { first: true }, email: { first: true }, password: { first: true },
+    password_confirmation: { first: true }
+  });
 
-  useEffect(() => {
-    console.log(validation);
-    if (response && response.status === 'SUCCESS') {
-      props.history.push('/');
+  useEffect(async () => {
+    const lists = ['username', 'email'];
+    lists.map(async list => {
+      if (fields[list].validation.uniqueness === 'pending') {
+        setFields({
+          ...fields,
+          [list]: {
+            ...fields[list],
+            validation: {
+              ...fields[list].validation,
+              uniqueness: await api_call('GET', `/api/v1/users?list=${list}`),
+            }
+          }
+        });
+      }
+    });
+    if (response.status === 'SUCCESS') {
+      location.reload();
     }
   });
 
   const handleSubmit = async event => {
     event.preventDefault();
     const fetch = await api_call('POST', '/api/v1/users', { user: {
-      username: fields.username,
-      email: fields.email,
-      password: fields.password,
-      password_confirmation: fields.password_confirmation,
-      birthday: `${fields.year}-${fields.month + 1}-${fields.day}`,
-      gender: fields.gender,
+      username: fields.username.field,
+      email: fields.email.field,
+      password: fields.password.field,
+      password_confirmation: fields.password_confirmation.field,
+      birthday: `${fields.year.field}-${fields.month.field}-${fields.day.field}`,
+      gender: fields.gender.field,
     }, });
     setResponse(fetch)
-  }
+  };
   const handleChange = event => {
     setFields({
       ...fields,
@@ -65,7 +117,11 @@ const Register = props => {
     });
 
     validate(event.target.name, event.target.value, fields, validation, setValidation);
-  }
+  };
+  const passArr = arr => {
+    arr.splice(arr.indexOf('is invalid'));
+    return arr;
+  };
 
   return (
     <>
@@ -87,31 +143,48 @@ const Register = props => {
                 value={fields.username.field} onChange={handleChange}
               />
             </div>
-            <Errors type='username' error={response.error ? response.error.username : null} />
+            {Object.keys(validation).length > 0 ?
+              <Errors type='username' error={Array.isArray(validation.username) ? validation.username : null } />
+            :
+              <Errors type='username' error={response.error ? response.error.username : null} />
+            }
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="email" name="email"
                 placeholder={lang('placeholders.email')}
-                value={fields.email} onChange={handleChange}
+                value={fields.email.field} onChange={handleChange}
               />
             </div>
-            <Errors type='email' error={response.error ? response.error.email : null} />
+            {Object.keys(validation).length > 0 ?
+              <Errors type='email' error={Array.isArray(validation.email) ? validation.email : null } />
+            :
+              <Errors type='email' error={response.error ? response.error.email : null} />
+            }
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="password" name="password"
                 placeholder={lang('placeholders.password')}
-                value={fields.password} onChange={handleChange}
+                value={fields.password.field} onChange={handleChange}
               />
             </div>
-            <Errors type='password' error={response.error ? response.error.password : null} />
+            {Object.keys(validation).length > 0 ?
+              <Errors type='password' error={Array.isArray(validation.password) ? passArr(validation.password)
+              : null } />
+            :
+              <Errors type='password' error={response.error ? response.error.password : null} />
+            }
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="password" name="password_confirmation"
                 placeholder={lang('placeholders.password_confirmation')}
-                value={fields.password_confirmation} onChange={handleChange}
+                value={fields.password_confirmation.field} onChange={handleChange}
               />
             </div>
-            <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
+            {Object.keys(validation).length > 0 ?
+              <Errors type='password_confirmation' error={Array.isArray(validation.password_confirmation) ? validation.password_confirmation : null } />
+            :
+              <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
+            }
             <p className="label">{lang('labels.birthday')}</p>
             <PickDate change={handleChange} />
             <p className="label">{lang('labels.gender')}</p>
@@ -131,7 +204,6 @@ const Register = props => {
                 </button>
               </div>
             }
-            
           </form>
         </div>
       }

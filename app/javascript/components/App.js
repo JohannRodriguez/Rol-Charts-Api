@@ -17,8 +17,8 @@ import Settings from './users/Settings';
 const App = props => {
   const [session, setSession] = useState(props.session);
 
-  const login = status => {
-    setSession(status);
+  const login = session => {
+    setSession(session);
   };
   const logout = () => {
     setSession({log: 'NOT_LOGGED_IN',})
@@ -42,7 +42,7 @@ const App = props => {
         <Login {...getProps} session={session} login={login} />
       )}/>
       <Route exact path='/register' render={getProps => (
-        <Register {...getProps} session={session} />
+        <Register {...getProps} session={session} login={login} />
       )}/>
       <Route exact path='/:user/characters' render={getProps => (
         <Characters {...getProps} session={session} />
