@@ -113,86 +113,84 @@ const Register = props => {
   };
 
   return (
-    <>
-      {props.session.log === 'LOGGED_IN' ?
-        <Redirect to='/' />
-      :
-        <div className="register">
-          <header>
-            <h1>{lang('title')}</h1>
-            <p className="register-link"
-              onClick={() => {props.history.push('/login')}}
-            >{lang('buttons.login')}</p>
-          </header>
-          <form onSubmit={handleSubmit}>
-            <div className="dfi-bv01 f-gbv01">
-              <input className="fi-bv01"
-                type="username" name="username"
-                placeholder={lang('placeholders.username')} value={fields.username.field} 
-                onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
-              />
+    <>{props.session.log === 'LOGGED_IN' ?
+      <Redirect to='/' />
+    :
+      <div className="register">
+        <header>
+          <h1>{lang('title')}</h1>
+          <p className="register-link"
+            onClick={() => {props.history.push('/login')}}
+          >{lang('buttons.login')}</p>
+        </header>
+        <form onSubmit={handleSubmit}>
+          <div className="dfi-bv01 f-gbv01">
+            <input className="fi-bv01"
+              type="text" name="username"
+              placeholder={lang('placeholders.username')} value={fields.username.field} 
+              onChange={e => validationChange(e, fields, setFields, validation, setValidation)}
+            />
+          </div>
+          {Object.keys(validation).length > 0 ?
+            <Errors type='username' error={Array.isArray(validation.username) ? validation.username : null } />
+          :
+            <Errors type='username' error={response.error ? response.error.username : null} />
+          }
+          <div className="dfi-bv01 f-gbv01">
+            <input className="fi-bv01"
+              type="email" name="email"
+              placeholder={lang('placeholders.email')}
+              value={fields.email.field} onChange={e => validationChange(e, fields, setFields)}
+            />
+          </div>
+          {Object.keys(validation).length > 0 ?
+            <Errors type='email' error={Array.isArray(validation.email) ? validation.email : null } />
+          :
+            <Errors type='email' error={response.error ? response.error.email : null} />
+          }
+          <div className="dfi-bv01 f-gbv01">
+            <input className="fi-bv01"
+              type="password" name="password"
+              placeholder={lang('placeholders.password')}
+              value={fields.password.field} onChange={e => validationChange(e, fields, setFields)}
+            />
+          </div>
+          {Object.keys(validation).length > 0 ?
+            <Errors type='password' error={Array.isArray(validation.password) ? passArr(validation.password) : null } />
+          :
+            <Errors type='password' error={response.error ? response.error.password : null} />
+          }
+          <div className="dfi-bv01 f-gbv01">
+            <input className="fi-bv01"
+              type="password" name="password_confirmation"
+              placeholder={lang('placeholders.password_confirmation')}
+              value={fields.password_confirmation.field} onChange={e => validationChange(e, fields, setFields)}
+            />
+          </div>
+          {Object.keys(validation).length > 0 ?
+            <Errors type='password_confirmation' error={Array.isArray(validation.password_confirmation) ? validation.password_confirmation : null } />
+          :
+            <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
+          }
+          <p className="label">{lang('labels.birthday')}</p>
+          <PickDate change={handleChange} />
+          <p className="label">{lang('labels.gender')}</p>
+          <Gender change={handleChange} />
+          {Object.keys(validation).length === 0 ?
+            <div className="db-sbv01 db-sbvt">
+              <button className="fb-sbv01" type="submit">
+                <span className="sb-msg">{lang('buttons.reg.secondary')}</span>
+                <span className="mb-msg">{lang('buttons.reg.main')}</span>
+              </button>
             </div>
-            {Object.keys(validation).length > 0 ?
-              <Errors type='username' error={Array.isArray(validation.username) ? validation.username : null } />
-            :
-              <Errors type='username' error={response.error ? response.error.username : null} />
-            }
-            <div className="dfi-bv01 f-gbv01">
-              <input className="fi-bv01"
-                type="email" name="email"
-                placeholder={lang('placeholders.email')}
-                value={fields.email.field} onChange={e => validationChange(e, fields, setFields)}
-              />
+          :
+            <div className="db-sbv01 db-sbvf">
+              <button className="fb-sbv01" type="button">
+                <span className="sb-msg">{lang('buttons.reg.validation')}</span>
+                <span className="mb-msg">{lang('buttons.reg.main')}</span>
+              </button>
             </div>
-            {Object.keys(validation).length > 0 ?
-              <Errors type='email' error={Array.isArray(validation.email) ? validation.email : null } />
-            :
-              <Errors type='email' error={response.error ? response.error.email : null} />
-            }
-            <div className="dfi-bv01 f-gbv01">
-              <input className="fi-bv01"
-                type="password" name="password"
-                placeholder={lang('placeholders.password')}
-                value={fields.password.field} onChange={e => validationChange(e, fields, setFields)}
-              />
-            </div>
-            {Object.keys(validation).length > 0 ?
-              <Errors type='password' error={Array.isArray(validation.password) ? passArr(validation.password)
-              : null } />
-            :
-              <Errors type='password' error={response.error ? response.error.password : null} />
-            }
-            <div className="dfi-bv01 f-gbv01">
-              <input className="fi-bv01"
-                type="password" name="password_confirmation"
-                placeholder={lang('placeholders.password_confirmation')}
-                value={fields.password_confirmation.field} onChange={e => validationChange(e, fields, setFields)}
-              />
-            </div>
-            {Object.keys(validation).length > 0 ?
-              <Errors type='password_confirmation' error={Array.isArray(validation.password_confirmation) ? validation.password_confirmation : null } />
-            :
-              <Errors type='password_confirmation' error={response.error ? response.error.password_confirmation : null} />
-            }
-            <p className="label">{lang('labels.birthday')}</p>
-            <PickDate change={handleChange} />
-            <p className="label">{lang('labels.gender')}</p>
-            <Gender change={handleChange} />
-            {Object.keys(validation).length === 0 ?
-              <div className="db-sbv01 db-sbvt">
-                <button className="fb-sbv01" type="submit">
-                  <span className="sb-msg">{lang('buttons.reg.secondary')}</span>
-                  <span className="mb-msg">{lang('buttons.reg.main')}</span>
-                </button>
-              </div>
-            :
-              <div className="db-sbv01 db-sbvf">
-                <button className="fb-sbv01" type="button">
-                  <span className="sb-msg">{lang('buttons.reg.validation')}</span>
-                  <span className="mb-msg">{lang('buttons.reg.main')}</span>
-                </button>
-              </div>
-            }
+          }
           </form>
         </div>
       }

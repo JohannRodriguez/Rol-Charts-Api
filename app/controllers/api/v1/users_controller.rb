@@ -59,7 +59,9 @@ module Api
       def update
         user = @current_user if @current_user === User.find_by(id: params[:id])
 
-        if (Time.now.to_i - session[:auth_time]) > 18000
+        if user.status === 'INACTIVE' or user.status === 'DEACTIVADED' or user.status ==='BANNED'
+          render json: { status: 'BAD_CREDENTIALS', argument: user.status }
+        elsif (Time.now.to_i - session[:auth_time]) > 18000
           session[:auth_status] = 'NOT_AUTH'
           render json: { status: 'NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'

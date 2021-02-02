@@ -2,7 +2,7 @@
   "title": "Autenticación",
   "placeholder": "Contraseña",
   "button": "Confirmar",
-  "error": {
+  "errors": {
     "password": "Contraseña Incorrecta",
     "user": "Ningún usuario fue encontrado con este nombre"
   },

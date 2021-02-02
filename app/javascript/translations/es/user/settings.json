@@ -14,5 +14,8 @@
   "menu": {
     "account": "Cuenta",
     "security": "Seguridad"
+  },
+  "account": {
+    "button": "Guardar cambios"
   }
 }
