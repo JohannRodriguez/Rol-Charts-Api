@@ -9,12 +9,13 @@
   "buttons": {
     "reg": {
       "main": "Regístrate",
-      "secondary": "Comienza tu aventura"
+      "secondary": "Comienza tu aventura",
+      "validation": "Debes llenar correctamente todos los campos"
     },
     "login": "Iniciar sesión"
   },
   "labels": {
     "birthday": "Fecha de nacimiento",
-    "sex": "Sexo"
+    "gender": "Género"
   }
 }

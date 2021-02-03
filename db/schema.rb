@@ -29,6 +29,8 @@ ActiveRecord::Schema.define(version: 2021_01_18_161558) do
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.string "gender"
+    t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "status", default: "INACTIVE"

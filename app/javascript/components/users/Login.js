@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
-import api_call from '../../api/api_call';
+import { change, submit } from './helpers/handler';
 
 const Login = props => {
   const [lang] = useTranslation('login');
@@ -17,24 +17,9 @@ const Login = props => {
 
   useEffect(() => {
     if (response.status === 'SUCCESS') {
-      delete response.status;
-      props.login(response);
-      props.history.push('/');
+      location.reload();
     }
   });
-
-  const handleSubmit = async event => {
-    event.preventDefault();
-    
-    const fetch = await api_call('POST', '/api/v1/sessions', {user: field});
-    setResponse(fetch);
-  };
-  const handleChange = event => {
-    setField({
-      ...field,
-      [event.target.name]: event.target.value
-    });
-  };
 
   return (
     <>
@@ -43,17 +28,17 @@ const Login = props => {
       :
         <div className="login">
           <h1>{lang('title')}</h1>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={e => submit(e, 'POST', '/api/v1/sessions', {user: field}, setResponse)}>
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="email" name="email" placeholder={lang('placeholders.email')}
-                value={field.email} onChange={handleChange}
+                value={field.email} onChange={e => change(e, field, setField)}
               />
             </div>
             <div className="dfi-bv01 f-gbv01">
               <input className="fi-bv01"
                 type="password" name="password" placeholder={lang('placeholders.password')}
-                value={field.password} onChange={handleChange}
+                value={field.password} onChange={e => change(e, field, setField)}
               />
             </div>
             {response.status === 'BAD_USER' ?

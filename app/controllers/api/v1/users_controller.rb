@@ -4,8 +4,9 @@ module Api
       include CurrentUserConcern
       
       def index
-        users = User.all.collect(&:username)
-        render json: users
+        users = User.select(params[:list])
+        usersArr = users.collect{|u| u[params[:list]]}
+        render json: usersArr
       end
 
       def show
@@ -37,6 +38,7 @@ module Api
       end
 
       def create
+        fail
         user = User.new(create_user_params)
 
         if user.save
@@ -44,7 +46,12 @@ module Api
           session[:auth_status] = 'NOT_AUTH'
           session[:auth_time] = 0
           UsersMailer.registration_confirmation(user).deliver
-          render json: { status: 'SUCCESS' }
+          render json: { status: 'SUCCESS', user: {
+            id: user.id,
+            username: user.username,
+            status: user.status,
+            email: user.email,
+          }, }
         else
           render json: { status: 'BAD_FIELD', error: user.errors }
         end
@@ -53,7 +60,9 @@ module Api
       def update
         user = @current_user if @current_user === User.find_by(id: params[:id])
 
-        if (Time.now.to_i - session[:auth_time]) > 18000
+        if user.status === 'INACTIVE' or user.status === 'DEACTIVADED' or user.status ==='BANNED'
+          render json: { status: 'BAD_CREDENTIALS', argument: user.status }
+        elsif (Time.now.to_i - session[:auth_time]) > 18000
           session[:auth_status] = 'NOT_AUTH'
           render json: { status: 'NOT_AUTH' }
         elsif session[:auth_status] === 'AUTH' and user.status === 'ACTIVE' or user.status === 'SUSPENDED'
@@ -84,11 +93,11 @@ module Api
       private
 
       def create_user_params
-        params.require(:user).permit(:username, :email, :password, :password_confirmation)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :birthday, :gender)
       end
 
       def update_user_params
-        params.require(:user).permit(:username, :password, :password_confirmation)
+        params.require(:user).permit(:username, :email, :password, :password_confirmation, :gender)
       end
     end
   end

@@ -20,13 +20,15 @@ import characters_es from '../translations/es/character/characters.json';
 import dashboard_es from '../translations/es/user/dashboard.json';
 import destroy_es from '../translations/es/global/destroy.json';
 import email_es from '../translations/es/email/email.json';
+import errors_es from '../translations/es/global/errors.json';
 import login_es from '../translations/es/user/login.json';
 import months_es from '../translations/es/user/months.json';
 import navbar_es from '../translations/es/global/navbar.json';
 import new_character_es from '../translations/es/character/new_character.json';
+import placeholders_es from '../translations/es/global/placeholders.json';
 import register_es from '../translations/es/user/register.json';
 import settings_es from '../translations/es/user/settings.json';
-import sex_es from '../translations/es/user/sex.json';
+import gender_es from '../translations/es/user/gender.json';
 
 const getLang = session => {
   if (session.lang) {
@@ -58,13 +60,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         dashboard: dashboard_es,
         destroy: destroy_es,
         email: email_es,
+        errors: errors_es,
         login: login_es,
         months: months_es,
         navbar: navbar_es,
         new_character: new_character_es,
+        placeholders: placeholders_es,
         register: register_es,
         settings: settings_es,
-        sex: sex_es,
+        gender: gender_es,
       },
       en: {
         login: login_en,

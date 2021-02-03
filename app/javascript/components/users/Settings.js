@@ -1,20 +1,30 @@
 // Import Packages
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
-import AllFields from './AllFields';
+import Account from './settings/Account';
 import Destroy from '../global/Destroy';
+import Authenticate from './Authenticate';
+import Security from './settings/Security';
 
 const Settings = props => {
   const [lang] = useTranslation('settings');
 
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [response, setResponse] = useState({});
   const [modal, setModal] = useState(false);
 
+  useEffect(() => {
+    if (response.status === 'NOT_AUTH') {
+      setModal(true);
+      setResponse({});
+    }
+  });
+
   return (
-    <>
-      {props.session.log === 'LOGGED_IN' ?
+    <>{props.session.log === 'LOGGED_IN' ?
       <>
       <main className="settings">
         <div className="menu">
@@ -39,14 +49,10 @@ const Settings = props => {
           <>
             <h2>{lang('titles.account')}</h2>
             <div className="arguments">
-              <AllFields {...props}
-                type={'update'}
-                show={{ username: true, }}
-                display={{ username: props.session.user.username }}
-              />
+              <Account user={props.session.user} setResponse={setResponse} />
               <div className="danger">
                 <button className="delete-btn"
-                  onClick={() => {setModal(true)}}>{lang('buttons.destroy')}</button>
+                  onClick={() => {setDeleteModal(true)}}>{lang('buttons.destroy')}</button>
               </div>
             </div>
           </>
@@ -54,27 +60,21 @@ const Settings = props => {
           <> 
             <h2>{lang('titles.security')}</h2>
             <div className="arguments">
-              <AllFields {...props}
-                type={'update'}
-                show={{ password: true, password_confirmation: true }}
-                display={{}}
-              />
+              <Security user={props.session.user} setResponse={setResponse} />
             </div>
           </>
           :null
           }
         </div>
       </main>
-      <Destroy modal={modal} setModal={setModal}
+      <Destroy modal={deleteModal} setModal={setDeleteModal}
         message={lang('destroy.message')}
         type="users" id={props.session.user.id} 
         confirmDestroy={`${lang('destroy.type')}/${props.session.user.username}`}
       />
+      <Authenticate modal={modal} setModal={setModal} />
       </>
-      :
-        <Redirect to='/login' />
-      }
-    </>
+    : <Redirect to='/login' />}</>
   );
 };
 

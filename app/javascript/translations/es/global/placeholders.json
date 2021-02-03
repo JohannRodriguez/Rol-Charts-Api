@@ -1,0 +1,6 @@
+{
+  "username": "Nombre de usuario",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "password_confirmation": "Confirmar contraseña"
+}

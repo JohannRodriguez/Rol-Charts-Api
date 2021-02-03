@@ -10,10 +10,13 @@ class User < ApplicationRecord
     (?=.*[[:^alnum:]])
   /x
 
-  validates :username, presence: { message: 'presence' }, length: { in: 3...16, too_long: 'long', too_short: 'short' }, format: { with:  /\A[a-zA-Z0-9\_]+\z/, message: 'format' }, uniqueness: { case_sensitive: false, message: 'uniqueness' }
-  validates :email, presence: { message: 'presence' }, uniqueness: { message: 'uniqueness' }, email: { message: 'email' }
-  validates :password, presence: true, length: { in: 8...28, too_long: 'long', too_short: 'short' }, format: { with: PASSWORD_FORMAT, message: 'format' }, if: :password
-  validates :status, inclusion: { in: %w(INACTIVE ACTIVE DEACTIVADED SUSPENDED BANNED), message: 'status' }
+  validates :username, presence: true, length: { in: 3...16, too_short: 'is too short', too_long: 'is too long' }, format: { with:  /\A[a-zA-Z0-9\_]+\z/ }, uniqueness: { case_sensitive: false }
+  validates :email, presence: true, uniqueness: true, email: true
+  validates :password, presence: true, length: { in: 8...28, too_short: 'is too short', too_long: 'is too long' }, format: { with: PASSWORD_FORMAT }
+  validates :password_confirmation, presence: true
+  validates :status, inclusion: { in: %w(INACTIVE ACTIVE DEACTIVADED SUSPENDED BANNED), message: 'inclusion' }
+  validates :gender, presence: true,  inclusion: { in: %w(neutral female male), message: 'inclusion' }
+  validates :birthday, presence: true
 
   def email_activate
     if self.status ==='INACTIVE'
