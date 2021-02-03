@@ -7,4 +7,3 @@ json.user do
   json.gender @current_user.gender
   json.birthday @current_user.birthday
 end
-json.characters @current_user.characters.all.collect(&:name)

@@ -8,4 +8,3 @@ json.user do
   json.gender @user.gender
   json.birthday @user.birthday
 end
-json.characters @user.characters.all.collect(&:name)

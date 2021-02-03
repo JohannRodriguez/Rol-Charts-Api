@@ -38,7 +38,6 @@ module Api
       end
 
       def create
-        fail
         user = User.new(create_user_params)
 
         if user.save

@@ -46,7 +46,7 @@ const NavBar = props => {
           <span>{lang('dashboard')}</span>
         </div>
         <div className={path.includes('characters') ? 'highlight link' : 'link'}
-          onClick={() => {props.history.push(`${props.session.user.username}/characters`)}}>
+          onClick={() => {props.history.push(`/${props.session.user.username}/characters`)}}>
           <svg viewBox="0 0 100 100">
             <g>
               <path d="M50 2 c-55 0, -30 78, -45 91 q-5 5, 5 5

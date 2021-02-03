@@ -1,5 +1,5 @@
 // Import Packages
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -9,19 +9,7 @@ import api_call from '../../api/api_call';
 const Dashboard = props => {
   const [lang] = useTranslation('dashboard');
 
-  const [characters, setCharacters] = useState(null);
   const [field, setField] = useState({ search: '', });
-
-  useEffect(() => {
-    if (!characters && props.session.log === 'LOGGED_IN') {
-      let arr = [props.session.user.username];
-      if (props.session.characters.length > 0) {
-        arr = arr.concat(props.session.characters);
-      }
-      setCharacters(arr);
-    }
-  });
-
 
   const logout = async () => {
     await api_call('DELETE', '/api/v1/logout');
