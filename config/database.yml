@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: rol_charts_production
-  username: rol_charts
-  password: <%= ENV['ROL_CHARTS_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_URL'] %>
