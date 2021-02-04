@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 // Import Components
 import api_call from '../../api/api_call';
 import validate, { checkValidations } from './helpers/new_character_helper';
+import Header from './Header';
 
 const NewCharacter = props => {
   const [lang] = useTranslation('new_character');
@@ -57,7 +58,8 @@ const NewCharacter = props => {
     {props.session.log === 'NOT_LOGGED_IN' ?
       <Redirect to='/login' />
     :
-      <div>
+      <main className="characters">
+        <Header path={props.location.pathname.split('/').filter(e => e)} history={props.history} user={props.session.user.username}/>
         <h1>{lang('title')}</h1>
         <form onSubmit={handleSubmit}>
           <input
@@ -94,7 +96,7 @@ const NewCharacter = props => {
           {response === 'BAD_FIELDS' ? <p>{lang('errors.bad_fields')}</p>: null}
           <button type="submit">{lang('button')}</button>
         </form>
-      </div>
+      </main>
     }
     </>
   )

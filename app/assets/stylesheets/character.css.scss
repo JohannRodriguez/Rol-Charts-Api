@@ -1,24 +1,95 @@
 $pale-blue: rgb(176, 202, 219);
-$grey: rgb(145, 164, 177);
-$offset: 100px;
+$offset: 150px;
+$blue: rgb(93, 146, 207);
+$dark: rgb(27, 32, 39);
+$dark-grey: rgb(35, 44, 56);
+$prov: rgb(27, 32, 39);
+$grey: rgb(55, 68, 83);
 
-.characters article {
-  overflow: hidden;
-  max-width: 700px;
+//rgb(33, 40, 51)
+.characters .c-mh {
+  padding: 5px 0;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100;
+
+  .highlight {
+    position: relative;
+    &::after {
+      content: '';
+      width: 100%;
+      height: 3px;
+      background-color: $blue;
+      position: absolute;
+      bottom: -5px;
+      border-radius: 5px;
+    }
+    svg {
+      fill: $blue;
+      stroke: none !important;
+    }
+  }
+  div:first-of-type {
+    margin-left: 0;
+  }
+  div:last-of-type {
+    margin-right: 0;
+  }
+  div {
+    cursor: pointer;
+    height: 50px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    margin: 0 10px;
+
+    &:hover {
+      svg {
+        stroke: $blue;
+      }
+    }
+    svg {
+      width: 30px;
+    }
+  }
+}
+
+.characters .char-i {
   width: 100%;
-  height: 350px;
-  box-sizing: border-box;
-  margin: auto;
-  border: $pale-blue solid 1px;
-  border-radius: 10px;
-  padding: 20px 25px;
+  flex: 1;
+  padding: 30px 10px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.characters article {
+  overflow: hidden;
+  width: 100%;
+  height: 400px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-flow: column;
+  border: 1px solid $grey;
 
   h2 {
     margin: 0;
+  }
+  header {
+    position: relative;
+    left: 0;
+    background-color: $dark-grey;
+    margin-bottom: 0;
+    padding: 10px;
+  }
+  .date span {
+    margin-right: 5px;
+    font-size: 14px;
   }
 }
 
@@ -41,11 +112,11 @@ $offset: 100px;
       position: absolute;
       top: 0;
       left: -$offset;
-      z-index: -5;
       width: calc(100% + #{$offset});
+      z-index: -5;
+      width: 100%;
       height: 100%;
-      background: rgb(27,32,39);
-      background: linear-gradient(90deg, $grey 0%, $grey 20%, rgba(27,32,39,0) 55%);
+      background: linear-gradient(90deg, $dark-grey 0%, $dark-grey 28%, rgba(27, 32, 39, 0) 50%);
     }
   }
 }
@@ -61,10 +132,17 @@ $offset: 100px;
       top: 0;
       right: -$offset;
       z-index: -5;
-      width: calc(100% - #{$offset});
+      width: calc(100% + #{$offset});
       height: 100%;
-      background: rgb(27,32,39);
-      background: linear-gradient(270deg, $grey 0%, $grey 20%, rgba(27,32,39,0) 55%);
+      background: linear-gradient(270deg, $dark-grey 0%, $dark-grey 21.5%, rgba(27, 32, 39, 0) 50%);
     }
   }
+}
+
+.cm-d {
+  max-width: 740px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 20px;
+  margin: auto;
 }
