@@ -12,12 +12,29 @@ const Characters = props => {
   const [lang] = useTranslation('characters');
   const [m] = useTranslation('months');
 
-  const [characters, setCharacters] = useState(null);
+  const [characters, setCharacters] = useState([{
+    alias: "La roda del desierto",
+    bio: "Cazarecompensas noxiana",
+    created_at: "2021-02-03T04:14:59.593Z",
+    id: 1,
+    name: "Samira",
+    universe: "League of Legends",
+    updated_at: "2021-02-03T04:14:59.593Z",
+    user_id: 1,
+  }]);
   const [owner, setOwner] = useState(null);
   const [usrRes, setUsrRes] = useState({});
 
   useEffect(async () => {
     console.log(characters);
+    if (characters.length === 1) {
+      const arr = [];
+      for (let i = 0; i < 20; i++) {
+        const obj = characters[0];
+        arr.push(obj);
+      }
+      setCharacters(arr);
+    }
     if (Object.keys(usrRes).length === 0) {
       const fetch = await api_call('GET', `/api/v1/users/${props.match.params.user}`);
       setUsrRes(fetch);
@@ -49,34 +66,26 @@ const Characters = props => {
     <main className="characters">
       {usrRes.status === 'SUCCESS' ?
       <>
-      <Header path={props.location.pathname.split('/').filter(e => e)} history={props.history} user={props.session.user.username}/>
+        {owner ?
+          <Header path={props.location.pathname.split('/').filter(e => e)} history={props.history} user={props.session.user.username}/>
+        : null}
         {characters && characters.length === 0 ?
           <p>{lang('empty_chars')}</p>
         : <div className="cm-d">
-          {characters ? characters.map((character, i) =>
-            <article key={`${character.id}-character`}>
-              <header className="gh-dfd">
-                <User name={usrRes.user.username} img="https://i.pinimg.com/236x/83/ff/7c/83ff7ca8f68b1cb9b56759c41e5c15d4.jpg" />
-                <div className="date">
-                  <span>{getDate(character.created_at, 'day')}</span>
-                  <span>{getDate(character.created_at, 'month')}</span>
-                  <span>{getDate(character.created_at, 'year')}</span>
+          {owner ? <h3>{lang('title.owner')}</h3> : <h3>{lang('title.viewer')}</h3>}
+          <section>
+            {characters ? characters.map((character) =>
+              <article key={`${character.id}-character`}>
+                <div className="cd-img">
+                  <img key={`${character.id}-img`} src="https://static.13.cl/7/sites/default/files/esports/articulos/field-image/lol-champion-samira-lanzamiento.jpg" /> 
                 </div>
-              </header>
-              <div className={i % 2 === 0 ? 'char-i ca-l' : 'char-i ca-r'}>
-                <div key={`${character.id}-bg`} className="ca-bg" style={{backgroundImage: `url('https://www.xtrafondos.com/wallpapers/samira-league-of-legends-6798.jpg')`}}></div>
-                <h2 key={`${character.id}-name`}>{character.name}</h2>
-                <div>
-                  {character.universe ?
-                    <p key={`${character.id}-universe`}>{character.universe}</p>
-                  : null}
-                  <button onClick={() => {
-                    props.history.push(`/${usrRes.user.username}/characters/${character.name}`)
-                  }}>{lang('buttons.see')}</button>
+                <div className="cd-n">
+                  <p className={character.name.length <= 10 ? 'cd-nlfb' : 'cd-nlfs'}
+                   key={`${character.id}-name`}>{character.name}</p>
                 </div>
-              </div>
-            </article>
-          ) : null }
+              </article>
+            ) : null }
+          </section>
         </div>}
       </>
       : usrRes && usrRes.status === 'NO_USER' ?

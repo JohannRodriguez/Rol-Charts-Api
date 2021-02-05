@@ -163,7 +163,7 @@ button {
 
 nav,
 .groups {
-  flex-basis: 25%;
+  flex: 1;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -173,7 +173,6 @@ nav,
 nav {
   display: flex;
   justify-content: flex-end;
-  padding: 0 60px;
   box-sizing: border-box;
 
   .link,
