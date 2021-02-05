@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import api_call from '../../api/api_call';
 import ownership from './helpers/global';
 import Header from './Header';
-import User from '../global/User';
 
 const Characters = props => {
   const [lang] = useTranslation('characters');
@@ -48,6 +47,15 @@ const Characters = props => {
     }
   });
 
+  const scl = mult => {
+    const slide = document.querySelector('.h-scl');
+    if (mult === 'left') {
+      slide.scrollLeft -= 300;
+    }
+    else if (mult === 'right') {
+      slide.scrollLeft += 300;
+    }
+  };
   const getDate = (date, type) => {
     const d = new Date(Date.parse(date))
     switch (type) {
@@ -73,19 +81,22 @@ const Characters = props => {
           <p>{lang('empty_chars')}</p>
         : <div className="cm-d">
           {owner ? <h3>{lang('title.owner')}</h3> : <h3>{lang('title.viewer')}</h3>}
-          <section>
+          <section className="h-scl">
             {characters ? characters.map((character) =>
-              <article key={`${character.id}-character`}>
+            <div className="cd-mc">
+              <article className="cd-ma" key={`${character.id}-character`}>
                 <div className="cd-img">
                   <img key={`${character.id}-img`} src="https://static.13.cl/7/sites/default/files/esports/articulos/field-image/lol-champion-samira-lanzamiento.jpg" /> 
                 </div>
                 <div className="cd-n">
-                  <p className={character.name.length <= 10 ? 'cd-nlfb' : 'cd-nlfs'}
-                   key={`${character.id}-name`}>{character.name}</p>
+                  <p key={`${character.id}-name`}>{character.name}</p>
                 </div>
               </article>
+            </div>
             ) : null }
           </section>
+          <p onClick={() => scl('left')}>{'<'}</p>
+          <p onClick={() => scl('right')}>{'>'}</p>
         </div>}
       </>
       : usrRes && usrRes.status === 'NO_USER' ?

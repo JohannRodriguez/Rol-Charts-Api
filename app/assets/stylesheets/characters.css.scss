@@ -57,46 +57,64 @@ $char-w: 112px;
 
 .cm-d {
   width: 100%;
-  margin: auto;
 }
-
 .characters section {
-  height: fit-content;
-  padding: 30px 0;
-  white-space: nowrap;
-  overflow: hidden;
+  height: max-content;
+  overflow: auto;
+  width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
+  padding: 20px 10px;
+  box-sizing: border-box;
 }
-
+.cd-mc {
+  min-width: 15%;
+  height: max-content;
+  position: relative;
+  
+  &::after {
+    content: '';
+    display: block;
+    padding-top: calc(100% / (1 / 1.2));
+  }
+}
 .characters article {
-  margin: 0 10px;
-  width: $char-w;
-  height: fit-content;
+  left: 10px; right: 10px;
+  position: absolute;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  height: 90%;
   box-sizing: border-box;
   border-radius: 3px;
   cursor: pointer;
-  transition: 0.5s;
   -webkit-box-shadow: 10px 10px 16px -4px rgba(0,0,0,0.75);
   -moz-box-shadow: 10px 10px 16px -4px rgba(0,0,0,0.75);
   box-shadow: 10px 10px 16px -4px rgba(0,0,0,0.75);
   overflow: hidden;
   background-color: $dark-grey;
-  display: inline-block;
   border: 1px solid $grey;
+  transition: 0.5s;
+  margin: auto;
 
   &:hover {
     transition: 0.5s;
     transform: scale(1.1, 1.1);
   }
   .cd-img {
-    height: $char-w;
+    height: 70%;
     overflow: hidden;
     img {
       position: relative;
-      left: -55px;
-      height: $char-w;
+      left: -40%;
+      height: 100%;
     }
   }
   .cd-n {
+    width: 100%;
     display: flex;
     align-items: center;
     min-height: 35px;
@@ -110,15 +128,10 @@ $char-w: 112px;
     clip-path: polygon(0 0, 20% 0, 30% 10%, 70% 10%, 80% 0, 100% 0, 100% 100%, 0 100%);
     box-sizing: border-box;
     text-align: center;
-
-    .cd-nlfb {
-      font-size: 16.5px;
-    }
-    .cd-nlfs {
-      font-size: 15px;
-    }
+    
     p {
       width: 100%;
+      font-size: 1vw;
       color: $pale-blue;
       word-break: break-all;
       white-space: normal;
