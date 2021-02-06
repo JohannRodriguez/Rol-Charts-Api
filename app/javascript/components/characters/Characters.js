@@ -6,13 +6,14 @@ import { useTranslation } from 'react-i18next';
 import api_call from '../../api/api_call';
 import ownership from './helpers/global';
 import Header from './Header';
+import Carousel from './Carousel';
 
 const Characters = props => {
   const [lang] = useTranslation('characters');
   const [m] = useTranslation('months');
 
   const [characters, setCharacters] = useState([{
-    alias: "La roda del desierto",
+    alias: "La rosa del desierto",
     bio: "Cazarecompensas noxiana",
     created_at: "2021-02-03T04:14:59.593Z",
     id: 1,
@@ -25,10 +26,9 @@ const Characters = props => {
   const [usrRes, setUsrRes] = useState({});
 
   useEffect(async () => {
-    console.log(characters);
     if (characters.length === 1) {
       const arr = [];
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 50; i++) {
         const obj = characters[0];
         arr.push(obj);
       }
@@ -47,15 +47,6 @@ const Characters = props => {
     }
   });
 
-  const scl = mult => {
-    const slide = document.querySelector('.h-scl');
-    if (mult === 'left') {
-      slide.scrollLeft -= 300;
-    }
-    else if (mult === 'right') {
-      slide.scrollLeft += 300;
-    }
-  };
   const getDate = (date, type) => {
     const d = new Date(Date.parse(date))
     switch (type) {
@@ -77,27 +68,17 @@ const Characters = props => {
         {owner ?
           <Header path={props.location.pathname.split('/').filter(e => e)} history={props.history} user={props.session.user.username}/>
         : null}
-        {characters && characters.length === 0 ?
-          <p>{lang('empty_chars')}</p>
+          {characters && characters.length === 0 ?
+            <p>{lang('empty_chars')}</p>
         : <div className="cm-d">
-          {owner ? <h3>{lang('title.owner')}</h3> : <h3>{lang('title.viewer')}</h3>}
-          <section className="h-scl">
-            {characters ? characters.map((character) =>
-            <div className="cd-mc">
-              <article className="cd-ma" key={`${character.id}-character`}>
-                <div className="cd-img">
-                  <img key={`${character.id}-img`} src="https://static.13.cl/7/sites/default/files/esports/articulos/field-image/lol-champion-samira-lanzamiento.jpg" /> 
-                </div>
-                <div className="cd-n">
-                  <p key={`${character.id}-name`}>{character.name}</p>
-                </div>
-              </article>
+            {owner ? <h3>{lang('title.owner')}</h3> : <h3>{lang('title.viewer')}</h3>}
+            <div className="cd-msc">
+              {characters ?
+                <Carousel chars={characters} />
+              : null}
             </div>
-            ) : null }
-          </section>
-          <p onClick={() => scl('left')}>{'<'}</p>
-          <p onClick={() => scl('right')}>{'>'}</p>
-        </div>}
+          </div>
+        }
       </>
       : usrRes && usrRes.status === 'NO_USER' ?
         <p>{lang('errors.no_user')}{`${props.match.params.user}`}</p>
