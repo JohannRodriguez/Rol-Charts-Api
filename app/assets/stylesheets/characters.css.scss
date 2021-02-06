@@ -65,27 +65,27 @@ $metalic-blue: rgb(72, 89, 107);
   width: 100%;
   position: relative;
 }
-.characters section {
-  position: relative;
-  height: max-content;
-  flex-wrap: nowrap;
-  display: flex;
-  padding: 20px 0;
-  box-sizing: border-box;
-  transition: 0.5s;
-  width: 100%;
-}
-.cd-mc {
-  min-width: $resSize;
-  height: max-content;
-  position: relative;
+// .characters section {
+//   position: relative;
+//   height: max-content;
+//   flex-wrap: nowrap;
+//   display: flex;
+//   padding: 20px 0;
+//   box-sizing: border-box;
+//   transition: 0.5s;
+//   width: 100%;
+// }
+// .cd-mc {
+//   min-width: $resSize;
+//   height: max-content;
+//   position: relative;
   
-  &::after {
-    content: '';
-    display: block;
-    padding-top: calc(100% * 1.2);
-  }
-}
+//   &::after {
+//     content: '';
+//     display: block;
+//     padding-top: calc(100% * 1.2);
+//   }
+// }
 .mock {
   min-width: calc(#{$resSize} / 2);
   height: max-content;
@@ -128,14 +128,7 @@ $metalic-blue: rgb(72, 89, 107);
     height: 90%;
 
     .cd-cmn {
-      left: -10px;
-      right: 10px;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: 0.5s;
+      
 
       &:hover {
         opacity: 0.8;
@@ -246,24 +239,7 @@ $metalic-blue: rgb(72, 89, 107);
     }
   }
   .cd-n {
-    width: 105%;
-    height: calc(30% + 5px);
-    display: flex;
-    align-items: center;
-    padding: 5px 10px 0;
-    line-height: 14px;
-    font-weight: bold;
-    position: relative;
-    top: -5px;
-    left: -2.5%;
-    background-color: $dark-grey;
-    transform: skewX(5deg);
-    clip-path: polygon(0 0, 20% 0, 30% 10%, 70% 10%, 80% 0, 100% 0, 100% 100%, 0 100%);
-    box-sizing: border-box;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
     
     p {
       transform: skewX(-6deg);
