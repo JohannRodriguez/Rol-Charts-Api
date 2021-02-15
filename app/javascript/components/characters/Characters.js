@@ -23,7 +23,7 @@ const Characters = props => {
     <Cont styles={{ minHeight: '100vh', width: '70vw', borderRight: `1px solid ${colors.grey}`, borderLeft: `1px solid ${colors.grey}`  }}> { characters.status === 'SUCCESS' ?
       <>
         {characters.owner ?
-          <Header path={props.location.pathname.split('/').filter(e => e)}
+          <Header path={props.location.pathname.toLowerCase().split('/').filter(e => e)}
             history={props.history} user={props.session.user.username}
           />
         : null}

@@ -33,10 +33,10 @@ const flexDisposition = disposition => {
       break;
   }
 };
-const checkElement = (element, type) => {
-  if (Object.prototype.toString.call(element) === '[object Array]') {
-    for (let i = 0; i < element.length; i++) {
-      if (!type.includes(element[i].type)) {
+const checkElement = (width, type) => {
+  if (Object.prototype.toString.call(width) === '[object Array]') {
+    for (let i = 0; i < width.length; i++) {
+      if (!type.includes(width[i].type)) {
         return false;
       }
     }
@@ -64,23 +64,6 @@ const textBreaks = (breaks, base, width) => {
     if (!base && !breaks) num = (width / 5);
   }
   return num;
-};
-const useWidth = props => {
-  const [size, setSize] = useState(props ? props.offsetWidth : null);
-
-  useEffect(() => {
-    if (props && !size) {
-      setSize(props.offsetWidth);
-    }
-    const handleResize = () => {
-      setSize(props.offsetWidth);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  }, [props, size]);
-  return size;
 };
 const propsHandler = (props, type) => {
   return css`
@@ -218,8 +201,20 @@ export const ResText = props => {
   const childs = getChilds(props.children);
   const checkText = checkElement(childs, ['p', 'a', 'span', 'strong']);
   const ref = useRef();
-  const width = useWidth(ref.current);
+  const [width, setWidth] = useState();
   const base = textBreaks(props.params.breaks, props.params.base, width);
+
+  useEffect(() => {
+    setWidth(ref.current.offsetWidth);
+    const handleResize = () => {
+      setWidth(ref.current.offsetWidth);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
   return (
     <>{checkText ?
       <ResTextParent ref={ref} params={props.params} calc={base}>
@@ -385,7 +380,6 @@ const Slider = styled.div`
 export const Carousel = props => {
   const childs = getChilds(props.children);
   const ref = useRef();
-  const width = useWidth(ref.current);
   const [current, setCurrent] = useState(1);
   const [transition, setTransition] = useState(true);
   const [clickable, setClickable] = useState(true);
@@ -416,10 +410,12 @@ export const Carousel = props => {
   }, [current, transition, clickable]);
 
   const scroll = op => {
-    if (clickable) {
-      setCurrent(current + op);
+    if (length > items) {
+      if (clickable) {
+        setCurrent(current + op);
+      }
+      setClickable(false);
     }
-    setClickable(false);
   };
 
   return (
