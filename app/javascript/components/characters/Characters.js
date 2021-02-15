@@ -18,7 +18,7 @@ const Characters = props => {
     const charactersFetch = await api_call('GET', `/api/v1/characters?user=${props.match.params.user}`)
     setCharacters(charactersFetch);
   }, []);
-  console.log(characters);
+
   return (
     <Cont styles={{ minHeight: '100vh', width: '70vw', borderRight: `1px solid ${colors.grey}`, borderLeft: `1px solid ${colors.grey}`  }}> { characters.status === 'SUCCESS' ?
       <>
