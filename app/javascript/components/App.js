@@ -23,11 +23,11 @@ const App = props => {
 
   return (
     <>
-    {session.log === 'LOGGED_IN' ?
+    {/* {session.log === 'LOGGED_IN' ?
       <Route path='/' render={getProps => (
         <NavBar {...getProps} session={session} />
-    )}/>
-    : null}
+    )}/> 
+    : null} */}
     <Switch>
       <Route exact path='/' render={getProps => (
         <Dashboard {...getProps} session={session} logout={logout} />
@@ -57,11 +57,11 @@ const App = props => {
         <ResendEmail {...getProps} />
       )}/>
     </Switch>
-    {session.log === 'LOGGED_IN' ?
+    {/* {session.log === 'LOGGED_IN' ?
       <Route path='/' render={getProps => (
         <NavBar {...getProps} session={session} />
     )}/>
-    : null}
+    : null} */}
     </>
   );
 };
