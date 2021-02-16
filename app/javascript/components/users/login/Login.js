@@ -2,9 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Cont } from '../../../styles/blossom';
 
 // Import Components
-import { change, submit } from './helpers/handler';
+import { change, submit } from '../helpers/handler';
+
+// Import Data
+import loginStyles from './loginStyles';
 
 const Login = props => {
   const [lang] = useTranslation('login');
@@ -26,21 +30,21 @@ const Login = props => {
       {props.session.log === 'LOGGED_IN' ?
         <Redirect to='/' />
       :
-        <div className="login">
+        <Cont styles={loginStyles.contParent.styles}>
           <h1>{lang('title')}</h1>
           <form onSubmit={e => submit(e, 'POST', '/api/v1/sessions', {user: field}, setResponse)}>
-            <div className="dfi-bv01 f-gbv01">
+            <Cont styles={loginStyles.contInput.styles}>
               <input className="fi-bv01"
                 type="email" name="email" placeholder={lang('placeholders.email')}
                 value={field.email} onChange={e => change(e, field, setField)}
               />
-            </div>
-            <div className="dfi-bv01 f-gbv01">
+            </Cont>
+            <Cont styles={loginStyles.contInput.styles}>
               <input className="fi-bv01"
                 type="password" name="password" placeholder={lang('placeholders.password')}
                 value={field.password} onChange={e => change(e, field, setField)}
               />
-            </div>
+            </Cont>
             {response.status === 'BAD_USER' ?
               <p>{lang('errors.email')}</p>
             : response.status === 'BAD_PASSWORD' ?
@@ -58,7 +62,7 @@ const Login = props => {
               <p>{lang('register.message')}</p><span onClick={() => {props.history.push('/register')}}>{lang('register.link')}</span>
             </div>
           </div>
-        </div>
+        </Cont>
       }
     </>
   );

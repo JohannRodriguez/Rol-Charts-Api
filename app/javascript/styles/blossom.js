@@ -98,6 +98,7 @@ const propsHandler = (props, type) => {
 };
 
 export const Cont = styled.div`
+${props => console.log(props)}
   ${props => props.styles ?
     css`
       ${props.styles.width ? null : css`width: 100%;`}
@@ -479,3 +480,4 @@ Carousel.defaultProps = {
   styles: {},
   children: [],
 };
+
