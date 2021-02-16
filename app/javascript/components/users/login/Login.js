@@ -8,7 +8,9 @@ import { Cont } from '../../../styles/blossom';
 import { change, submit } from '../helpers/handler';
 
 // Import Data
-import loginStyles from './loginStyles';
+import loginStyles, { H1, Span, SpanBullet } from './loginStyles';
+import { BlueBorderInput, Input, BlueButton } from '../../../styles/global';
+import loginData from './loginData';
 
 const Login = props => {
   const [lang] = useTranslation('login');
@@ -31,35 +33,29 @@ const Login = props => {
         <Redirect to='/' />
       :
         <Cont styles={loginStyles.contParent.styles}>
-          <h1>{lang('title')}</h1>
+          <H1>{lang('title')}</H1>
           <form onSubmit={e => submit(e, 'POST', '/api/v1/sessions', {user: field}, setResponse)}>
-            <Cont styles={loginStyles.contInput.styles}>
-              <input className="fi-bv01"
-                type="email" name="email" placeholder={lang('placeholders.email')}
-                value={field.email} onChange={e => change(e, field, setField)}
-              />
-            </Cont>
-            <Cont styles={loginStyles.contInput.styles}>
-              <input className="fi-bv01"
-                type="password" name="password" placeholder={lang('placeholders.password')}
-                value={field.password} onChange={e => change(e, field, setField)}
-              />
-            </Cont>
-            {response.status === 'BAD_USER' ?
-              <p>{lang('errors.email')}</p>
-            : response.status === 'BAD_PASSWORD' ?
-              <p>{lang('errors.password')}</p>
-            :
-              null
-            }
-            <button className="login-btn" type="submit">{lang('buttons.login')}</button>
+            {loginData.map(d => 
+              <BlueBorderInput key={d.name} styles={loginStyles.borderInput.styles}>
+                <Input
+                  type={d.type} name={d.name} placeholder={lang(`placeholders.${d.name}`)}
+                  onChange={e => change(e, field, setField)}
+                />
+              </BlueBorderInput>
+            )}
+            {response.status === 'BAD_USER' ? <p>{lang('errors.email')}</p>
+            : response.status === 'BAD_PASSWORD' ? <p>{lang('errors.password')}</p>
+            : null }
+            <BlueButton styles={loginStyles.button.styles} type="submit">{lang('buttons.login')}</BlueButton>
           </form>
-          <div className="login-adt">
+          <div>
             <div>
-              <p>{lang('forgot.message')}</p><span>{lang('forgot.link')}</span><br/>
+              <SpanBullet>{lang('forgot.message')}</SpanBullet>
+              <Span>{lang('forgot.link')}</Span>
             </div>
             <div>
-              <p>{lang('register.message')}</p><span onClick={() => {props.history.push('/register')}}>{lang('register.link')}</span>
+              <SpanBullet>{lang('register.message')}</SpanBullet>
+              <Span onClick={() => {props.history.push('/register')}}>{lang('register.link')}</Span>
             </div>
           </div>
         </Cont>

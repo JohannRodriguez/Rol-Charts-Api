@@ -1,7 +1,9 @@
 {
   "blue": "rgb(93, 146, 207)",
+  "dark": "rgb(27, 32, 39)",
   "darkBlue": "rgb(44, 63, 85)",
   "darkGrey": "rgb(35, 44, 56)",
+  "focusBlue": "rgb(111, 162, 221)",
   "grey": "rgb(55, 68, 83)",
   "light": "rgb(207, 218, 225)",
   "lightGrey": "rgb(169, 181, 196)",
