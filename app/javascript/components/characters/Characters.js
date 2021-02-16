@@ -5,9 +5,11 @@ import { Carousel, Cont, ContRes } from '../../styles/blossom';
 
 // Import Modules
 import api_call from '../../api/api_call';
-import Header from './Header';
-import colors from '../../styles/colors.json';
 import CharacterCard from './CharacterCard';
+import Header from './header/Header';
+
+// Import data
+import colors from '../../styles/colors.json';
 
 const Characters = props => {
   const [lang] = useTranslation('characters');

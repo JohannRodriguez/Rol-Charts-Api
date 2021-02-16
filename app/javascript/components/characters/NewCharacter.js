@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 
 // Import Components
 import api_call from '../../api/api_call';
+import Header from './header/Header';
 import validate, { checkValidations } from './helpers/new_character_helper';
-import Header from './Header';
 
 const NewCharacter = props => {
   const [lang] = useTranslation('new_character');
