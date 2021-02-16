@@ -38,7 +38,7 @@ const CharacterCard = props => {
         backgroundColor: colors.darkGrey, height: '35%', paddingTop: '5%',
         clipPath: 'polygon(0 0, 20% 0, 30% 10%, 70% 10%, 80% 0, 100% 0, 100% 100%, 0 100%)',
         }}>
-        <ResText params={{ bold: true, color: colors.paleBlue, align: 'center', base: 7}}>
+        <ResText params={{ base: 7, }} styles={{ color: colors.paleBlue, fontWeight: 'bold', textAlign: 'center', }}>
           <p>{props.character.name}</p>
         </ResText>
       </Flex>

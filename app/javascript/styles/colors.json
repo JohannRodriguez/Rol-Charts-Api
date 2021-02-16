@@ -2,6 +2,7 @@
   "blue": "rgb(93, 146, 207)",
   "darkGrey": "rgb(35, 44, 56)",
   "grey": "rgb(55, 68, 83)",
+  "light": "rgb(207, 218, 225)",
   "lightGrey": "rgb(169, 181, 196)",
   "paleBlue": "rgb(176, 202, 219)"
 }

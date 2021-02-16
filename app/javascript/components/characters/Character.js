@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import api_call from '../../api/api_call';
 import Destroy from '../global/Destroy';
 import Authenticate from '../users/Authenticate';
-import ownership from './helpers/global';
 import validate, { checkValidations } from './helpers/new_character_helper';
 
 const Character = props => {
@@ -39,9 +38,6 @@ const Character = props => {
     if (usrRes && usrRes.status === 'SUCCESS' && !charRes) {
       const fetch = await api_call('GET', `/api/v1/characters/${props.match.params.character}?user=${usrRes.user.id}`);
       setCharRes(fetch);
-    }
-    if (charRes && charRes.character && owner === null && props.session.user) {
-      setOwner(ownership(props.session.user.id, charRes.character.user_id));
     }
     if (response && response.status === 'SUCCESS') {
       window.location.reload();

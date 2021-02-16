@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState} from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState} from 'react';
 import styled, {css} from 'styled-components';
 
 const styles = styles => {
@@ -27,6 +27,11 @@ const flexDisposition = disposition => {
     case 'spread-center':
       return css`
         justify-content: space-between;
+        align-items: center;
+      `
+    case 'left-center':
+      return css`
+        justify-content: start;
         align-items: center;
       `
     default:
@@ -96,7 +101,7 @@ export const Cont = styled.div`
   ${props => props.styles ?
     css`
       ${props.styles.width ? null : css`width: 100%;`}
-      ${props.styles.height ? null : css`height: 100%;`}
+      ${props.styles.height ? null : css`height: auto;`}
       ${props.styles.position ? null : css`position: relative;`}
     `
   : null}
@@ -109,7 +114,7 @@ export const Flex = styled.div`
   ${props => props.styles ?
     css`
       ${props.styles.width ? null : css`width: 100%;`}
-      ${props.styles.height ? null : css`height: 100%;`}
+      ${props.styles.height ? null : css`height: auto;`}
       ${props.styles.position ? null : css`position: relative;`}
     `
   : null}
@@ -122,15 +127,6 @@ Flex.defaultProps = {
   styles: {},
   children: [],
 };
-const ResTextParent = styled.div`
-  & * {
-    font-size: ${props => props.calc}px;
-    color: ${props => props.params.color || 'white'};
-    font-weight: ${props => props.params.bold ? 'bold' : props.params.weight || 'normal'};
-    text-align: ${props => props.params.align || 'left'}
-  }
-  width: 100%;
-`;
 
 const SvgParent = styled.svg`
   ${props => props.styles.width ? null : css`width: 100%;`}
@@ -197,15 +193,22 @@ ContRes.defaultProps = {
   children: [],
 };
 
+const ResTextParent = styled.div.attrs(props => ({
+  style: {
+    fontSize: `${props.calc}px`,
+  }
+}))`
+  ${props => props.styles.display && css`display: ${props.styles.display};`};
+  ${props => propsHandler(props)}
+  ${props => props.styles.flex ? css`flex: ${props.styles.flex};` : css`width: 100%;`}
+`;
 export const ResText = props => {
   const childs = getChilds(props.children);
-  const checkText = checkElement(childs, ['p', 'a', 'span', 'strong']);
   const ref = useRef();
   const [width, setWidth] = useState();
   const base = textBreaks(props.params.breaks, props.params.base, width);
 
   useEffect(() => {
-    setWidth(ref.current.offsetWidth);
     const handleResize = () => {
       setWidth(ref.current.offsetWidth);
     };
@@ -214,19 +217,19 @@ export const ResText = props => {
       window.removeEventListener('resize', handleResize);
     }
   }, []);
+  useLayoutEffect(() => {
+    setWidth(ref.current.offsetWidth);
+  });
 
   return (
-    <>{checkText ?
-      <ResTextParent ref={ref} params={props.params} calc={base}>
-        {childs.map(e => e)}
-      </ResTextParent>
-    :
-      <p>You must pass a text tag</p>
-    }</>
+    <ResTextParent ref={ref} calc={base} style={{fontSize: `${width / props.params.base}px`}} styles={props.styles} params={props.params}>
+      {childs.map(e => e)}
+    </ResTextParent>
   );
 };
 ResText.defaultProps = {
   params: {},
+  styles: {},
   children: [],
 };
 
@@ -349,13 +352,16 @@ const CarouselSlides = styled.div`
   position: relative;
   padding: 2% 0; 
 `;
-const Slider = styled.div`
+const Slider = styled.div.attrs(props => ({
+  style: {
+    transform: `translateX(${props.offset}%)`,
+  }
+}))`
   display: flex;
   flex-wrap: nowrap;
   ${props => props.transition && css`
     transition: transform 1s;
   `}
-  transform: translateX(${props => props.offset}%);
   .inactive {
     transform: scale(0.8) translateY(10%);
     opacity: 0.8;
