@@ -10,7 +10,9 @@ const validate = (name, value, fields, validation, setValidation) => {
   const params = validation;
 
   if (fields[name].validation.uniqueness) {
-    if (fields[name].validation.uniqueness.includes(value)) {
+    const arr = fields[name].validation.uniqueness || [];
+    const regex =  new RegExp(arr.join('|'), 'i');
+    if (arr.length > 0 && regex.test(value)) {
       if (!arr.includes('has already been taken')) {
         arr.push('has already been taken');
       }
