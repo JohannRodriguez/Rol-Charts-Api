@@ -18,5 +18,9 @@
   "errors" : {
     "email": "Ningún usuario fue encontrado con este email",
     "password": "Contraseña incorrecta"
+  },
+  "confirm_email": {
+    "message": "Ya casi estás, antes de poder iniciar sesión, por favor confirma tu correo electrónico, si quieres reenviar el correo, haz click",
+    "link": "aquí."
   }
 }

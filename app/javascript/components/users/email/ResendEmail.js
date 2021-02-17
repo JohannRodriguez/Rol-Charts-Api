@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 // Import Components
-import api_call from '../../api/api_call';
+import api_call from '../../../api/api_call';
 
-const ResendEmail = () => {
+const ResendEmail = props => {
   const [lang] = useTranslation('email');
 
   const [response, setResponse] = useState(null);
@@ -35,7 +35,6 @@ const ResendEmail = () => {
           type="email"
           name="email"
           placeholder={lang('resend.placeholder')}
-          value={field.email}
           onChange={handleChange}
           required
         />

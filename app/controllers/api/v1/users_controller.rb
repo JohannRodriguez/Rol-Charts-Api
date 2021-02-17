@@ -41,9 +41,6 @@ module Api
         @user = User.new(create_user_params)
 
         if @user.save
-          session[:user_id] = @user.id
-          session[:auth_status] = 'NOT_AUTH'
-          session[:auth_time] = 0
           UserMailer.register_email(@user).deliver_now
           render json: { status: 'SUCCESS', user: {
             id: @user.id,

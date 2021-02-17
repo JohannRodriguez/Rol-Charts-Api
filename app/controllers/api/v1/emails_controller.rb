@@ -14,12 +14,12 @@ module Api
       end
 
       def email_resend
-        user = User.find_by(email: params[:user][:email])
+        @user = User.find_by(email: params[:user][:email])
 
-        if user and user.status === 'INACTIVE'
-          UsersMailer.registration_confirmation(user).deliver
+        if @user and @user.status === 'INACTIVE'
+          UserMailer.register_email(@user).deliver_now
           render json: { status: 'SUCCESS' }
-        elsif user
+        elsif @user
           render json: { status: 'VERIFIED' }
         else
           render json: { status: 'NO_USER' }
