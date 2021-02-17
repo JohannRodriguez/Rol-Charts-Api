@@ -8,7 +8,7 @@ const navSys = {
           backgroundColor: colors.darkGrey,
           cursor: 'pointer',
           color: colors.blue,
-          transition: '0.3s',
+          transition: 'background-color 0.3s, color 0.3s',
         },
       },
       {
@@ -23,7 +23,7 @@ const navSys = {
     styles: {
       padding: '5% 8%',
       borderRadius: '30px',
-      transition: '0.3s',
+      transition: 'background-color 0.3s, color 0.3s',
     },
   },
   svg: {
@@ -39,6 +39,7 @@ const navSys = {
       strokeWidth: 5,
       flex: '0 0 20%',
       marginRight: '5%',
+      transition: '0.3s',
     },
   },
   resText: {
