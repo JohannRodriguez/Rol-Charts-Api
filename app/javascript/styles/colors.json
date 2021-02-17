@@ -3,6 +3,8 @@
   "dark": "rgb(27, 32, 39)",
   "darkBlue": "rgb(44, 63, 85)",
   "darkGrey": "rgb(35, 44, 56)",
+  "fadeBlue": "rgb(54, 94, 140)",
+  "fadeLight": "rgb(177, 180, 183)",
   "focusBlue": "rgb(111, 162, 221)",
   "grey": "rgb(55, 68, 83)",
   "light": "rgb(207, 218, 225)",

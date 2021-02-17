@@ -10,7 +10,7 @@ import Dashboard from './users/Dashboard';
 import Login from './users/login/Login';
 import Navbar from './global/navbar/Navbar';
 import NewCharacter from './characters/NewCharacter';
-import Register from './users/Register';
+import Register from './users/register/Register';
 import ResendEmail from './users/ResendEmail';
 import Settings from './users/Settings';
 

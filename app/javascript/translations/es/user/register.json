@@ -10,7 +10,7 @@
     "reg": {
       "main": "Regístrate",
       "secondary": "Comienza tu aventura",
-      "validation": "Debes llenar correctamente todos los campos"
+      "validation": "Completa el formulario"
     },
     "login": "Iniciar sesión"
   },

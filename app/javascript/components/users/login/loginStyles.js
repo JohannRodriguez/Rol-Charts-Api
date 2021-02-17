@@ -33,6 +33,7 @@ export const SpanBullet = styled.span`
 `;
 export const Span = styled.span`
   cursor: pointer;
+  color: ${colors.blue};
   font-size: 14px;
   &:hover {
     text-decoration: underline;

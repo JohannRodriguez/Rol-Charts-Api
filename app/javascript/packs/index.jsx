@@ -25,6 +25,7 @@ import login_es from '../translations/es/user/login.json';
 import months_es from '../translations/es/user/months.json';
 import navbar_es from '../translations/es/global/navbar.json';
 import new_character_es from '../translations/es/character/new_character.json';
+import pass_char_es from '../translations/es/user/pass_char.json';
 import placeholders_es from '../translations/es/global/placeholders.json';
 import register_es from '../translations/es/user/register.json';
 import settings_es from '../translations/es/user/settings.json';
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         months: months_es,
         navbar: navbar_es,
         new_character: new_character_es,
+        pass_char: pass_char_es,
         placeholders: placeholders_es,
         register: register_es,
         settings: settings_es,
