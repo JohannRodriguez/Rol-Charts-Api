@@ -7,10 +7,10 @@ import Character from './characters/Character';
 import Characters from './characters/Characters';
 import ConfirmEmail from './users/ConfirmEmail';
 import Dashboard from './users/Dashboard';
-import Login from './users/Login';
-import NavBar from './global/NavBar';
+import Login from './users/login/Login';
+import Navbar from './global/navbar/Navbar';
 import NewCharacter from './characters/NewCharacter';
-import Register from './users/Register';
+import Register from './users/register/Register';
 import ResendEmail from './users/ResendEmail';
 import Settings from './users/Settings';
 
@@ -25,8 +25,8 @@ const App = props => {
     <>
     {session.log === 'LOGGED_IN' ?
       <Route path='/' render={getProps => (
-        <NavBar {...getProps} session={session} />
-      )}/>
+        <Navbar {...getProps} session={session} />
+    )}/> 
     : null}
     <Switch>
       <Route exact path='/' render={getProps => (
@@ -57,6 +57,11 @@ const App = props => {
         <ResendEmail {...getProps} />
       )}/>
     </Switch>
+    {session.log === 'LOGGED_IN' ?
+      <Route path='/' render={getProps => (
+        <Navbar {...getProps} session={session} />
+    )}/>
+    : null}
     </>
   );
 };

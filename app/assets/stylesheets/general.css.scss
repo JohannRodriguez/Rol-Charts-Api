@@ -1,0 +1,43 @@
+$light: rgb(207, 218, 225);
+$dark: rgb(27, 32, 39);
+
+html {
+  height: auto;
+  min-height: 100%;
+}
+
+body {
+  background-color: $dark;
+  margin: 0;
+  min-height: 100vh;
+  height: auto;
+  font-family: 'Roboto';
+  color: $light;
+  .app {
+    width: 100%;
+    min-height: 100vh;
+    height: auto;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
+  margin: 0;
+}
+.app {
+  display: flex;
+  & > * {
+    flex: 1;
+  }
+  & > nav {
+    padding: 0 15px;
+  }
+}

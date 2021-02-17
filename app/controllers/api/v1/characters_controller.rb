@@ -4,11 +4,13 @@ module Api
       include CurrentUserConcern
 
       def index
-        user = User.find(params[:user])
-        characters = user.characters.all
+        user = User.find_by(username: params[:user])
+        @characters = user.characters.all if user
+        @owner = false
+        @owner = true if user === @current_user
  
         if user
-          render json: characters
+          render :index
         else
           render json: { status: 'NO_USER' }
         end

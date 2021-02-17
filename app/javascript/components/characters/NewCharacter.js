@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 // Import Components
 import api_call from '../../api/api_call';
+import Header from './header/Header';
 import validate, { checkValidations } from './helpers/new_character_helper';
 
 const NewCharacter = props => {
@@ -57,44 +58,47 @@ const NewCharacter = props => {
     {props.session.log === 'NOT_LOGGED_IN' ?
       <Redirect to='/login' />
     :
-      <div>
-        <h1>{lang('title')}</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text" name="name" placeholder={lang('placeholders.name')}
-            value={field.name} onChange={handleChange} required
-          />
-          {validation.name.uniqueness === 'bad' ?
-            <p>{lang('errors.uniqueness')}</p> : null
-          }
-          {validation.name.length === 'bad' ?
-            <p>{lang('errors.length')}</p> : null
-          }
-          <input
-            type="text" name="alias" placeholder={lang('placeholders.alias')}
-            value={field.alias} onChange={handleChange}
-          />
-          {validation.alias.length === 'bad' ?
-            <p>{lang('errors.length')}</p> : null
-          }
-          <input
-            type="text" name="universe" placeholder={lang('placeholders.universe')}
-            value={field.universe} onChange={handleChange}
-          />
-          {validation.universe.length === 'bad' ?
-            <p>{lang('errors.length')}</p> : null
-          }
-          <textarea
-            name="bio" placeholder={lang('placeholders.bio')}
-            value={field.bio} onChange={handleChange}
-          />
-          {validation.bio.length === 'bad' ?
-            <p>{lang('errors.length')}</p> : null
-          }
-          {response === 'BAD_FIELDS' ? <p>{lang('errors.bad_fields')}</p>: null}
-          <button type="submit">{lang('button')}</button>
-        </form>
-      </div>
+      <main className="characters">
+        <Header path={props.location.pathname.split('/').filter(e => e)} history={props.history} user={props.session.user.username}/>
+        <section className="cm-d">
+          <h3>{lang('title')}</h3>
+          <form onSubmit={handleSubmit}>
+              <input
+                type="text" name="name" placeholder={lang('placeholders.name')}
+                value={field.name} onChange={handleChange} required
+              />
+            {validation.name.uniqueness === 'bad' ?
+              <p>{lang('errors.uniqueness')}</p> : null
+            }
+            {validation.name.length === 'bad' ?
+              <p>{lang('errors.length')}</p> : null
+            }
+            <input
+              type="text" name="alias" placeholder={lang('placeholders.alias')}
+              value={field.alias} onChange={handleChange}
+            />
+            {validation.alias.length === 'bad' ?
+              <p>{lang('errors.length')}</p> : null
+            }
+            <input
+              type="text" name="universe" placeholder={lang('placeholders.universe')}
+              value={field.universe} onChange={handleChange}
+            />
+            {validation.universe.length === 'bad' ?
+              <p>{lang('errors.length')}</p> : null
+            }
+            <textarea
+              name="bio" placeholder={lang('placeholders.bio')}
+              value={field.bio} onChange={handleChange}
+            />
+            {validation.bio.length === 'bad' ?
+              <p>{lang('errors.length')}</p> : null
+            }
+            {response === 'BAD_FIELDS' ? <p>{lang('errors.bad_fields')}</p>: null}
+            <button type="submit">{lang('button')}</button>
+          </form>
+        </section>
+      </main>
     }
     </>
   )

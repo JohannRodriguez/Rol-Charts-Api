@@ -5,9 +5,7 @@
     "password": "Contraseña"
   },
   "buttons": {
-    "login": "Iniciar sesión",
-    "register": "Crear nueva cuenta",
-    "forgot": "¿Olvidaste tu contraseña?"
+    "login": "Iniciar sesión"
   },
   "forgot": {
     "message": "¿Olvidaste tu contraseña?",
@@ -15,7 +13,7 @@
   },
   "register": {
     "message": "¿Aún no eres miembro?",
-    "link": "registrase"
+    "link": "registrarse"
   },
   "errors" : {
     "email": "Ningún usuario fue encontrado con este email",

@@ -73,12 +73,7 @@ const validate = (name, value, fields, validation, setValidation) => {
     })
   }
   if (fields[name].validation.email) {
-    const emailArray = value.split(/(@|.com)/g);
-    emailArray.map((val, i) => {
-      if (val.length === 0) {
-        emailArray.splice(i, 1)
-      }
-    });
+    const emailArray = value.split(/(@|.com)/g).filter(e => e);
     if (emailArray.length === 4 && emailArray[1] === '@' && emailArray[3] === '.com') {
       if (arr.includes('is invalid')) {
         arr.splice(arr.indexOf('is invalid'), 1);
