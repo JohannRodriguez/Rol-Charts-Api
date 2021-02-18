@@ -31,9 +31,9 @@ const Register = props => {
   useEffect(async () => {
     if (Object.keys(fields).length === 0) {
       validationFields({ username: '', email: '', password: '',
-        password_confirmation: '', day: { field: new Date().getDate() },
-        month: { field: m(`${new Date().getMonth() + 1}`)},
-        year: { field: new Date().getFullYear() }, gender: 'neutral',
+        password_confirmation: '', day: `${new Date().getDate()}`,
+        month: m(`${new Date().getMonth() + 1}`),
+        year: `${new Date().getFullYear()}`, gender: 'neutral',
         }, setFields
       );
     }
@@ -47,7 +47,7 @@ const Register = props => {
     return arr;
   };
   const setBirthday = () => {
-    const obj = fields;
+    const obj = {...fields};
     const birthday = `${obj.year.field}-${obj.month.field}-${obj.day.field}`;
     delete obj.day;
     delete obj.month;

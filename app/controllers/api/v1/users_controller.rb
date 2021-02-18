@@ -38,21 +38,18 @@ module Api
       end
 
       def create
-        user = User.new(create_user_params)
+        @user = User.new(create_user_params)
 
-        if user.save
-          session[:user_id] = user.id
-          session[:auth_status] = 'NOT_AUTH'
-          session[:auth_time] = 0
-          UsersMailer.registration_confirmation(user).deliver
+        if @user.save
+          UserMailer.register_email(@user).deliver_now
           render json: { status: 'SUCCESS', user: {
-            id: user.id,
-            username: user.username,
-            status: user.status,
-            email: user.email,
+            id: @user.id,
+            username: @user.username,
+            status: @user.status,
+            email: @user.email,
           }, }
         else
-          render json: { status: 'BAD_FIELD', error: user.errors }
+          render json: { status: 'BAD_FIELD', error: @user.errors }
         end
       end
 

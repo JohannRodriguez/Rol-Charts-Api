@@ -33,6 +33,12 @@ const Login = props => {
         <Redirect to='/' />
       :
         <Cont styles={loginStyles.contParent.styles}>
+          {response.status === 'INACTIVE' ?
+            <div>
+              <span>{lang('confirm_email.message')}</span>
+              <span onClick={() => props.history.push('/resend_email')}>{lang('confirm_email.link')}</span>
+            </div>
+          : null}
           <H1>{lang('title')}</H1>
           <form onSubmit={e => submit(e, 'POST', '/api/v1/sessions', {user: field}, setResponse)}>
             {loginData.map(d => 

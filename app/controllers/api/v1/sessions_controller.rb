@@ -7,7 +7,9 @@ module Api
         @user = User.find_by(email: params[:user][:email])
         auth_user = @user.try(:authenticate, params[:user][:password])
     
-        if auth_user
+        if @user.status === 'INACTIVE'
+          render json: { status: 'INACTIVE' }
+        elsif auth_user
           session[:user_id] = @user.id
           session[:auth_status] = 'NOT_AUTH'
           session[:auth_time] = 0
